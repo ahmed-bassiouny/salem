@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>بيانات تفصيلية عن العميل</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <div id="wrapper" dir="rtl">
+
+        <div id="container-fluid">
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <h3>بيانات تفصيلية عن العميل</h3>
+                           <!-- <p>See how aspects of the Bootstrap grid system work across multiple devices with a handy table.</p>-->
+                           <div align="middle"><img id="img" src="../version1/default.jpg" style="width:150px;height:150px;"/></div>
+                            <div class="table-responsive">
+                             <div class='app-spinner'><i class="fa fa-spinner fa-spin" style="font-size:24px"></i></div>              
+                                <table style="width:70%;visibility: hidden" id="mytable" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>
+                                                بيانات العميل
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th >اسم العميل</th>
+                                            <td id="name"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>رقم الهاتف</th>
+                                            <td id="phone"></td>
+                                        </tr>
+                                      
+                                        <tr>
+                                            <th>البريد الالكترونى</th>
+                                            <td id="email"></td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <th> الحالة</th>
+                                            <td id="status"></td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--<p>Grid classes apply to devices with screen widths greater than or equal to the breakpoint sizes, and override grid classes targeted at smaller devices. Therefore, applying any
+                                <code>.col-md-</code> class to an element will not only affect its styling on medium devices but also on large devices if a
+                                <code>.col-lg-</code> class is not present.</p>-->
+                                <button type="button" style="width:30%;visibility:hidden" id="save" onclick="save()" class="btn btn-outline btn-primary btn-lg btn-block">حفظ الملحوظات</button>
+                                <button type="button" style="width:30%;visibility:hidden" id="block" onclick="block()" class="btn btn-outline btn-danger btn-lg btn-block"></button><br/>
+                                <button type="button" style="width:30%;visibility:hidden" id="back" onclick="back()" class="btn btn-outline btn-danger ">حذف العميل</button>
+                                
+                        </div>
+                    </div>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+
+
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="vendor/metisMenu/metisMenu.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="dist/js/sb-admin-2.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+    <script src="firebaseconfig.js"></script>
+    
+
+</body>
+  <script>
+
+   var key = getParameter("key");
+
+        var database = firebase.database();
+        var mylocation;
+        var childData;
+        database.ref('Users/'+key).once('value', function(snapshot) {
+                childData = snapshot.val();
+                document.getElementById("name").innerHTML += childData.name;
+                document.getElementById("phone").innerHTML += childData.phone;
+                
+                document.getElementById("email").innerHTML += childData.email;
+                document.getElementById("status").innerHTML += childData.status;
+                if (childData.thumb_image != "default")
+                document.getElementById("img").src = childData.thumb_image;
+                
+
+                $('.app-spinner').remove();
+                document.getElementById("mytable").style.visibility="visible";
+        });
+
+
+ 
+function getParameter(theParameter) { 
+  var params = window.location.search.substr(1).split('&');
+ 
+  for (var i = 0; i < params.length; i++) {
+    var p=params[i].split('=');
+    if (p[0] == theParameter) {
+      return decodeURIComponent(p[1]);
+    }
+  }
+  return false;
+}
+function save(){
+    var info =document.getElementById("info").value;
+    database.ref('USER').child(key+'/info').set(info);
+    database.ref('USER').child(key+'/rateFromAdmin').set(document.getElementById("rate").value);
+    alert('تم حفظ بنجاح');
+}
+function block(){
+
+    if(childData.blocked){
+        database.ref('USER').child(key+'/blocked').set(false);
+        childData.blocked = false;
+        document.getElementById("block").innerText = "تعطيل الحساب";
+        document.getElementById("blocked").innerHTML = "مفعل";
+    }else{
+        database.ref('USER').child(key+'/blocked').set(true);
+        childData.blocked = true;
+        document.getElementById("block").innerText = "تفعيل الحساب";
+        document.getElementById("blocked").innerHTML = "معطل";
+    }
+    alert("تم التغيير بنجاح")
+}
+function back(){
+    if (confirm('هل انت متاكد من الحذف')) {
+            firebase.database().ref('USER/'+key).remove();
+        window.history.back();
+
+} else {
+    // Do nothing!
+}
+}
+</script>
+
+</html>

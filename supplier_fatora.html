@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>الفاتورة </title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="driver.css" rel="stylesheet">
+
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- DataTables CSS -->
+    <link href="vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+
+    <!-- DataTables Responsive CSS -->
+    <link href="vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <div id="wrapper" dir="rtl">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+
+            <!-- /.navbar-header -->
+            <!-- /.navbar-top-links -->
+
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div class="container-fluid">
+            <div class="row">
+                <h3 id="title" style="text-align: center;"> اختر تاريخ الفاتورة</h3>
+
+                <div style="display: flex; justify-content: center;" id="search_div">
+                    <div style=" width: 800px;">
+                        <input style="text-align: center;" width="40%" id="selected_date" type="date"></textarea>
+                        <button type="button" class="btn btn-outline btn-primary" onclick="search()">بحث</button></div>
+                    <button onclick="myprint()" style="width: 30pt;height: 10dp;">طباعة</button>
+                    <button style="float: left;" id="back" onclick="back()" class="btn btn-danger">رجوع </button>
+
+
+                </div>
+
+                <div>
+                    <img src="temp.png" style="float:left;width: 80;height: 80;" dir="ltr" width="300pt" />
+                    <h2 style="padding-right: 60pt;position: relative;" >فاتورة  </h2>
+                    <h2 style="padding-right: 20pt;position: relative;" id="name" ></h2>
+                </div>
+
+
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+
+                        <h3 id="date">
+                            </h1>
+                            <h4 id="by">
+                                </h1>
+
+                                <div class="panel-body" id="content" dir="rtl">
+                                    <h1 id="dateLabel">بيان مفصل لبضاعة اليوم</h1>
+
+                                    <table width="50%" id="myTable" dir="rtl"
+                                        class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th style="font-size:16pt">العدد</th>
+                                                <th style="font-size:16pt">النوع</th>
+                                                <th style="font-size:16pt">اللون</th>
+                                                <th style="font-size:16pt">السعر</th>
+                                                <th style="font-size:16pt">الاجمالى</th>
+                                            </tr>
+
+                                        </thead>
+                                        <tbody id="Customdata">
+
+                                            <td colspan="7" class='app-spinner' style="text-align: center"><i
+                                                    class="fa fa-spinner fa-spin" style="font-size:24px"></i></td>
+
+                                        </tbody>
+                                    </table>
+                                    <div class="panel-body" dir="rtl">
+                                        <h1 id = "title_2">اجمالى بضاعة لكم وتحويلات لنا </h1>
+
+                                        <table id="myTable" dir="rtl"
+                                            class="table table-striped table-bordered table-hover">
+                                            <thead>
+
+                                                <tr>
+                                                    <td style="font-size:16pt">البيان</td>
+                                                    <td style="font-size:16pt">القيمة</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="Customdata">
+                                                <tr>
+                                                    <td style="font-size:18pt">اجمالى رصيد لنا حتى الان</td>
+                                                    <td style="font-weight:bold;font-size:25pt" id="third"> </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td style="font-size:18pt">اجمالى رصيد لكم حتى الان</td>
+                                                    <td style="font-weight:bold;font-size:25pt" id="fourth"></td>
+                                                </tr>
+                                                <tr hidden>
+                                                    <td><input style="font-size: 14pt;" id="dynamic_title"
+                                                            class="form-control"></textarea></td>
+                                                    <td><input style="font-weight:bold;font-size:25pt"
+                                                            onchange="getNewValue()" id="dynamic_value" type="number"
+                                                            value="0" class="form-control"></textarea></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td style="font-size:18pt" id="seven"> </td>
+                                                    <td style="font-weight:bold;font-size:25pt" id="eight"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                              <h3 style="border-bottom:solid 1px #000000; width: 300pt;text-align: center; margin: 0 auto;">العنوان : مول ابراج ماك الرأس السوداء الأسكندرية
+                                        </h3>
+                                        <h3 style="text-align: center;"> Salemnada1117@gmail.com</h3>
+                                        <h3 style="text-align: center;"> 01001319157(002) - 5170378(00203)</h3>
+                                    </div>
+                                </div>
+                                <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="vendor/metisMenu/metisMenu.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="vendor/datatables-responsive/dataTables.responsive.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="dist/js/sb-admin-2.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+    <script src="firebaseconfig.js"></script>
+
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+
+
+        $(document).ready(function () {
+            $('#dataTables-example').DataTable({
+                responsive: true
+            });
+        });
+
+
+        var key = getParameter("key");
+        var name = getParameter("name");
+        var phone = getParameter("phone");
+        var myTotal = 0;
+
+
+
+        var myTotalToSalem = 0;
+        var myTotalToSupplier = 0;
+
+        document.getElementById("name").innerHTML =  name + "<br/>" + phone
+
+        var database = firebase.database();
+        getDate();
+        fetchAllMoneySalemRecieved()
+        function search() {
+            var date = document.getElementById("selected_date").value;
+            document.getElementById("dateLabel").innerHTML = "بيان مفصل لبضاعة اليوم "+" "+date
+            database.ref('sendto').child(key).child(date).once('value', function (snapshot) {
+                document.getElementById("Customdata").innerHTML = ""
+                myTotal = 0
+                var by = ""
+                //document.getElementById("date").innerHTML = `التاريخ : ${date}`;
+                snapshot.forEach(function (childSnapshot) {
+                    var childData = childSnapshot.val();
+                    var table = `<tr><td style="font-size:14pt"> ${childData.count} </td> <td style="font-size:14pt"> ${childData.type} </td> <td style="font-size:14pt"> ${childData.color} </td> <td style="font-size:14pt"> ${childData.price} </td> <td style="font-size:14pt"> ${childData.total} </td> </tr>`;
+                    $('.app-spinner').remove();
+                    myTotal += parseInt(childData.total);
+                    document.getElementById("Customdata").innerHTML += table;
+                    document.getElementById("by").innerHTML = `شحن عن طريق : ${childData.by}`;
+
+                    by = childData.by;
+                });
+                document.getElementById("Customdata").innerHTML += `<tr> <td colspan="4" style="font-weight:bold;font-size:25pt">اجمالى الفاتورة الحالية</td> <td style="font-weight:bold;font-size:25pt"> ${myTotal} جنية مصرى</td> </tr>`;
+                var table1 = `<tr><td> ${date} </td> <td> ${by} </td> </tr>`;
+
+            });
+        }
+
+
+
+        function fetchAllMoneySalemRecieved() {
+            var totalTemp = 0
+            database.ref('reveice').child(key).once('value', function (snapshot) {
+                snapshot.forEach(function (childSnapshot) {
+                    var childData = childSnapshot.val();
+                    totalTemp += parseInt(childData.egp)
+                });
+                document.getElementById("fourth").innerHTML = `${totalTemp} جنية مصرى`
+                myTotalToSupplier = totalTemp
+                fetchAllMoneySalemSend()
+            });
+        }
+        function fetchAllMoneySalemSend() {
+            var totalTemp = 0
+            database.ref('sendto').child(key).once('value', function (snapshot) {
+                snapshot.forEach(function (childSnapshot) {
+                    childSnapshot.forEach(function (childChildSnapshot) {
+                        var childData = childChildSnapshot.val();
+                        totalTemp += parseInt(childData.total)
+                    });
+                });
+                document.getElementById("third").innerHTML = `${totalTemp} جنية مصرى`
+                myTotalToSalem = totalTemp
+
+
+                var temp = myTotalToSalem - myTotalToSupplier
+
+                if (temp > 0) {
+                    document.getElementById("seven").innerHTML = "الباقى لنا حتى الان"
+                    document.getElementById("eight").innerHTML = `${temp} جنية مصرى`
+                    document.getElementById("eight").style.color = "#31A46C";
+                    document.getElementById("seven").style.fontSize = 14;
+                } else {
+                    document.getElementById("seven").innerHTML = "الباقى لكم حتى الان"
+                    document.getElementById("eight").innerHTML = `${temp * -1} جنية مصرى`
+                    document.getElementById("eight").style.color = "#ff0000";
+                    document.getElementById("seven").style.fontSize = 14;
+
+                }
+
+            });
+        }
+
+        function getNewValue() {
+            var discount = parseInt(document.getElementById("dynamic_value").value)
+            var temp = myTotalToSalem - (myTotalToSupplier - discount)
+
+            if (temp > 0) {
+                document.getElementById("seven").innerHTML = "الباقى لنا حتى الان"
+                document.getElementById("eight").innerHTML = `${temp} جنية مصرى`
+                document.getElementById("eight").style.color = "#31A46C";
+                document.getElementById("seven").style.fontSize = 14;
+            } else {
+                document.getElementById("seven").innerHTML = "الباقى لكم حتى الان"
+                document.getElementById("eight").innerHTML = `${temp * -1} جنية مصرى`
+                document.getElementById("eight").style.color = "#ff0000";
+                document.getElementById("seven").style.fontSize = 14;
+
+            }
+
+
+        }
+        function getParameter(theParameter) {
+            var params = window.location.search.substr(1).split('&');
+
+            for (var i = 0; i < params.length; i++) {
+                var p = params[i].split('=');
+                if (p[0] == theParameter) {
+                    return decodeURIComponent(p[1]);
+                }
+            }
+            return false;
+        }
+
+        function myprint() {
+            document.getElementById("search_div").style.display = "none";
+            document.getElementById("title").style.display = "none";
+            print()
+            document.getElementById("title").style.display = "block";
+            document.getElementById("search_div").style.display = "flex";
+        }
+        function back(){
+        window.history.back();
+    }
+    
+    function getDate(){
+        var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+var yyyy = today.getFullYear();
+
+today = dd + '-' + mm + '-' + yyyy;
+            document.getElementById("title_2").innerHTML = "بيان بضاعة لكم وتحويلات لنا حتى "+" "+today;
+            
+
+    }
+    </script>
+
+</body>
+
+</html>

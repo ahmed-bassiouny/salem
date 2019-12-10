@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title> قائمه المنتجات بالاسعار</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <div id="wrapper" dir="rtl">
+
+        <div id="container-fluid">
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                                <button style="float: left;" onclick="back()" class="btn btn-danger">رجوع </button>
+
+                            <h3> قائمه المنتجات بالاسعار</h3>
+                            <!-- <p>See how aspects of the Bootstrap grid system work across multiple devices with a handy table.</p>-->
+                            <div class="table-responsive">
+                                <table style="width:70%;" id="mytable" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+
+                                    <tbody id="Customdata">
+                                
+                                        <td colspan="3" class='app-spinner' style="text-align: center"><i class="fa fa-spinner fa-spin" style="font-size:24px"></i></td>
+                                    </tbody>
+
+                                    
+                                </table>
+                                <table>
+                                    <tbody>
+                                        <td><input id="new_type" placeholder="صنف جديد" class="form-control"></textarea></td>
+                                        <td><input id="new_type_price" type="number"  value="0" class="form-control"></textarea></td>
+                                        <td><button onclick="saveNewType()"> حفظ</button></td>
+                                    </tbody>
+                                </table>
+                                
+                            </div>
+                            <!--<p>Grid classes apply to devices with screen widths greater than or equal to the breakpoint sizes, and override grid classes targeted at smaller devices. Therefore, applying any
+                                <code>.col-md-</code> class to an element will not only affect its styling on medium devices but also on large devices if a
+                                <code>.col-lg-</code> class is not present.</p>-->
+
+                        </div>
+                    </div>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+
+
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="vendor/metisMenu/metisMenu.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="dist/js/sb-admin-2.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+    <script src="firebaseconfig.js"></script>
+
+
+</body>
+<script>
+
+    var database = firebase.database();
+
+    //run()
+
+    // function run() {
+    //     var list = ["كاط يد",
+    //         "كاط جاكيت يد",
+    //         "كاط فرمله بداعية بالسروال يد",
+    //         "بداعية بالسروال يد",
+    //         "فرمله بالسروال يد",
+    //         "بداعية فردية يد",
+    //         "فرملة فردية يد",
+    //         "فرمله بداعية فردية يد",
+    //         "جبه يد",
+
+    //         "كاط مكينة",
+    //         "كاط فرمله بداعية بالسروال مكينة",
+    //         "كاط جاكيت مكينة",
+    //         "فرملة بداعية بالسروال مكينة",
+    //         "بداعية بالسروال مكينة",
+    //         "فرملة بالسروال مكينة",
+    //         "فرملة بداعية فردية مكينة",
+    //         "بداعية فردية مكينة",
+    //         "فرملة فردية مكينة",
+    //         "جبه مكينة",
+
+    //         "كاط اطفال مكينة",
+    //         "بدلة اطفال مكينة"];
+
+
+    // }
+
+    fetchData();
+    function fetchData() {
+        database.ref('prices_items').on('value', function (snapshot) {
+            document.getElementById("Customdata").innerHTML = "";
+            snapshot.forEach(function (childSnapshot) {
+                var childData = childSnapshot.val();
+                var table = `<tr> <td>${childData.name}</td> <td><input type="number" value=${childData.price} onchange="save('${childSnapshot.key}',this.value)" class="form-control"></textarea></td></tr>`;
+                $('.app-spinner').remove();
+                document.getElementById("Customdata").innerHTML += table;
+            });
+
+        });
+    }
+
+    function saveNewType(){
+        var item = document.getElementById("new_type").value
+        var price =  document.getElementById("new_type_price").value
+        database.ref('prices_items').push().set({
+            'name': item,
+            'price': price,
+        });
+        document.getElementById("new_type").value = ""
+        document.getElementById("new_type_price").value = "0"
+
+    }
+
+    function save(key,val){
+        database.ref('prices_items').child(key).child("price").set(val)
+    }
+
+    function back(){
+        window.history.back();
+    }
+</script>
+
+</html>

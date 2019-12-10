@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html dir="rtl">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>رسائل الادمن</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+
+    <body>
+
+        <div id="wrapper">
+
+
+            <div id="page-wrapper">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">رسائل الادمن</h1>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div style="width:50%" class="panel panel-default">
+                            <div class="panel-heading">
+                                برجاء اختيار النوع
+                            </div>
+                            <select style="width:50%" class="form-control" onchange="getType()" id="type">
+                                <option value="0">------------</option>
+                                <option value="USER">العميل</option>
+                                <option value="DRIVER">السائق</option>
+                            </select>
+                        </div>
+                        <div>
+                            <h6>عنوان الرسالة</h6>
+                            <input style="width:50%" type="text" class="form-control" id='title'></input>
+                            <br/>
+                            <h6>محتوى الرسالة</h6>
+                            <textarea style="width:50%" id='body' class="form-control" rows='3'></textarea>
+                            <br/>
+                            <br/>
+                            <select id="myselect" style="visibility: hidden;width:50%" class="form-control">
+                              <option  value="all"> الكل</option>
+                              <option  value="ونش انقاذ"> ونش انقاذ </option>
+                              <option  value="كساحة"> كساحة </option>
+                              <option  value="لودر"> لودر </option>
+
+                              <option  value="ربع نقل صندوق مفتوح"> ربع نقل صندوق مفتوح </option>
+                              <option  value="ربع نقل صندوق مغلق"> ربع نقل صندوق مغلق </option>
+                              <option  value="ربع نقل صندوق مبرد"> ربع نقل صندوق مبرد </option>
+                              <option  value="نص نقل صندوق مفتوح"> نص نقل صندوق مفتوح </option>
+                              <option  value="نص نقل صندوق مغلق"> نص نقل صندوق مغلق </option>
+
+                              <option  value="نص نقل صندوق مبرد"> نص نقل صندوق مبرد </option>
+                              <option  value="جرار فردانى فرش"> جرار فردانى فرش </option>
+                              <option  value="جرار فردانى قلاب"> جرار فردانى قلاب </option>
+                              <option  value="جرار فردانى كنتر"> جرار فردانى كنتر </option>
+                              <option  value="تريلا فرش"> تريلا فرش </option>
+
+                              <option  value="تريلا كنتر"> تريلا كنتر </option>
+                              <option  value="تريلا فلاب"> تريلا فلاب </option>
+                              <option  value="تريلا جناب"> تريلا جناب </option>
+                              <option  value="تريلا مبرد"> تريلا مبرد </option>
+                              <option  value="تريلا تنك"> تريلا تنك </option>
+                              <option value="جرار فرش" >جرار فرش</option>
+                              <option value="جرار كنتر" >جرار كنتر</option>
+                              <option value="جرار قلاب" >جرار قلاب</option>
+                              <option value="حفار" >حفار</option>
+                              <option value="حفار شكوش" >حفار شكوش</option>
+                              <option value="ونش موبليا" >ونش موبليا</option>
+                              <option value="معدات" >معدات</option>
+                              <option value="اتوبيس خاص" >اتوبيس خاص</option>
+                              <option value="اتوبيس رحلات" >اتوبيس رحلات</option>
+                              <option value="جرار فردانى تانك" >جرار فردانى تانك</option>
+                              <option value="نص نقل جامبو" >نص نقل جامبو</option>
+                              <option value="تروسيكل نقل" >تروسيكل نقل</option>
+                              <option value="سوزوكى نقل" >سوزوكى نقل</option>
+                              <option value="نقل عفش" >نقل عفش</option>
+                              <option value="جامبو تانك" >جامبو تانك</option>
+                          </select>
+                          <br/>
+                          <button onclick="save()" id="save" style='visibility:hidden' type="button" class="btn btn-primary">حفظ</button>
+                          <h5 id='loading' style='visibility:hidden'> جارى ارسال الرسالة من فضلك انتظر</h5>
+                      </div>
+                      <div class='app-spinner' id='progress' style='visibility:hidden'>
+                        <i class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="vendor/metisMenu/metisMenu.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="dist/js/sb-admin-2.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+    <script src="firebaseconfig.js"></script>
+
+</body>
+<script>
+    var result;
+    var type;
+    var database = firebase.database();
+
+    function getType() {
+        document.getElementById("progress").style.visibility = "visible";
+        document.getElementById("title").innerHTML = "";
+        document.getElementById("body").innerHTML = "";
+        type = document.getElementById("type").value;
+        if (type == 0)
+            return
+        if(type == "DRIVER"){
+            document.getElementById("myselect").style.visibility = "visible";
+        }else{
+            document.getElementById("myselect").style.visibility = "hidden";
+        }
+        database.ref('MESSAGE/' + type).once('value', function (snapshot) {
+            result = snapshot.val();
+            if (result != null) {
+                document.getElementById("title").value = result.title;
+                document.getElementById("body").value = result.body;
+                document.getElementById("progress").style.visibility = "hidden";
+                document.getElementById("save").style.visibility = "visible";
+
+            }
+        });
+    }
+    function save() {
+        var token ;
+        document.getElementById("progress").style.visibility = "visible";
+        document.getElementById("loading").style.visibility = "visible";
+        var myselect = document.getElementById("myselect").value;
+
+        result.title = document.getElementById("title").value;
+        result.body = document.getElementById("body").value;
+        database.ref('MESSAGE').child(type).set(result);
+        if(type == "USER" || (type == "DRIVER" && myselect =="all")){
+            database.ref(type).once('value', function(snapshot) {
+
+               snapshot.forEach(function(childSnapshot) {
+                var childData = childSnapshot.val();
+                if(childData.token !=null && childData.token.length >1 ){
+                    token += childData.token + ",";
+                }
+            });
+               token = token.substring(0, token.length - 1);
+
+               $.ajax({
+                type: "POST",
+                url: "http://naqlati.com/control/notification/notify_message.php",
+                data: {jsarray : token}, 
+                cache: false,
+
+                success: function(){
+                    alert('تم ارسال الرسالة');
+                    document.getElementById("progress").style.visibility = "hidden";
+                    document.getElementById("loading").style.visibility = "hidden";
+                }
+            });
+           });
+
+        }else {
+            database.ref(type).orderByChild("carType").equalTo(myselect).once('value', function(snapshot) {
+               snapshot.forEach(function(childSnapshot) {
+                var childData = childSnapshot.val();
+                if(childData.token !=null && childData.token.length >1 ){
+                    token += childData.token + ",";
+                }
+            });
+               token = token.substring(0, token.length - 1);
+
+               $.ajax({
+                type: "POST",
+                url: "http://naqlati.com/control/notification/notify_message.php",
+                data: {jsarray : token}, 
+                cache: false,
+
+                success: function(){
+                    alert('تم ارسال الرسالة');
+                    document.getElementById("progress").style.visibility = "hidden";
+                    document.getElementById("loading").style.visibility = "hidden";
+                }
+            });
+           });
+
+        }
+      /*  database.ref(type).once('value', function(snapshot) {
+
+         snapshot.forEach(function(childSnapshot) {
+            var childData = childSnapshot.val();
+            if(childData.token !=null && childData.token.length >1 ){
+                token += childData.token + ",";
+            }
+        });
+         token = token.substring(0, token.length - 1);
+
+         $.ajax({
+            type: "POST",
+            url: "http://naqlati.com/control/notification/notify_message.php",
+            data: {jsarray : token}, 
+            cache: false,
+
+            success: function(){
+                alert('تم ارسال الرسالة');
+                document.getElementById("progress").style.visibility = "hidden";
+                document.getElementById("loading").style.visibility = "hidden";
+            }
+        });
+     });
+     */
+
+ }
+</script>
+
+</html>

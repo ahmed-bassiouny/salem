@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <style>
+        #map {
+         height: 600px;
+         width: 70%;
+        }
+     </style>
+
+    <title>بيانات تفصيلية عن الطلبية</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <div id="wrapper" dir="rtl">
+
+        <div id="container-fluid">
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <h3>بيانات تفصيلية عن الطلبية</h3>
+                           <!-- <p>See how aspects of the Bootstrap grid system work across multiple devices with a handy table.</p>-->
+                            <div class="table-responsive">
+                             <div class='app-spinner'><i class="fa fa-spinner fa-spin" style="font-size:24px"></i></div>
+                                <table style="width:70%;visibility: hidden" id="mytable" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>
+                                                بيانات الطلبية
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th >رقم العربة</th>
+                                            <td id="carNumber"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>نوع العربة</th>
+                                            <td id="carType"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>اسم السيارة</th>
+                                            <td id="driverName"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>رقم السيارة</th>
+                                            <td id="driverPhone"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>عنوام البداية</th>
+                                            <td id="startpoint"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>عنوان النهاية</th>
+                                            <td id="endpoint"></td>
+                                        </tr>
+                                        <tr>
+                                            <th >حالة الطلب</th>
+                                           <td><code id="requestStatus"> </code></td>
+                                        </tr>
+                                        <tr>
+                                            <th>اسم العميل</th>
+                                            <td id="userName"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>رقم تليفون المالك</th>
+                                            <td id="userPhone" ></td>
+                                        </tr>
+                                        <tr>
+                                            <th>السعر</th>
+                                            <td id="price" ></td>
+                                        </tr>
+                                        <tr>
+                                            <th>نوع البضاعة</th>
+                                            <td id="productType" ></td>
+                                        </tr>
+                                        <tr>
+                                            <th id="productSizeName"></th>
+                                            <td id="productSize" ></td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <th>تقييم العميل</th>
+                                            <td id="rate_from_user" ></td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <th>تقييم السائق</th>
+                                            <td id="rate_from_driver" ></td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>عدد العمال المطلوبة</th>
+                                            <td id="employee_number" ></td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>تاريخ وميعاد بداية الرحله</th>
+                                            <td id="request_start_date" ></td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>تاريخ وميعاد نهاية الرحله</th>
+                                            <td id="request_end_date" ></td>
+                                        </tr>
+                                         
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!--<p>Grid classes apply to devices with screen widths greater than or equal to the breakpoint sizes, and override grid classes targeted at smaller devices. Therefore, applying any
+                                <code>.col-md-</code> class to an element will not only affect its styling on medium devices but also on large devices if a
+                                <code>.col-lg-</code> class is not present.</p>-->
+                        </div>
+                        <div id="map"></div>                                                
+                    </div>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+
+
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="vendor/metisMenu/metisMenu.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="dist/js/sb-admin-2.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+    <script src="firebaseconfig.js"></script>
+    
+
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDdPcS72hlMND63F_i1Ckki5YJM-uobkdw">
+    </script>
+</body>
+  <script>
+
+   var key = getParameter("key");
+
+        var database = firebase.database();
+        var userLocation,driverLocation,startPointLocation,endPointLocation;
+
+        database.ref('REQUESTS/'+key).once('value', function(snapshot) {
+                var childData = snapshot.val();
+                document.getElementById("carNumber").innerHTML = childData.carNumber;
+                document.getElementById("carType").innerHTML = childData.carType;
+                document.getElementById("driverName").innerHTML = childData.driverName;
+                document.getElementById("driverPhone").innerHTML = childData.driverPhone;
+                document.getElementById("startpoint").innerHTML = childData.startPoint.locationString;
+                document.getElementById("endpoint").innerHTML = childData.endPoint.locationString;
+                document.getElementById("userName").innerHTML = childData.userName;
+                document.getElementById("userPhone").innerHTML = childData.userPhone;
+                document.getElementById("price").innerHTML = childData.price;
+                document.getElementById("productType").innerHTML = childData.productType;
+                document.getElementById("productSize").innerHTML = childData.productSize;
+                
+                document.getElementById("rate_from_user").innerHTML = childData.rate_from_user;
+                document.getElementById("rate_from_driver").innerHTML = childData.rate_from_driver;
+
+                document.getElementById("employee_number").innerHTML = childData.employeeNumber;
+                document.getElementById("request_start_date").innerHTML = childData.date;
+                document.getElementById("request_end_date").innerHTML = childData.endRequestDate;
+                console.log(childData.carType);
+                if(childData.carType == "اتوبيس رحلات" || childData.carType == "اتوبيس خاص"){
+                    document.getElementById("productSizeName").innerHTML = "عدد الركاب"
+                }else {
+                    document.getElementById("productSizeName").innerHTML = "الكمية"
+                }
+                if(childData.requestStatus=='CANCEL_FROM_USER')
+                    document.getElementById("requestStatus").innerHTML = "تم الغاء الطلبية من قبل العميل";
+                else if (childData.requestStatus=='DRIVER_GO_TO_START_POINT')
+                    document.getElementById("requestStatus").innerHTML = "السائق ذاهب الى نقطة البداية";
+                else if (childData.requestStatus=='DRIVER_GO_TO_END_POINT')
+                    document.getElementById("requestStatus").innerHTML = "السائق ذاهب الى نقطة النهاية";
+                else if (childData.requestStatus=='ACCEPT')
+                    document.getElementById("requestStatus").innerHTML = "تم الموافقة على العملية";
+                else if (childData.requestStatus=='REFUSE')
+                    document.getElementById("requestStatus").innerHTML = "تم رفض على العملية";
+                else if (childData.requestStatus=='CANCEL_FROM_DRIVER')
+                    document.getElementById("requestStatus").innerHTML = "تم الغاء الطلبية من قبل السائق";
+                else if (childData.requestStatus=='COMPLETE')
+                    document.getElementById("requestStatus").innerHTML = "تم اكتمال العملية بنجاح";
+                    else if (childData.requestStatus=='REFUSE_FROM_USER')
+                    document.getElementById("requestStatus").innerHTML = "تم رفض الطلب من قبل العميل";
+                else if (childData.requestStatus=='REFUSE_FROM_DRIVER'){
+                    document.getElementById("requestStatus").innerHTML = "تم رفض الطلب من قبل السائق";
+                    database.ref('DRIVER/'+childData.driverId).once('value', function(snapshot) {
+                        var driver = snapshot.val();
+                        document.getElementById("carNumber").innerHTML = driver.carNumber;
+                        document.getElementById("carType").innerHTML = driver.carType;
+                        document.getElementById("driverName").innerHTML = driver.userName;
+                        document.getElementById("driverPhone").innerHTML = driver.userPhone;
+                    });   
+                }
+                $('.app-spinner').remove();
+                document.getElementById("mytable").style.visibility="visible";
+                // set user location
+                userLocation={lat: childData.userLat, lng: childData.userLng}
+                // set driver location
+                driverLocation={lat: childData.driverLat, lng: childData.driverLng}
+                // set start point location
+                startPointLocation={lat: childData.startPoint.lat, lng: childData.startPoint.lng}
+                // set end point location
+                endPointLocation={lat: childData.endPoint.lat, lng: childData.endPoint.lng}
+                initMap(userLocation,driverLocation,startPointLocation,endPointLocation);
+
+        });
+
+
+        function initMap(userLocation,driverLocation,startPointLocation,endPointLocation) {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 7,
+          center: driverLocation
+        });
+         var user = new google.maps.Marker({
+          position: userLocation,
+          map: map,
+          icon:'person_marker.png'
+        });
+        var driver = new google.maps.Marker({
+          position: driverLocation,
+          map: map,
+          icon:'car_marker.png'
+        });
+        var marker1 = new google.maps.Marker({
+          position: startPointLocation,
+          map: map,
+          title:'نقطة البداية'
+        });
+        var marker1 = new google.maps.Marker({
+          position: endPointLocation,
+          map: map,
+          title:'نقطة النهاية'
+        });
+      }
+
+function getParameter(theParameter) { 
+  var params = window.location.search.substr(1).split('&');
+ 
+  for (var i = 0; i < params.length; i++) {
+    var p=params[i].split('=');
+    if (p[0] == theParameter) {
+      return decodeURIComponent(p[1]);
+    }
+  }
+  return false;
+}
+</script>
+
+</html>
