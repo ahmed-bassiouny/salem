@@ -177,8 +177,8 @@
         function fetchData() {
 
             database.ref().child('supplier').child(key).once('value', function (snapshot) {
-                myTotalToSalem = parseInt(snapshot.val().for_salem)
-                myTotalToSupplier = parseInt(snapshot.val().for_supplier)
+                myTotalToSalem = parseFloat(snapshot.val().for_salem)
+                myTotalToSupplier = parseFloat(snapshot.val().for_supplier)
                 document.getElementById("first").innerHTML = myTotalToSalem
                 document.getElementById("second").innerHTML = myTotalToSupplier
                 fetchAllMoneySalemRecieved()
@@ -190,7 +190,7 @@
             database.ref('reveice').child(key).once('value', function (snapshot) {
                 snapshot.forEach(function (childSnapshot) {
                     var childData = childSnapshot.val();
-                    totalTemp += parseInt(childData.egp)
+                    totalTemp += parseFloat(childData.egp)
                 });
                 document.getElementById("fourth").innerHTML = totalTemp
                 document.getElementById("sexith").innerHTML = totalTemp + myTotalToSupplier
@@ -203,7 +203,7 @@
                 snapshot.forEach(function (childSnapshot) {
                     childSnapshot.forEach(function (childChildSnapshot) {
                         var childData = childChildSnapshot.val();
-                        totalTemp += parseInt(childData.total)
+                        totalTemp += parseFloat(childData.total)
                     });
                 });
                 document.getElementById("third").innerHTML = totalTemp

@@ -222,7 +222,7 @@
                     var childData = childSnapshot.val();
                     var table = `<tr><td style="font-size:14pt"> ${childData.count} </td> <td style="font-size:14pt"> ${childData.type} </td> <td style="font-size:14pt"> ${childData.color} </td> <td style="font-size:14pt"> ${childData.price} </td> <td style="font-size:14pt"> ${childData.total} </td> </tr>`;
                     $('.app-spinner').remove();
-                    myTotal += parseInt(childData.total);
+                    myTotal += parseFloat(childData.total);
                     document.getElementById("Customdata").innerHTML += table;
                     document.getElementById("by").innerHTML = `شحن عن طريق : ${childData.by}`;
 
@@ -241,7 +241,7 @@
             database.ref('reveice').child(key).once('value', function (snapshot) {
                 snapshot.forEach(function (childSnapshot) {
                     var childData = childSnapshot.val();
-                    totalTemp += parseInt(childData.egp)
+                    totalTemp += parseFloat(childData.egp)
                 });
                 document.getElementById("fourth").innerHTML = `${totalTemp} جنية مصرى`
                 myTotalToSupplier = totalTemp
@@ -254,7 +254,7 @@
                 snapshot.forEach(function (childSnapshot) {
                     childSnapshot.forEach(function (childChildSnapshot) {
                         var childData = childChildSnapshot.val();
-                        totalTemp += parseInt(childData.total)
+                        totalTemp += parseFloat(childData.total)
                     });
                 });
                 document.getElementById("third").innerHTML = `${totalTemp} جنية مصرى`
@@ -280,7 +280,7 @@
         }
 
         function getNewValue() {
-            var discount = parseInt(document.getElementById("dynamic_value").value)
+            var discount = parseFloat(document.getElementById("dynamic_value").value)
             var temp = myTotalToSalem - (myTotalToSupplier - discount)
 
             if (temp > 0) {

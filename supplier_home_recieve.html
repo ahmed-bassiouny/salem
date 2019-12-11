@@ -223,7 +223,7 @@
                         var table = `<tr> <td> ${childData.date} </td> <td> ${childData.dollar} </td> <td> ${childData.price} </td><td> ${childData.price_discount} </td> <td> </td><td> ${childData.egp} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${childSnapshot.key}')">حذف </a></td> </tr>`;
                     }
                     $('.app-spinner').remove();
-                    myTotal += parseInt(childData.egp);
+                    myTotal += parseFloat(childData.egp);
                     document.getElementById("Customdata").innerHTML += table;
                 });
                 document.getElementById("my_total").innerHTML = `رصيد لكم طرفنا ${myTotal}`;

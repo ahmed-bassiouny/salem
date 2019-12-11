@@ -248,7 +248,7 @@
                     var childData = childSnapshot.val();
                     var table = `<tr> <td> ${childData.count} </td> <td> ${childData.type} </td> <td> ${childData.color} </td> <td> ${childData.price} </td> <td> ${childData.total} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${date}','${childSnapshot.key}')">حذف </a> </td> </tr>`;
                     $('.app-spinner').remove();
-                    myTotal += parseInt(childData.total);
+                    myTotal += parseFloat(childData.total);
                     document.getElementById("Customdata").innerHTML += table;
                 });
                 document.getElementById("my_total").innerHTML = `اجمالى الفاتورة الحالية ${myTotal}`;

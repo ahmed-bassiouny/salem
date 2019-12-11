@@ -238,7 +238,7 @@
                     var childData = childSnapshot.val();
                     var table = `<tr> <td> ${childData.date} </td><td> ${childData.count} </td> <td> ${childData.type} </td> <td> ${childData.color} </td> <td> ${childData.price} </td> <td> ${childData.total} </td> <td> <input id="received"  type="number" value="${childData.received}" class="form-control"></textarea></td><td> <button style="color:white;" class='btn btn-primary' onclick="edit_received('${childSnapshot.key}')">حفظ </a><button style="color:red;" class='btn btn-error' onclick="deleteItem('${date}','${childSnapshot.key}')">حذف </a> </td> </tr>`;
                     $('.app-spinner').remove();
-                    myTotal += parseInt(childData.total);
+                    myTotal += parseFloat(childData.total);
                     document.getElementById("Customdata").innerHTML += table;
                 });
             });
