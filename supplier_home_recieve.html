@@ -112,7 +112,13 @@
                                     <tr>
                                         <th> المبلغ بالمصرى</th>
                                         <td>
-                                            <input id="egp" type="number" class="form-control"></textarea>
+                                            <input id="egp" value="0" onchange="onChangeType()" type="number" class="form-control"></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr >
+                                        <th>  الاجمالى</th>
+                                        <td>
+                                            <input disabled id="total" type="number" class="form-control"></textarea>
                                         </td>
                                     </tr>
 
@@ -140,14 +146,14 @@
                                         <th>عمولة التحويل</th>
                                         <th> مصاريف اخرى</th>
                                         <th>المبلغ بالمصرى</th>
-
+                                        <th> الاجمالى</th>
                                         <th>خيارات</th>
                                     </tr>
 
                                 </thead>
                                 <tbody id="Customdata">
 
-                                    <td colspan="7" class='app-spinner' style="text-align: center"><i
+                                    <td colspan="8" class='app-spinner' style="text-align: center"><i
                                             class="fa fa-spinner fa-spin" style="font-size:24px"></i></td>
 
                                 </tbody>
@@ -218,9 +224,9 @@
                 snapshot.forEach(function (childSnapshot) {
                     var childData = childSnapshot.val();
                     if (childData.dynamic_title) {
-                        var table = `<tr> <td> ${childData.date} </td> <td> ${childData.dollar} </td> <td> ${childData.price} </td><td> ${childData.price_discount} </td> <td> ${childData.dynamic_title + " ( " + childData.dynamic_value + " )"} </td><td> ${childData.egp} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${childSnapshot.key}')">حذف </a></td> </tr>`;
+                        var table = `<tr> <td> ${childData.date} </td> <td> ${childData.dollar} </td> <td> ${childData.price} </td><td> ${childData.price_discount} </td> <td> ${childData.dynamic_title + " ( " + childData.dynamic_value + " )"} </td><td> ${childData.egp} </td><td> ${childData.total} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${childSnapshot.key}')">حذف </a></td> </tr>`;
                     } else {
-                        var table = `<tr> <td> ${childData.date} </td> <td> ${childData.dollar} </td> <td> ${childData.price} </td><td> ${childData.price_discount} </td> <td> </td><td> ${childData.egp} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${childSnapshot.key}')">حذف </a></td> </tr>`;
+                        var table = `<tr> <td> ${childData.date} </td> <td> ${childData.dollar} </td> <td> ${childData.price} </td><td> ${childData.price_discount} </td> <td> </td><td> ${childData.egp} </td><td> ${childData.total} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${childSnapshot.key}')">حذف </a></td> </tr>`;
                     }
                     $('.app-spinner').remove();
                     myTotal += parseFloat(childData.egp);
@@ -230,9 +236,18 @@
             });
         }
         function onChangeType() {
+            var dollar = document.getElementById("dollar").value
+            var egp = document.getElementById("egp").value
 
-            document.getElementById("egp").value = ((document.getElementById("dollar").value * document.getElementById("price").value) - document.getElementById("price_discount").value - document.getElementById("dynamic_value").value)
+            if (dollar > 0){
+                document.getElementById("total").value = ((dollar * document.getElementById("price").value) - document.getElementById("price_discount").value) - document.getElementById("dynamic_value").value
+            }else {
+                document.getElementById("total").value = (egp - document.getElementById("price_discount").value) - document.getElementById("dynamic_value").value
+            }
+            
         }
+
+       
 
         function save_for_salem() {
             var date = document.getElementById("date").value
@@ -241,7 +256,8 @@
             var price_discount = document.getElementById("price_discount").value
             var dynamic_title = document.getElementById("dynamic_title").value
             var dynamic_value = document.getElementById("dynamic_value").value
-            if (date != "" && dollar > 0 && egp > 0) {
+            var total = document.getElementById("total").value
+            if (date != "" && total > 0) {
                 var price = document.getElementById("price").value
 
                 database.ref().child('reveice').child(key).push().set({
@@ -251,7 +267,8 @@
                     price: price,
                     price_discount: price_discount,
                     dynamic_title: dynamic_title,
-                    dynamic_value: dynamic_value
+                    dynamic_value: dynamic_value,
+                    total: total,
                 }, function (error) {
                     if (error) {
                         // The write failed...
@@ -260,12 +277,13 @@
                         // Data saved successfully!
                         alert("تم الحفظ بنجاح");
                         document.getElementById("date").value = ""
-                        document.getElementById("dollar").value = ""
-                        document.getElementById("egp").value = ""
-                        document.getElementById("price").value = ""
-                        document.getElementById("price_discount").value = ""
+                        document.getElementById("dollar").value = "0"
+                        document.getElementById("egp").value = "0"
+                        document.getElementById("price").value = "0"
+                        document.getElementById("price_discount").value = "0"
                         document.getElementById("dynamic_title").value = ""
-                        document.getElementById("dynamic_value").value = ""
+                        document.getElementById("dynamic_value").value = "0"
+                        document.getElementById("total").value = "0"
                     }
                 });
 

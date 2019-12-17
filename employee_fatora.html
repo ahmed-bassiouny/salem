@@ -62,7 +62,7 @@
                     </div>
                 </div>
 
-                <br/>
+                <br />
                 <h2 style="text-align: center;">فاتورة </h2>
                 <h2 id="name" style="text-align: center;"></h2>
                 <!-- /.row -->
@@ -87,26 +87,23 @@
                                         </thead>
                                         <tbody id="Customdata">
                                             <tr>
-                                                <td style="font-size:18pt">تم تصدير بضاعة بمبلغ</td>
+                                                <td style="font-size:18pt">رصيد لكم</td>
                                                 <td style="font-weight:bold;font-size:25pt" id="first"> </td>
                                             </tr>
 
-                                            <tr>
-                                                <td style="font-size:18pt">تم استلام بضاعة بمبلغ</td>
-                                                <td style="font-weight:bold;font-size:25pt" id="second"></td>
-                                            </tr>
 
                                             <tr>
-                                                <td style="font-size:18pt" id="seven">تم صرف مبلغ مالى مقدارة</td>
+                                                <td style="font-size:18pt" id="seven">مصروف</td>
                                                 <td style="font-weight:bold;font-size:25pt" id="third"></td>
                                             </tr>
                                             <tr>
-                                                <td style="font-size:18pt">المتبقي</td>
+                                                <td style="font-size:18pt" id="second">المتبقي</td>
                                                 <td style="font-weight:bold;font-size:25pt" id="fourth"></td>
                                             </tr>
                                         </tbody>
                                     </table>
 
+                                    <button class="btn btn-primary" onclick="final()">تصفيه الحساب</button>
                                 </div>
                             </div>
                             <!-- /.panel-body -->
@@ -158,7 +155,8 @@
 
             var money = 0;
             var goods = 0;
-            var goodsBack = 0;
+
+            
 
             document.getElementById("name").innerHTML = name + "<br/>"
 
@@ -170,11 +168,11 @@
                 database.ref('employee_have_items').child(key).once('value', function (snapshot) {
                     snapshot.forEach(function (childSnapshot) {
                         var childData = childSnapshot.val();
+                        
                         goods += parseFloat(childData.price) * parseInt(childData.count)
-                        goodsBack += parseFloat(childData.price) * parseInt(childData.received)
                     });
                     document.getElementById("first").innerHTML = `${goods} جنية مصرى`
-                    document.getElementById("second").innerHTML = `${goodsBack} جنية مصرى`
+
                     fetchMoney()
                 });
             }
@@ -183,13 +181,35 @@
                 database.ref('employee_have_price').child(key).once('value', function (snapshot) {
                     snapshot.forEach(function (childSnapshot) {
                         var childData = childSnapshot.val();
-                        money += parseFloat(childData.price) 
+                        money += parseFloat(childData.price)
                     });
                     document.getElementById("third").innerHTML = `${money} جنية مصرى`
-                    document.getElementById("fourth").innerHTML = `${goods - goodsBack - money} جنية مصرى`
+                    var temp = goods - money
+                    if (temp > 0) {
+                        document.getElementById("second").innerHTML = "الباقى لكم"
+                        document.getElementById("fourth").innerHTML = `${temp} جنية مصرى`
+                        document.getElementById("fourth").style.color = "#ff0000";
+                    } else {
+                        document.getElementById("second").innerHTML = "الباقى لنا"
+                        document.getElementById("fourth").style.color = "#31A46C";
+                        document.getElementById("fourth").innerHTML = `${temp * -1} جنية مصرى`
+                    }
+
                 });
             }
-           
+
+            function final(){
+                database.ref("employee_have_price").child(key).remove();
+                
+                database.ref("employee_have_items").child(key).remove().then(function () {
+                    location.reload();
+            });
+
+                
+                
+            }
+            
+
             function getParameter(theParameter) {
                 var params = window.location.search.substr(1).split('&');
 

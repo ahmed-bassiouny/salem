@@ -81,8 +81,7 @@
                                 <tbody>
                                     <tr>
                                         <th>التاريخ</th>
-                                        <td><input id="date" type="date"
-                                                class="form-control"></textarea></td>
+                                        <td><input id="date" type="date" class="form-control"></textarea></td>
                                     </tr>
                                     <tr>
                                         <th>النوع</th>
@@ -135,8 +134,11 @@
 
                         <br />
                         <br />
+                        <textarea style="width: 50%; height: 100pt;" id="note"></textarea>
+                        <button onclick="saveNote()"> حفظ</button>
+                        <button onclick="deleteNote()"> حذف</button>
                         <div class="panel-body" dir="rtl">
-                            <h1> البضاعة التى ارسلت للعامل  </h1>
+                            <h1> البضاعة التى ارسلت للعامل </h1>
 
                             <table width="50%" id="myTable" dir="rtl"
                                 class="table table-striped table-bordered table-hover">
@@ -149,18 +151,19 @@
                                         <th>السعر</th>
                                         <th>الاجمالى</th>
                                         <th>تم استرداد</th>
+                                        <th>المتبقي</th>
                                         <th>خيارات</th>
                                     </tr>
 
                                 </thead>
                                 <tbody id="Customdata">
 
-                                    <td colspan="8" class='app-spinner' style="text-align: center"><i
+                                    <td colspan="9" class='app-spinner' style="text-align: center"><i
                                             class="fa fa-spinner fa-spin" style="font-size:24px"></i></td>
 
                                 </tbody>
                             </table>
-                            
+
                         </div>
                         <!-- /.panel-body -->
                     </div>
@@ -214,6 +217,8 @@
         var database = firebase.database();
 
         getProduct()
+        getNote()
+        
         function getProduct() {
             database.ref().child('prices_items').once('value', function (snapshot) {
 
@@ -230,16 +235,42 @@
             });
         }
 
+        function getNote() {
+
+            database.ref().child('employee').child(key).child("note").once('value', function (snapshot) {
+                document.getElementById("note").value = snapshot.val()
+                
+                
+            });
+        }
+
+        function saveNote() {
+            database.ref('employee').child(key).child("note").set(document.getElementById("note").value).then(function () {
+                alert("تم الحفظ بنجاح")
+            });
+        }
+        function deleteNote() {
+            database.ref('employee').child(key).child("note").remove().then(function () {
+                alert("تم الحذف بنجاح")
+                document.getElementById("note").value = ""
+            });
+        }
+
         function fetchData() {
             database.ref('employee_have_items').child(key).on('value', function (snapshot) {
                 document.getElementById("Customdata").innerHTML = ""
                 myTotal = 0
                 snapshot.forEach(function (childSnapshot) {
                     var childData = childSnapshot.val();
-                    var table = `<tr> <td> ${childData.date} </td><td> ${childData.count} </td> <td> ${childData.type} </td> <td> ${childData.color} </td> <td> ${childData.price} </td> <td> ${childData.total} </td> <td> <input id="received"  type="number" value="${childData.received}" class="form-control"></textarea></td><td> <button style="color:white;" class='btn btn-primary' onclick="edit_received('${childSnapshot.key}')">حفظ </a><button style="color:red;" class='btn btn-error' onclick="deleteItem('${date}','${childSnapshot.key}')">حذف </a> </td> </tr>`;
+                    if (childData.count - childData.received != 0) {
+                        var table = `<tr> <td> ${childData.date} </td><td> ${childData.count} </td> <td> ${childData.type} </td> <td> ${childData.color} </td> <td> ${childData.price} </td> <td> ${childData.total} </td> <td> <input   onchange="edits('${childSnapshot.key}',this)" type="number" value="${childData.received}" class="form-control"></textarea></td><td style='color:red'> ${childData.count - childData.received} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${date}','${childSnapshot.key}')">حذف </a> </td> </tr>`;
+                    } else {
+                        var table = `<tr> <td> ${childData.date} </td><td> ${childData.count} </td> <td> ${childData.type} </td> <td> ${childData.color} </td> <td> ${childData.price} </td> <td> ${childData.total} </td> <td> <input   onchange="edits('${childSnapshot.key}',this)" type="number" value="${childData.received}" class="form-control"></textarea></td><td style='color:red'> ${childData.count - childData.received} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${date}','${childSnapshot.key}')">حذف </a> </td> </tr>`;
+                    }
                     $('.app-spinner').remove();
                     myTotal += parseFloat(childData.total);
                     document.getElementById("Customdata").innerHTML += table;
+                    
                 });
             });
         }
@@ -249,10 +280,22 @@
             document.getElementById("total").value = document.getElementById("type").value * document.getElementById("count").value
         }
 
-        function edit_received(k){
+        function edit_received(k) {
             var val = document.getElementById("received").value
-            database.ref('employee_have_items').child(key).child(k).child("received").set(val)
-            alert("تم التعديل بنجاح")
+
+        }
+
+        function edits(k, v) {
+
+            database.ref('employee_have_items').child(key).child(k).child("received").set(v.value, function (error) {
+                if (error) {
+                    alert("خطا")
+                } else {
+                    alert("تم التعديل بنجاح")
+                }
+            })
+
+
         }
 
         function save() {
@@ -261,7 +304,7 @@
                 var count = document.getElementById("count").value
                 var date = document.getElementById("date").value
                 var price = document.getElementById("price").value
-                
+
                 var type = document.getElementById("type").options[document.getElementById("type").selectedIndex].text
                 var color = document.getElementById("color").value
 
@@ -270,6 +313,7 @@
                     count: count,
                     date: date,
                     price: price,
+                    invisible: false,
                     received: 0,
                     type: type,
                     color: color,
@@ -297,7 +341,7 @@
         function deleteItem(date, subKey) {
 
 
-            database.ref("sendto").child(key).child(subKey).remove().then(function () {
+            database.ref("employee_have_items").child(key).child(subKey).remove().then(function () {
                 alert("تم الحذف بنجاح");
             });
         }

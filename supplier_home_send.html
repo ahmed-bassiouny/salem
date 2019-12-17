@@ -105,7 +105,8 @@
                                     <tr>
                                         <th>السعر</th>
                                         <td>
-                                            <input id="price" type="number" disabled class="form-control"></textarea>
+                                            <input id="price" onchange="onChange()" type="number"
+                                                class="form-control"></textarea>
                                         </td>
                                     </tr>
                                     <tr>
@@ -258,6 +259,12 @@
 
             document.getElementById("price").value = document.getElementById("type").value
             document.getElementById("total").value = document.getElementById("type").value * document.getElementById("count").value
+        }
+
+        function onChange() {
+
+            
+            document.getElementById("total").value = document.getElementById("price").value * document.getElementById("count").value
         }
 
         function save_for_salem() {
