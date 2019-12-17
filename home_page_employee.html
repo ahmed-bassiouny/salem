@@ -42,6 +42,7 @@
 
 <body>
 
+    
     <div id="wrapper" dir="rtl">
 
         <!-- Navigation -->
@@ -52,6 +53,8 @@
 
             <!-- /.navbar-static-side -->
         </nav>
+
+        <button style="float: left;margin-left: 30pt;" onclick="back()" class="btn btn-danger">رجوع </button>
 
         <div class="container-fluid">
             <div class="row">
@@ -172,6 +175,10 @@
                 }
             }
         }
+
+        function back(){
+        window.history.back();
+    }
 
     </script>
 
