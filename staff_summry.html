@@ -200,6 +200,7 @@
 
             function final() {
                 database.ref("staff").child(key).child('expenses').remove();
+                database.ref("over_time").child(key).child('expenses').remove();
 
                 database.ref("staff").child(key).child('subtract').remove().then(function () {
                     location.reload();
