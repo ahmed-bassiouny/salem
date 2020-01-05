@@ -47,6 +47,8 @@
                             <h3> قائمه المنتجات بالاسعار</h3>
                             <!-- <p>See how aspects of the Bootstrap grid system work across multiple devices with a handy table.</p>-->
                             <div class="table-responsive">
+                                <input placeholder="بحث" onchange="searchByName(this.value)" class="form-control" style="margin: 20pt;width: 300pt;"/>
+
                                 <table style="width:70%;" id="mytable" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
@@ -154,6 +156,20 @@
 
         });
     }
+
+    function searchByName(item){
+        database.ref('prices_items').orderByChild('name').startAt(item)
+                 .endAt(item+"\uf8ff").on('value', function (snapshot) {
+            document.getElementById("Customdata").innerHTML = "";
+            snapshot.forEach(function (childSnapshot) {
+                var childData = childSnapshot.val();
+                var table = `<tr> <td>${childData.name}</td> <td><input type="number" value=${childData.price} onchange="save('${childSnapshot.key}',this.value)" class="form-control"></textarea></td></tr>`;
+                $('.app-spinner').remove();
+                document.getElementById("Customdata").innerHTML += table;
+            });
+
+        });
+        }
 
     function saveNewType(){
         var item = document.getElementById("new_type").value

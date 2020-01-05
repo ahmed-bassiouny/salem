@@ -53,13 +53,13 @@
                                         <tr>
                                             <th></th>
                                             <th>
-                                                بيانات العامل
+                                                بيانات الصنايعي
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <th>اسم العامل</th>
+                                            <th>اسم الصنايعي</th>
                                             <td><input id="name" class="form-control"></textarea></td>
                                         </tr>
                                         <tr>
@@ -132,7 +132,7 @@
             phone: phone
         };
         firebase.database().ref().child('employee').child(key).update(agent);
-        alert('تم حفظ العامل بنجاح');
+        alert('تم حفظ الصنايعي بنجاح');
         window.history.back();
 
     }

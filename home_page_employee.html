@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>عرض جميع العمال</title>
+    <title>عرض جميع الصنايعية</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="driver.css" rel="stylesheet">
@@ -42,7 +42,7 @@
 
 <body>
 
-    
+
     <div id="wrapper" dir="rtl">
 
         <!-- Navigation -->
@@ -59,7 +59,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12" dir="rtl">
-                    <h1 class="page-header">عرض جميع العمال</h1>
+                    <h1 class="page-header">عرض جميع الصنايعية</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -70,7 +70,15 @@
 
                         <!-- /.panel-heading -->
                         <div class="panel-body" dir="rtl">
-
+                            <input placeholder="بحث" onchange="searchByName(this.value)" class="form-control"
+                                style="margin: 20pt;width: 300pt;" />
+                            <select onchange="filter(this.value)"
+                                style="margin-right: 20pt;margin-bottom: 10pt; width: 300pt;" class="form-control">
+                                <option value="0">الكل</option>
+                                <option value="1">الاسكندرية</option>
+                                <option value="2">رشيد</option>
+                                <option value="3">دمنهور</option>
+                            </select>
                             <table width="50%" id="myTable" dir="rtl"
                                 class="table table-striped table-bordered table-hover">
                                 <thead>
@@ -140,6 +148,7 @@
 
         var database = firebase.database();
         var index = 0
+        var list = ['الاسكندرية', 'رشيد', 'دمنهور']
 
         database.ref('employee').once('value', function (snapshot) {
             $('.app-spinner').remove();
@@ -147,7 +156,7 @@
                 var childData = childSnapshot.val();
                 index++
                 if (!childData.phone) childData.phone = ""
-                var table = `<tr> <td style="font-size:14pt"> ${index} - ${childData.name}</td><td style="font-size:14pt">${childData.phone}</td><td><a  href='edit_employee.html?key=${childSnapshot.key}' type='button'  class='btn btn-warning'>تعديل بيانات العامل</a><a  href='employee_home_send.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-success'>عرض واضافه البضائع </a><a  href='employee_take_money.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-primary'>المصروف </a>
+                var table = `<tr> <td style="font-size:14pt"> ${index} - ${childData.name} (${list[childData.city - 1]})</td><td style="font-size:14pt">${childData.phone}</td><td><a  href='edit_employee.html?key=${childSnapshot.key}' type='button'  class='btn btn-warning'>تعديل بيانات الصنايعي</a><a  href='employee_home_send.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-success'>عرض واضافه البضائع </a><a  href='employee_take_money.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-primary'>المصروف </a>
                     <a  href='employee_fatora.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-success'>عرض الملخص </a></td></tr>`;
 
                 document.getElementById("Customdata").innerHTML += table;
@@ -155,6 +164,57 @@
 
         });
 
+        function filter(value) {
+            index = 0;
+            document.getElementById("Customdata").innerHTML = "";
+            if (value == 0) {
+                database.ref('employee').once('value', function (snapshot) {
+                    $('.app-spinner').remove();
+                    snapshot.forEach(function (childSnapshot) {
+                        var childData = childSnapshot.val();
+                        index++
+                        if (!childData.phone) childData.phone = ""
+                        var table = `<tr> <td style="font-size:14pt"> ${index} - ${childData.name} (${list[childData.city - 1]})</td><td style="font-size:14pt">${childData.phone}</td><td><a  href='edit_employee.html?key=${childSnapshot.key}' type='button'  class='btn btn-warning'>تعديل بيانات الصنايعي</a><a  href='employee_home_send.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-success'>عرض واضافه البضائع </a><a  href='employee_take_money.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-primary'>المصروف </a>
+                    <a  href='employee_fatora.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-success'>عرض الملخص </a></td></tr>`;
+
+                        document.getElementById("Customdata").innerHTML += table;
+                    });
+
+                });
+            } else {
+                database.ref('employee').orderByChild('city').equalTo(parseInt(value)).once('value', function (snapshot) {
+                    $('.app-spinner').remove();
+                    snapshot.forEach(function (childSnapshot) {
+                        var childData = childSnapshot.val();
+                        index++
+                        if (!childData.phone) childData.phone = ""
+                        var table = `<tr> <td style="font-size:14pt"> ${index} - ${childData.name} (${list[childData.city - 1]})</td><td style="font-size:14pt">${childData.phone}</td><td><a  href='edit_employee.html?key=${childSnapshot.key}' type='button'  class='btn btn-warning'>تعديل بيانات الصنايعي</a><a  href='employee_home_send.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-success'>عرض واضافه البضائع </a><a  href='employee_take_money.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-primary'>المصروف </a>
+                    <a  href='employee_fatora.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-success'>عرض الملخص </a></td></tr>`;
+
+                        document.getElementById("Customdata").innerHTML += table;
+                    });
+
+                });
+            }
+        }
+        function searchByName(item) {
+            index = 0;
+            document.getElementById("Customdata").innerHTML = "";
+            database.ref('employee').orderByChild('name').startAt(item)
+                .endAt(item + "\uf8ff").once('value', function (snapshot) {
+                    $('.app-spinner').remove();
+                    snapshot.forEach(function (childSnapshot) {
+                        var childData = childSnapshot.val();
+                        index++
+                        if (!childData.phone) childData.phone = ""
+                        var table = `<tr> <td style="font-size:14pt"> ${index} - ${childData.name} (${list[childData.city - 1]})</td><td style="font-size:14pt">${childData.phone}</td><td><a  href='edit_employee.html?key=${childSnapshot.key}' type='button'  class='btn btn-warning'>تعديل بيانات الصنايعي</a><a  href='employee_home_send.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-success'>عرض واضافه البضائع </a><a  href='employee_take_money.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-primary'>المصروف </a>
+                    <a  href='employee_fatora.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-success'>عرض الملخص </a></td></tr>`;
+
+                        document.getElementById("Customdata").innerHTML += table;
+                    });
+
+                });
+        }
         function myFunction() {
             // Declare variables 
             var input, filter, table, tr, td, i;
@@ -176,9 +236,11 @@
             }
         }
 
-        function back(){
-        window.history.back();
-    }
+        function back() {
+            window.history.back();
+        }
+
+
 
     </script>
 

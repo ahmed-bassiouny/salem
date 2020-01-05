@@ -241,7 +241,7 @@
             database.ref('reveice').child(key).once('value', function (snapshot) {
                 snapshot.forEach(function (childSnapshot) {
                     var childData = childSnapshot.val();
-                    totalTemp += parseFloat(childData.egp)
+                    totalTemp += parseFloat(childData.total)
                 });
                 document.getElementById("fourth").innerHTML = `${totalTemp} جنية مصرى`
                 myTotalToSupplier = totalTemp

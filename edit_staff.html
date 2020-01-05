@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>اضافه عامل</title>
+    <title>تعديل عامل للورشة</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -39,11 +39,13 @@
         <div id="container-fluid">
             <!-- /.row -->
             <div class="row">
+                
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-body">
                                 <button style="float: left;" onclick="back()" class="btn btn-danger">رجوع </button>
-                            <h3>اضافة عامل جديد</h3>
+                            <h3>تعديل عامل </h3>
+                            
                             <!-- <p>See how aspects of the Bootstrap grid system work across multiple devices with a handy table.</p>-->
                             <div class="table-responsive">
                                 <table style="width:70%;" id="mytable" class="table table-bordered table-striped">
@@ -51,31 +53,21 @@
                                         <tr>
                                             <th></th>
                                             <th>
-                                                بيانات الصنايعي
+                                                بيانات العامل
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <th>اسم الصنايعي</th>
+                                            <th>اسم العامل</th>
                                             <td><input id="name" class="form-control"></textarea></td>
                                         </tr>
                                         <tr>
-                                            <th >رقم الهاتف</th>
-                                            <td ><input id="phone" type="number" 
-                                                    class="form-control"></textarea></td>
-                                        </tr>
-                                        <tr>
-                                            <th>المحافظة</th>
-                                            <td>
-                                                <select id="city" class="form-control">
-                                                
-                                                <option value="1">الاسكندرية</option>
-                                                <option value="2">رشيد</option>
-                                                <option value="3">دمنهور</option>
-                                            </select>
+                                            <th>المرتب </th>
+                                            <td><input id="salary" type="number" class="form-control"></textarea>
                                             </td>
                                         </tr>
+
                                     </tbody>
                                 </table>
                             </div>
@@ -83,7 +75,7 @@
                                 <code>.col-md-</code> class to an element will not only affect its styling on medium devices but also on large devices if a
                                 <code>.col-lg-</code> class is not present.</p>-->
                             <button type="button" style="width:30%;" id="save" onclick="save()"
-                                class="btn btn-outline btn-primary btn-lg btn-block">تسجيل عامل جديد</button>
+                                class="btn btn-outline btn-primary btn-lg btn-block">حفظ </button>
 
                         </div>
                     </div>
@@ -118,24 +110,42 @@
 <script>
 
     var database = firebase.database();
+    var key = getParameter("key");
+    var database = firebase.database();
+    fetchData();
+    function fetchData() {
+        document.getElementById("save").style.display = "none";
+        database.ref().child("staff").child(key).once('value', function (snapshot) {
+            document.getElementById("save").style.display = "block";
+            var childData = snapshot.val();
+            document.getElementById("name").value = childData.name
+            document.getElementById("salary").value = childData.phone
+        });
+    }
 
     function save() {
-        var city = document.getElementById("city").value;
-        
         var name = document.getElementById("name").value;
-        if (name == "")
-            return
-        var phone = document.getElementById("phone").value;
+        var salary = document.getElementById("salary").value;
 
         var agent = {
             name: name,
-            phone: phone,
-            city:parseInt(city)
+            salary: salary
         };
-        var newPostKey = firebase.database().ref().child('employee').push().set(agent);
-        alert('تم حفظ الصنايعي بنجاح');
-        document.getElementById("name").value = ""
-        document.getElementById("phone").value = ""
+        firebase.database().ref().child('staff').child(key).update(agent);
+        alert('تم تعديل العامل بنجاح');
+        window.history.back();
+
+    }
+    function getParameter(theParameter) {
+        var params = window.location.search.substr(1).split('&');
+
+        for (var i = 0; i < params.length; i++) {
+            var p = params[i].split('=');
+            if (p[0] == theParameter) {
+                return decodeURIComponent(p[1]);
+            }
+        }
+        return false;
     }
 
     function back(){

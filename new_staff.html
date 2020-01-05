@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>اضافه عامل</title>
+    <title>اضافه عامل للورشة</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -51,31 +51,21 @@
                                         <tr>
                                             <th></th>
                                             <th>
-                                                بيانات الصنايعي
+                                                بيانات العامل
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <th>اسم الصنايعي</th>
+                                            <th>اسم العامل</th>
                                             <td><input id="name" class="form-control"></textarea></td>
                                         </tr>
                                         <tr>
-                                            <th >رقم الهاتف</th>
-                                            <td ><input id="phone" type="number" 
+                                            <th > المرتب الاساسى</th>
+                                            <td ><input id="salary" type="number" 
                                                     class="form-control"></textarea></td>
                                         </tr>
-                                        <tr>
-                                            <th>المحافظة</th>
-                                            <td>
-                                                <select id="city" class="form-control">
-                                                
-                                                <option value="1">الاسكندرية</option>
-                                                <option value="2">رشيد</option>
-                                                <option value="3">دمنهور</option>
-                                            </select>
-                                            </td>
-                                        </tr>
+                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -120,22 +110,20 @@
     var database = firebase.database();
 
     function save() {
-        var city = document.getElementById("city").value;
         
         var name = document.getElementById("name").value;
         if (name == "")
             return
-        var phone = document.getElementById("phone").value;
+        var salary = document.getElementById("salary").value;
 
         var agent = {
             name: name,
-            phone: phone,
-            city:parseInt(city)
+            salary: salary
         };
-        var newPostKey = firebase.database().ref().child('employee').push().set(agent);
-        alert('تم حفظ الصنايعي بنجاح');
+        var newPostKey = firebase.database().ref().child('staff').push().set(agent);
+        alert('تم حفظ العامل بنجاح');
         document.getElementById("name").value = ""
-        document.getElementById("phone").value = ""
+        document.getElementById("salary").value = ""
     }
 
     function back(){

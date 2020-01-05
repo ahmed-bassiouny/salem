@@ -45,10 +45,12 @@
                         <form role="form">
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="الاسم" id="name" name="name" type="name" autofocus>
+                                    <input class="form-control" placeholder="الاسم" id="name" name="name" type="name"
+                                        autofocus>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="الرقم السرى" id="password" name="password" type="password" value="">
+                                    <input class="form-control" placeholder="الرقم السرى" id="password" name="password"
+                                        type="password" value="">
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
                                 <a onclick="login()" class="btn btn-lg btn-success btn-block">تسجيل الدخول</a>
@@ -72,17 +74,44 @@
     <!-- Custom Theme JavaScript -->
     <script src="dist/js/sb-admin-2.js"></script>
     <script>
-        function login(){
-          var name = document.getElementById('name').value;
-          var password = document.getElementById('password').value;
-          if(name=='salem' && password =='yassinbadr'){
-            window.location.href = "home_page.html";
-          }else{
-              alert('اسم المستخدم غير صحيح')
-          }
-        
+        function login() {
+            var name = document.getElementById('name').value;
+            var password = document.getElementById('password').value;
+            if (name == 'salem' && password == 'yassin8badr11') {
+                window.location.href = "main.html";
+            } else {
+                alert('اسم المستخدم غير صحيح')
+            }
+
 
         }
+
+
+        // Get the input field
+        var input = document.getElementById("name");
+
+        // Execute a function when the user releases a key on the keyboard
+        input.addEventListener("keyup", function (event) {
+            // Number 13 is the "Enter" key on the keyboard
+            if (event.keyCode === 13) {
+                // Cancel the default action, if needed
+                event.preventDefault();
+                login()
+            }
+        });
+
+        // Get the input field
+        var input2 = document.getElementById("password");
+
+        // Execute a function when the user releases a key on the keyboard
+        input2.addEventListener("keyup", function (event) {
+            // Number 13 is the "Enter" key on the keyboard
+            if (event.keyCode === 13) {
+                // Cancel the default action, if needed
+                event.preventDefault();
+                login()
+            }
+        });
     </script>
 
 </body>

@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>عمليات التاجر</title>
+    <title>عرض جميع صنايعية الورشة</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="driver.css" rel="stylesheet">
@@ -42,6 +42,7 @@
 
 <body>
 
+
     <div id="wrapper" dir="rtl">
 
         <!-- Navigation -->
@@ -53,11 +54,12 @@
             <!-- /.navbar-static-side -->
         </nav>
 
+        <button style="float: left;margin-left: 30pt;" onclick="back()" class="btn btn-danger">رجوع </button>
+
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12" dir="rtl">
-                    <button style="float: left;" onclick="back()" class="btn btn-danger">رجوع </button>
-                    <h2 id="name" style="text-align: center;"></h2>
+                    <h1 class="page-header">عرض جميع صنايعية الورشة</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -66,29 +68,27 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
 
-                        <div class="table-responsive">
-                        </div>
                         <!-- /.panel-heading -->
-                        <br />
-                        <br />
-
-
-                        <br />
-                        <br />
-                        <div class="panel-body" dir="rtl" id="myDiv">
-                            <h1> جميع البضائع التى ارسلت للتاجر </h1>
-
+                        <div class="panel-body" dir="rtl">
+                            
                             <table width="50%" id="myTable" dir="rtl"
                                 class="table table-striped table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>الاسم</th>
+                                        <th>خيارات</th>
+                                    </tr>
 
+                                </thead>
                                 <tbody id="Customdata">
 
-                                    <td colspan="7" class='app-spinner' style="text-align: center"><i
+                                    <td colspan="3" class='app-spinner' style="text-align: center"><i
                                             class="fa fa-spinner fa-spin" style="font-size:24px"></i></td>
 
                                 </tbody>
                             </table>
-
+                            <a type="button" style="width:30%;" id="save" href="new_staff.html"
+                                class="btn btn-outline btn-primary btn-lg btn-block">تسجيل صنايعي جديد</a>
                         </div>
                         <!-- /.panel-body -->
                     </div>
@@ -134,72 +134,49 @@
         });
 
 
-        var key = getParameter("key");
-        var name = getParameter("name");
-        var myTotal = 0;
-        document.getElementById("name").innerHTML = name
 
         var database = firebase.database();
+        var index = 0
+        
+        database.ref('staff').once('value', function (snapshot) {
+            $('.app-spinner').remove();
+            snapshot.forEach(function (childSnapshot) {
+                var childData = childSnapshot.val();
+                index++
+                var table = `<tr> <td style="font-size:14pt"> ${index} - ${childData.name}</td><td><a  href='edit_staff.html?key=${childSnapshot.key}' type='button'  class='btn btn-warning'>تعديل بيانات الصنايعي</a><a  href='staff_subtract.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-danger'>الخصومات </a><a  href='staff_take_money.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-primary'>المصروف </a>
+                    <a  href='staff_summry.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-success'>عرض الملخص </a></td></tr>`;
 
-        fetch();
-        function fetch() {
-
-            database.ref('sendto').child(key).once('value', function (snapshot) {
-                $('.app-spinner').remove();
-
-                snapshot.forEach(function (childSnapshot) {
-                    var childData = childSnapshot.val();
-                    console.log(childSnapshot.key);
-
-
-
-                    //document.getElementById("myDiv").innerHTML += childSnapshot.key+"<br/>"
-                    var total = 0;
-                    var table = `<tr> <td colspan="5" style="font-size:20pt;text-align:center"> ${childSnapshot.key} </td> </tr>`;
-                    document.getElementById("Customdata").innerHTML += table;
-
-                    var table = `<tr style="font-size:16pt;"> <td> العدد </td> <td> النوع </td> <td> اللون </td> <td> السعر </td> <td> الاجمالى </td> </tr>`;
-                    document.getElementById("Customdata").innerHTML += table;
-                    childSnapshot.forEach(function (childchildSnapshot) {
-                        var childData = childchildSnapshot.val();
-                        total +=  parseFloat(childData.total)
-                        var table = `<tr style="font-size:16pt;"> <td> ${childData.count} </td> <td> ${childData.type} </td> <td> ${childData.color} </td> <td> ${childData.price} </td> <td> ${childData.total} </td> </tr>`;
-                        document.getElementById("Customdata").innerHTML += table;
-
-                    });
-                    var table = `<tr> <td colspan="4" style="font-size:20pt;text-align:end;">  اجمالى الفاتورة الحالية  </td> <td colspan="1" style="font-size:20pt;"> ${total} </td> </tr>`;
-                    document.getElementById("Customdata").innerHTML += table;
-
-                });
-
-                //document.getElementById("my_total").innerHTML = ;
+                document.getElementById("Customdata").innerHTML += table;
             });
-        }
 
+        });
 
+        function myFunction() {
+            // Declare variables 
+            var input, filter, table, tr, td, i;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
 
-        // function deleteItem(date, subKey) {
-
-
-        //     database.ref("sendto").child(key).child(date).child(subKey).remove().then(function () {
-        //         alert("تم الحذف بنجاح");
-        //     });
-        // }
-        function getParameter(theParameter) {
-            var params = window.location.search.substr(1).split('&');
-
-            for (var i = 0; i < params.length; i++) {
-                var p = params[i].split('=');
-                if (p[0] == theParameter) {
-                    return decodeURIComponent(p[1]);
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
                 }
             }
-            return false;
         }
 
         function back() {
             window.history.back();
         }
+
+
 
     </script>
 
