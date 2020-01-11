@@ -101,6 +101,10 @@
                                                 <td style="font-weight:bold;font-size:25pt" id="third"></td>
                                             </tr>
                                             <tr>
+                                                <td style="font-size:18pt">الوقت الاضافى</td>
+                                                <td style="font-weight:bold;font-size:25pt" id="fifth"></td>
+                                            </tr>
+                                            <tr>
                                                 <td style="font-size:18pt">المتبقي</td>
                                                 <td style="font-weight:bold;font-size:25pt" id="fourth"></td>
                                             </tr>
@@ -173,6 +177,7 @@
                 var subtractDays = 0
                 var salaryPerDay = 0;
                 var expenses = 0;
+                var timeMinutes = 0;
 
                 database.ref('staff').child(key).once('value', function (snapshot) {
                     subTotal = parseInt(snapshot.val().salary)
@@ -190,17 +195,26 @@
                     salaryPerDay = subTotal / 30;
                     subtract = (subtractDays * salaryPerDay) / 4
 
-                    document.getElementById("first").innerHTML = `${subTotal} جنية مصرى`
-                    document.getElementById("second").innerHTML = `${expenses} جنية مصرى`
-                    document.getElementById("third").innerHTML = `${subtract} جنية مصرى من`
-                    document.getElementById("fourth").innerHTML = `${subTotal - expenses - subtract} جنية مصرى`
+                    snapshot.child('over_time').forEach(function (childSnapshot) {
+                        var childData = childSnapshot.val();
+
+                        timeMinutes += parseInt(childData.time)
+                    });
+                    var salaryPerMin = salaryPerDay / (8*60)
+                    var overTime = salaryPerMin * timeMinutes;
+
+                    document.getElementById("first").innerHTML = `${subTotal.toFixed(2)} جنية مصرى`
+                    document.getElementById("second").innerHTML = `${expenses.toFixed(2)} جنية مصرى`
+                    document.getElementById("third").innerHTML = `${subtract.toFixed(2)} جنية مصرى من`
+                    document.getElementById("fifth").innerHTML = `${overTime.toFixed(2)} جنية مصرى من`
+                    document.getElementById("fourth").innerHTML = `${(subTotal - expenses - subtract+ overTime).toFixed(2)} جنية مصرى`
 
                 });
             }
 
             function final() {
                 database.ref("staff").child(key).child('expenses').remove();
-                database.ref("over_time").child(key).child('expenses').remove();
+                database.ref("staff").child(key).child('over_time').remove();
 
                 database.ref("staff").child(key).child('subtract').remove().then(function () {
                     location.reload();

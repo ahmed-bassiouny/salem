@@ -88,21 +88,14 @@
                                         <td>
                                             <select id="type" class="form-control">
 
-                                                <option value="30">نص ساعة</option>
                                                 <option value="75">ساعة</option>
-                                                <option value="105">ساعة ونص</option>
                                                 <option value="150">ساعتين</option>
-                                                <option value="1">ساعتين ونص</option>
-                                                <option value="1">ثلاث ساعات</option>
-                                                <option value="1">ثلاث ساعات ونصف</option>
-                                                <option value="1">اربع ساعات</option>
-                                                <option value="1">اربع ساعات ونصف</option>
-                                                <option value="1">خمس ساعات</option>
-                                                <option value="1">خمس ساعات ونصف</option>
+                                                <option value="225">ثلاث ساعات</option>
+                                                <option value="300">اربع ساعات</option>
                                             </select></td>
                                     </tr>
                                     <tr>
-                                        <th> سبب الخصم</th>
+                                        <th> السبب </th>
                                         <td>
                                             <input id="note" class="form-control"></textarea>
                                         </td>
@@ -127,7 +120,7 @@
                                 <thead>
                                     <tr>
                                         <th>التاريخ</th>
-                                        <th>مدة الوقت الاضافى بالدقايق</th>
+                                        <th>مدة الوقت الاضافى </th>
                                         <th> السبب</th>
 
                                         <th>خيارات</th>
@@ -201,9 +194,11 @@
             database.ref('staff').child(key).child('over_time').on('value', function (snapshot) {
                 document.getElementById("Customdata").innerHTML = ""
                 myTotal = 0
+                // console.log('here')
+                // $('.app-spinner').remove(); 
                 snapshot.forEach(function (childSnapshot) {
                     var childData = childSnapshot.val();
-                    var table = `<tr> <td> ${childData.date} </td> <td> ${childData.time} </td> <td> ${childData.note} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${childSnapshot.key}')">حذف </a></td> </tr>`;
+                    var table = `<tr> <td> ${childData.date} </td> <td> ${getTimeHour(childData.time)} </td> <td> ${childData.note} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${childSnapshot.key}')">حذف </a></td> </tr>`;
                     $('.app-spinner').remove();
                     myTotal += parseFloat(childData.egp);
                     document.getElementById("Customdata").innerHTML += table;
@@ -211,12 +206,21 @@
             });
         }
 
+        function getTimeHour(time){
+            switch(time){
+                case "75": return "ساعة";
+                case "150": return "ساعتين";
+                case "225": return "ثلاث ساعات";
+                case "300": return "اربع ساعات";
+            }
+        }
+
         function save() {
             var date = document.getElementById("date").value
             var time = document.getElementById("type").value
             var note = document.getElementById("note").value
             if (date != "" && time > 0) {
-                database.ref().child('staff').child(key).child('subtract').push().set({
+                database.ref().child('staff').child(key).child('over_time').push().set({
                     date: date,
                     note: note,
                     time: time
