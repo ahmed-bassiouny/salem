@@ -262,7 +262,7 @@
         function deleteItem(subKey) {
 
 
-            database.ref('staff').child(key).child('subtract').child(subKey).remove().then(function () {
+            database.ref('staff').child(key).child('over_time').child(subKey).remove().then(function () {
                 alert("تم الحذف بنجاح");
             });
         }
