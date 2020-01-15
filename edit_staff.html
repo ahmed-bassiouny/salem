@@ -67,6 +67,11 @@
                                             <td><input id="salary" type="number" class="form-control"></textarea>
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <th>ملاحظات </th>
+                                            <td><textarea id="note" class="form-control"></textarea>
+                                            </td>
+                                        </tr>
 
                                     </tbody>
                                 </table>
@@ -119,17 +124,20 @@
             document.getElementById("save").style.display = "block";
             var childData = snapshot.val();
             document.getElementById("name").value = childData.name
-            document.getElementById("salary").value = childData.phone
+            document.getElementById("salary").value = childData.salary
+            document.getElementById("note").value = childData.note
         });
     }
 
     function save() {
         var name = document.getElementById("name").value;
         var salary = document.getElementById("salary").value;
+        var note = document.getElementById("note").value;
 
         var agent = {
             name: name,
-            salary: salary
+            salary: salary,
+            note: note,
         };
         firebase.database().ref().child('staff').child(key).update(agent);
         alert('تم تعديل العامل بنجاح');
