@@ -218,7 +218,7 @@
 
         getProduct()
         getNote()
-        
+
         function getProduct() {
             database.ref().child('prices_items').once('value', function (snapshot) {
 
@@ -239,8 +239,8 @@
 
             database.ref().child('employee').child(key).child("note").once('value', function (snapshot) {
                 document.getElementById("note").value = snapshot.val()
-                
-                
+
+
             });
         }
 
@@ -257,20 +257,20 @@
         }
 
         function fetchData() {
-            database.ref('employee_have_items').child(key).on('value', function (snapshot) {
+            database.ref('employee_have_items').child(key).orderByChild('date').on('value', function (snapshot) {
                 document.getElementById("Customdata").innerHTML = ""
                 myTotal = 0
                 snapshot.forEach(function (childSnapshot) {
                     var childData = childSnapshot.val();
                     if (childData.count - childData.received != 0) {
-                        var table = `<tr> <td> ${childData.date} </td><td> ${childData.count} </td> <td> ${childData.type} </td> <td> ${childData.color} </td> <td> ${childData.price} </td> <td> ${childData.total} </td> <td> <input   onchange="edits('${childSnapshot.key}',this)" type="number" value="${childData.received}" class="form-control"></textarea></td><td style='color:red'> ${childData.count - childData.received} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${date}','${childSnapshot.key}')">حذف </a> </td> </tr>`;
+                        var table = `<tr> <td> ${childData.date} </td><td> ${childData.count} </td> <td> ${childData.type} </td> <td> ${childData.color} </td> <td> ${childData.price} </td> <td> ${childData.total} </td> <td> <input   onchange="edits('${childSnapshot.key}',this)"  value="${childData.received}" class="form-control"></textarea></td><td style='color:red'> ${childData.count - childData.received} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${date}','${childSnapshot.key}')">حذف </a> </td> </tr>`;
                     } else {
-                        var table = `<tr> <td> ${childData.date} </td><td> ${childData.count} </td> <td> ${childData.type} </td> <td> ${childData.color} </td> <td> ${childData.price} </td> <td> ${childData.total} </td> <td> <input   onchange="edits('${childSnapshot.key}',this)" type="number" value="${childData.received}" class="form-control"></textarea></td><td style='color:red'> ${childData.count - childData.received} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${date}','${childSnapshot.key}')">حذف </a> </td> </tr>`;
+                        var table = `<tr> <td> ${childData.date} </td><td> ${childData.count} </td> <td> ${childData.type} </td> <td> ${childData.color} </td> <td> ${childData.price} </td> <td> ${childData.total} </td> <td> <input  onchange="edits('${childSnapshot.key}',this)" value="${childData.received}" class="form-control"></textarea></td><td style='color:black'> ${childData.count - childData.received} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${date}','${childSnapshot.key}')">حذف </a> </td> </tr>`;
                     }
                     $('.app-spinner').remove();
                     myTotal += parseFloat(childData.total);
                     document.getElementById("Customdata").innerHTML += table;
-                    
+
                 });
             });
         }
@@ -286,8 +286,25 @@
         }
 
         function edits(k, v) {
+            
+            
+            var total = 0;
+            if (v.value.includes('+')) {
+                var arr = v.value.split('+')
+                for(index in arr){
+                    total+=parseInt(arr[index])
+                }
+            } else if (v.value.includes('-')) {
+                var arr = v.value.split('-')
+                total = arr[0]
+                for(var i = 1 ;i < arr.length;i++){
+                    total-=parseInt(arr[i])
+                }
+            }else{
+                total = parseInt(v.value)
+            }
 
-            database.ref('employee_have_items').child(key).child(k).child("received").set(v.value, function (error) {
+            database.ref('employee_have_items').child(key).child(k).child("received").set(total, function (error) {
                 if (error) {
                     alert("خطا")
                 } else {

@@ -70,7 +70,7 @@
 
                         <!-- /.panel-heading -->
                         <div class="panel-body" dir="rtl">
-                            <input placeholder="بحث" onchange="searchByName(this.value)" class="form-control"
+                            <input placeholder="بحث" id="searchName"  class="form-control"
                                 style="margin: 20pt;width: 300pt;" />
                             <select onchange="filter(this.value)"
                                 style="margin-right: 20pt;margin-bottom: 10pt; width: 300pt;" class="form-control">
@@ -84,7 +84,7 @@
                                 <thead>
                                     <tr>
                                         <th>الاسم</th>
-                                        <th>رقم الهاتف</th>
+                                        
                                         <th>خيارات</th>
                                     </tr>
 
@@ -156,12 +156,26 @@
                 var childData = childSnapshot.val();
                 index++
                 if (!childData.phone) childData.phone = ""
-                var table = `<tr> <td style="font-size:14pt"> ${index} - ${childData.name} (${list[childData.city - 1]})</td><td style="font-size:14pt">${childData.phone}</td><td><a  href='edit_employee.html?key=${childSnapshot.key}' type='button'  class='btn btn-warning'>تعديل بيانات الصنايعي</a><a  href='employee_home_send.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-success'>عرض واضافه البضائع </a><a  href='employee_take_money.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-primary'>المصروف </a>
+                var table = `<tr> <td style="font-size:14pt"> ${index} - ${childData.name} (${list[childData.city - 1]})</td><td><a  href='edit_employee.html?key=${childSnapshot.key}' type='button'  class='btn btn-warning'>تعديل بيانات الصنايعي</a><a  href='employee_home_send.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-success'>عرض واضافه البضائع </a><a  href='employee_take_money.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-primary'>المصروف </a>
                     <a  href='employee_fatora.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-success'>عرض الملخص </a></td></tr>`;
 
                 document.getElementById("Customdata").innerHTML += table;
             });
 
+        });
+
+        // Get the input field
+        var input = document.getElementById("searchName");
+
+        // Execute a function when the user releases a key on the keyboard
+        input.addEventListener("keyup", function (event) {
+            // Number 13 is the "Enter" key on the keyboard
+            if (event.keyCode === 13) {
+                // Cancel the default action, if needed
+                event.preventDefault();
+                searchByName(input.value)
+                
+            }
         });
 
         function filter(value) {
@@ -174,7 +188,7 @@
                         var childData = childSnapshot.val();
                         index++
                         if (!childData.phone) childData.phone = ""
-                        var table = `<tr> <td style="font-size:14pt"> ${index} - ${childData.name} (${list[childData.city - 1]})</td><td style="font-size:14pt">${childData.phone}</td><td><a  href='edit_employee.html?key=${childSnapshot.key}' type='button'  class='btn btn-warning'>تعديل بيانات الصنايعي</a><a  href='employee_home_send.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-success'>عرض واضافه البضائع </a><a  href='employee_take_money.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-primary'>المصروف </a>
+                        var table = `<tr> <td style="font-size:14pt"> ${index} - ${childData.name} (${list[childData.city - 1]})</td><td><a  href='edit_employee.html?key=${childSnapshot.key}' type='button'  class='btn btn-warning'>تعديل بيانات الصنايعي</a><a  href='employee_home_send.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-success'>عرض واضافه البضائع </a><a  href='employee_take_money.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-primary'>المصروف </a>
                     <a  href='employee_fatora.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-success'>عرض الملخص </a></td></tr>`;
 
                         document.getElementById("Customdata").innerHTML += table;
@@ -207,7 +221,7 @@
                         var childData = childSnapshot.val();
                         index++
                         if (!childData.phone) childData.phone = ""
-                        var table = `<tr> <td style="font-size:14pt"> ${index} - ${childData.name} (${list[childData.city - 1]})</td><td style="font-size:14pt">${childData.phone}</td><td><a  href='edit_employee.html?key=${childSnapshot.key}' type='button'  class='btn btn-warning'>تعديل بيانات الصنايعي</a><a  href='employee_home_send.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-success'>عرض واضافه البضائع </a><a  href='employee_take_money.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-primary'>المصروف </a>
+                        var table = `<tr> <td style="font-size:14pt"> ${index} - ${childData.name} (${list[childData.city - 1]})</td><td><a  href='edit_employee.html?key=${childSnapshot.key}' type='button'  class='btn btn-warning'>تعديل بيانات الصنايعي</a><a  href='employee_home_send.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-success'>عرض واضافه البضائع </a><a  href='employee_take_money.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-primary'>المصروف </a>
                     <a  href='employee_fatora.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-success'>عرض الملخص </a></td></tr>`;
 
                         document.getElementById("Customdata").innerHTML += table;
