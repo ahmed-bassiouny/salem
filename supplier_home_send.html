@@ -328,6 +328,11 @@
             window.history.back();
         }
 
+        document.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                save_for_salem();
+            }
+        });
     </script>
 
 </body>

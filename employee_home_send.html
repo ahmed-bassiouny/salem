@@ -286,21 +286,21 @@
         }
 
         function edits(k, v) {
-            
-            
+
+
             var total = 0;
             if (v.value.includes('+')) {
                 var arr = v.value.split('+')
-                for(index in arr){
-                    total+=parseInt(arr[index])
+                for (index in arr) {
+                    total += parseInt(arr[index])
                 }
             } else if (v.value.includes('-')) {
                 var arr = v.value.split('-')
                 total = arr[0]
-                for(var i = 1 ;i < arr.length;i++){
-                    total-=parseInt(arr[i])
+                for (var i = 1; i < arr.length; i++) {
+                    total -= parseInt(arr[i])
                 }
-            }else{
+            } else {
                 total = parseInt(v.value)
             }
 
@@ -377,6 +377,11 @@
             window.history.back();
         }
 
+        document.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                save();
+            }
+        });
     </script>
 
 </body>
