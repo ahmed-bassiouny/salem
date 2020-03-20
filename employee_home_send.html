@@ -116,7 +116,7 @@
 
                                 </tbody>
                             </table>
-                            <button type="button" style="width:30%;" id="save" onclick="save()"
+                            <button type="button" style="width:30%;" id="save" onclick="save(this)"
                                 class="btn btn-outline btn-primary btn-lg btn-block">حفظ</button>
                         </div>
                         <!-- /.panel-heading -->
@@ -135,8 +135,8 @@
                         <br />
                         <br />
                         <textarea style="width: 50%; height: 100pt;" id="note"></textarea>
-                        <button onclick="saveNote()"> حفظ</button>
-                        <button onclick="deleteNote()"> حذف</button>
+                        <button onclick="saveNote(this)"> حفظ</button>
+                        <button onclick="deleteNote(this)"> حذف</button>
                         <div class="panel-body" dir="rtl">
                             <h1> البضاعة التى ارسلت للصنايعي </h1>
 
@@ -244,15 +244,19 @@
             });
         }
 
-        function saveNote() {
+        function saveNote(btn) {
+            btn.disabled = true;
             database.ref('employee').child(key).child("note").set(document.getElementById("note").value).then(function () {
                 alert("تم الحفظ بنجاح")
+                btn.disabled = false;
             });
         }
-        function deleteNote() {
+        function deleteNote(btn) {
+            btn.disabled = true;
             database.ref('employee').child(key).child("note").remove().then(function () {
                 alert("تم الحذف بنجاح")
                 document.getElementById("note").value = ""
+                btn.disabled = false;
             });
         }
 
@@ -315,7 +319,7 @@
 
         }
 
-        function save() {
+        function save(btn) {
             var total = document.getElementById("total").value
             if (total > 0) {
                 var count = document.getElementById("count").value
@@ -324,7 +328,7 @@
 
                 var type = document.getElementById("type").options[document.getElementById("type").selectedIndex].text
                 var color = document.getElementById("color").value
-
+                btn.disabled = true;
                 database.ref().child('employee_have_items').child(key).push().set({
                     total: total,
                     count: count,
@@ -338,6 +342,7 @@
                     if (error) {
                         // The write failed...
                         alert("خطا");
+                        btn.disabled = false;
                     } else {
                         // Data saved successfully!
                         alert("تم الحفظ بنجاح");
@@ -346,6 +351,7 @@
                         document.getElementById("price").value = ""
                         document.getElementById("type").value = ""
                         document.getElementById("color").value = ""
+                        btn.disabled = false;
                     }
                 });
 
@@ -379,7 +385,7 @@
 
         document.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
-                save();
+                save(document.getElementById("save"));
             }
         });
     </script>

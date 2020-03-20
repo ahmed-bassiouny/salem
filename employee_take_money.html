@@ -85,8 +85,8 @@
 
                                     <tr>
                                         <th>المبلغ </th>
-                                        <td><input id="price" type="number" class="form-control" value="0"
-                                                ></textarea></td>
+                                        <td><input id="price" type="number" class="form-control" value="0"></textarea>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th> ملاحظفات</th>
@@ -98,7 +98,7 @@
 
                                 </tbody>
                             </table>
-                            <button type="button" style="width:30%;" id="save" onclick="save()"
+                            <button type="button" style="width:30%;" id="save" onclick="save(this)"
                                 class="btn btn-outline btn-primary btn-lg btn-block">حفظ</button>
                         </div>
                         <!-- /.panel-heading -->
@@ -199,13 +199,14 @@
             });
         }
 
-        function save() {
+        function save(btn) {
             var date = document.getElementById("date").value
             var price = document.getElementById("price").value
             var note = document.getElementById("note").value
-            if (date != "" && price > 0 ) {
-                
 
+            if (date != "" && price > 0) {
+
+                btn.disabled = true;
                 database.ref().child('employee_have_price').child(key).push().set({
                     date: date,
                     note: note,
@@ -214,12 +215,14 @@
                     if (error) {
                         // The write failed...
                         alert("خطا");
+                        btn.disabled = false;
                     } else {
                         // Data saved successfully!
                         alert("تم الحفظ بنجاح");
                         document.getElementById("date").value = ""
                         document.getElementById("note").value = ""
                         document.getElementById("price").value = ""
+                        btn.disabled = false;
                     }
                 });
 
@@ -255,7 +258,7 @@
 
         document.addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
-                save();
+                save(document.getElementById("save"));
             }
         });
     </script>
