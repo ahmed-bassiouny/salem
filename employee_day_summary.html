@@ -132,7 +132,7 @@
         <script>
 
             var employee = [];
-
+            var list = ['الاسكندرية', 'رشيد', 'دمنهور']
             $(document).ready(function () {
                 $('#dataTables-example').DataTable({
                     responsive: true
@@ -148,7 +148,7 @@
                     snapshot.forEach(function (childSnapshot) {
                         var childData = childSnapshot.val();
 
-                        employee[childSnapshot.key] = childData.name
+                        employee[childSnapshot.key] = childData.name + " ( " + list[childData.city - 1] + " )"
                     });
                     document.getElementById("txt").innerText = ""
                 });
