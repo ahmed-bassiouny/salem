@@ -175,7 +175,7 @@
                         childSnapshot.forEach(function (childchildSnapshot) {
                             var rst = childchildSnapshot.val()
                             if (rst.date == date)
-                                result += `${rst.count} - ${rst.type} = ${rst.total}<br/>`
+                                result += `${rst.count} - ${rst.type} ${rst.price} = ${rst.total}<br/>`
                         });
                         if (result == '') return
                         var table = `<tr> <td style="width: 30;"> ${name} </td><td> ${result}</td> </tr>`;
