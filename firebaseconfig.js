@@ -6,3 +6,6 @@ var config = {
     };
 
 firebase.initializeApp(config);
+if(localStorage.getItem('key') != "true"){
+    window.location.href = "home.html";
+}

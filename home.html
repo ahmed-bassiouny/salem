@@ -78,6 +78,7 @@
             var name = document.getElementById('name').value;
             var password = document.getElementById('password').value;
             if (name == 'salem' && password == 'yassin8badr11') {
+                localStorage.setItem('key', "true");
                 window.location.href = "main.html";
             } else {
                 alert('اسم المستخدم غير صحيح')
