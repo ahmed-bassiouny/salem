@@ -135,11 +135,15 @@
                                 <input style="text-align: center;" width="40%" id="selected_date"
                                     type="date"></textarea>
                                 <button type="button" class="btn btn-outline btn-primary"
-                                    onclick="search()">بحث</button></div>
+                                    onclick="search()">بحث</button>
+                            </div>
                         </div>
 
                         <br />
                         <br />
+                        <textarea style="width: 50%; height: 100pt;" id="note"></textarea>
+                        <button onclick="saveNote(this)"> حفظ</button>
+                        <button onclick="deleteNote(this)"> حذف</button>
                         <div class="panel-body" dir="rtl">
                             <h1> البضاعة التى ارسلت للتاجر اليوم </h1>
 
@@ -222,6 +226,7 @@
         var database = firebase.database();
 
         getProduct()
+        getNote()
         function getProduct() {
             database.ref().child('prices').once('value', function (snapshot) {
 
@@ -237,7 +242,30 @@
 
             });
         }
+        function getNote() {
 
+            database.ref().child('supplier').child(key).child("note").once('value', function (snapshot) {
+                document.getElementById("note").value = snapshot.val()
+
+
+            });
+        }
+
+        function saveNote(btn) {
+            btn.disabled = true;
+            database.ref('supplier').child(key).child("note").set(document.getElementById("note").value).then(function () {
+                alert("تم الحفظ بنجاح")
+                btn.disabled = false;
+            });
+        }
+        function deleteNote(btn) {
+            btn.disabled = true;
+            database.ref('supplier').child(key).child("note").remove().then(function () {
+                alert("تم الحذف بنجاح")
+                document.getElementById("note").value = ""
+                btn.disabled = false;
+            });
+        }
         function search() {
             var date = document.getElementById("date").value;
             if (date == '')
@@ -263,7 +291,7 @@
 
         function onChange() {
 
-            
+
             document.getElementById("total").value = document.getElementById("price").value * document.getElementById("count").value
         }
 

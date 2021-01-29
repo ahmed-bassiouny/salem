@@ -67,6 +67,11 @@
                                             <td><input id="phone" type="number" class="form-control"></textarea>
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <th>ملاحظات عن العامل</th>
+                                            <td><textarea id="note" class="form-control"></textarea>
+                                            </td>
+                                        </tr>
 
                                     </tbody>
                                 </table>
@@ -120,16 +125,19 @@
             var childData = snapshot.val();
             document.getElementById("name").value = childData.name
             document.getElementById("phone").value = childData.phone
+            document.getElementById("note").value = childData.note
         });
     }
 
     function save() {
         var name = document.getElementById("name").value;
         var phone = document.getElementById("phone").value;
+        var note = document.getElementById("note").value;
 
         var agent = {
             name: name,
-            phone: phone
+            phone: phone,
+            note: note,
         };
         firebase.database().ref().child('supplier').child(key).update(agent);
         alert('تم حفظ التاجر بنجاح');

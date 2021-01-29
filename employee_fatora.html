@@ -104,6 +104,48 @@
                                     </table>
 
                                     <button class="btn btn-primary" onclick="final()">تصفيه الحساب</button>
+                                    <a data-target="#myModal" role="button" class="btn btn-danger"
+                                        data-toggle="modal">تصفيه مصروف شهر محدد</a>
+
+                                </div>
+                                <h1 id="loading_price" style="color: red;" hidden> برجاء الانتظار</h1>
+                            </div>
+                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+                                aria-labelledby="myModalLabel" aria-hidden="true">
+
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                aria-hidden="true">×</button>
+                                            <h3 id="myModalLabel">هل انت متاكد من حذف مصروفات شهر</h3>
+                                        </div>
+                                        <div class="modal-body">
+                                            <select id="selector">
+                                                <option value="01">1</option>
+                                                <option value="02">2</option>
+                                                <option value="03">3</option>
+                                                <option value="04">4</option>
+                                                <option value="05">5</option>
+                                                <option value="06">6</option>
+                                                <option value="07">7</option>
+                                                <option value="08">8</option>
+                                                <option value="09">9</option>
+                                                <option value="10">10</option>
+                                                <option value="11">11</option>
+                                                <option value="12">12</option>
+                                            </select>
+                                        </div>
+                                        <div class="modal-footer">
+
+
+
+                                            <button class="btn" data-dismiss="modal" aria-hidden="true">الغاء</button>
+                                            <button class="btn btn-primary" style="margin-right: 80%;"
+                                                data-dismiss="modal" onclick="removePriceForMonth()">تاكيد</button>
+                                        </div>
+                                        
+                                    </div>
                                 </div>
                             </div>
                             <!-- /.panel-body -->
@@ -156,7 +198,7 @@
             var money = 0;
             var goods = 0;
 
-            
+
 
             document.getElementById("name").innerHTML = name + "<br/>"
 
@@ -168,7 +210,7 @@
                 database.ref('employee_have_items').child(key).once('value', function (snapshot) {
                     snapshot.forEach(function (childSnapshot) {
                         var childData = childSnapshot.val();
-                        
+
                         goods += parseFloat(childData.price) * parseInt(childData.count)
                     });
                     document.getElementById("first").innerHTML = `${goods} جنية مصرى`
@@ -198,17 +240,67 @@
                 });
             }
 
-            function final(){
+            function final() {
                 database.ref("employee_have_price").child(key).remove();
-                
+
                 database.ref("employee_have_items").child(key).remove().then(function () {
                     location.reload();
-            });
+                });
 
-                
-                
+
+
             }
-            
+
+            function removePriceForMonth() {
+                document.getElementById("loading_price").style.display = "block"
+                var keysWillRemoved = []
+                var totalWillRemoved = 0
+                var msg = "سوف ستم حذف مبلغ قدره "
+                var selectedMonth = document.getElementById("selector").value;
+
+                database.ref('employee_have_price').child(key).once('value', function (snapshot) {
+                    snapshot.forEach(function (childSnapshot) {
+                        var childData = childSnapshot.val();
+                        if (childData.date.split("-")[1] == selectedMonth) {
+                            keysWillRemoved.push(childSnapshot.key)
+                            totalWillRemoved += parseFloat(childData.price)
+                        }
+
+                    });
+                    msg += totalWillRemoved
+                    msg += " عن شهر "
+                    msg += selectedMonth
+                    if (keysWillRemoved.length <= 0) {
+                        alert("لا يوجد مصاريف فى هذا الشهر")
+                        document.getElementById("loading_price").style.display = "none"
+                    } else {
+                        if (confirm(msg)) {
+                            // Save it!
+
+                            var map = {}
+                            while (keysWillRemoved.length > 0) {
+                                var currentKey = keysWillRemoved.pop()
+                                map[currentKey] = null
+                            }
+
+                            database.ref('employee_have_price').child(key).update(map).then(function () {
+                                location.reload();
+                            });
+
+                        }else {
+                            document.getElementById("loading_price").style.display = "none"
+                        }
+                    }
+
+                });
+
+
+
+
+
+
+            }
+
 
             function getParameter(theParameter) {
                 var params = window.location.search.substr(1).split('&');
