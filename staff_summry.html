@@ -340,7 +340,7 @@
                     if (keysWillRemoved.length <= 0) {
                         alert("لا يوجد خصومات فى هذا الشهر")
                         document.getElementById("loading_price").style.display = "none"
-                        removePriceForMonthOverTime();
+                        removePriceForMonthOverTime(selectedMonth);
                     } else {
                         if (confirm(msg)) {
                             // Save it!
@@ -352,7 +352,7 @@
                             }
                             console.log(map);
                             database.ref('staff').child(key).child('subtract').update(map).then(function () {
-                                removePriceForMonthOverTime()
+                                removePriceForMonthOverTime(selectedMonth)
                             });
 
                         }else {
