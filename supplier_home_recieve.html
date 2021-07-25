@@ -115,6 +115,12 @@
                                             <input id="egp" value="0" onchange="onChangeType()" type="number" class="form-control"></textarea>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <th> ملحوظات</th>
+                                        <td>
+                                            <input id="my_note" value=""  type="text" class="form-control"></textarea>
+                                        </td>
+                                    </tr>
                                     <tr >
                                         <th>  الاجمالى</th>
                                         <td>
@@ -225,9 +231,9 @@
                 snapshot.forEach(function (childSnapshot) {
                     var childData = childSnapshot.val();
                     if (childData.dynamic_title) {
-                        var table = `<tr> <td> ${childData.date} </td> <td> ${childData.dollar} </td> <td> ${childData.price} </td><td> ${childData.price_discount} </td> <td> ${childData.dynamic_title +" " + childData.dynamic_value } </td><td> ${childData.egp} </td><td> ${childData.total} </td><td> اى كلام كتير عشان يبان </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${childSnapshot.key}')">حذف </a></td> </tr>`;
+                        var table = `<tr> <td> ${childData.date} </td> <td> ${childData.dollar} </td> <td> ${childData.price} </td><td> ${childData.price_discount} </td> <td> ${childData.dynamic_title +" " + childData.dynamic_value } </td><td> ${childData.egp} </td><td> ${childData.total} </td><td> ${childData.my_note} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${childSnapshot.key}')">حذف </a></td> </tr>`;
                     } else {
-                        var table = `<tr> <td> ${childData.date} </td> <td> ${childData.dollar} </td> <td> ${childData.price} </td><td> ${childData.price_discount} </td> <td> </td><td> ${childData.egp} </td><td> ${childData.total} </td><td> اى كلام كتير عشان يبان </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${childSnapshot.key}')">حذف </a></td> </tr>`;
+                        var table = `<tr> <td> ${childData.date} </td> <td> ${childData.dollar} </td> <td> ${childData.price} </td><td> ${childData.price_discount} </td> <td> </td><td> ${childData.egp} </td><td> ${childData.total} </td><td> ${childData.my_note} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${childSnapshot.key}')">حذف </a></td> </tr>`;
                     }
                     $('.app-spinner').remove();
                     myTotal += parseFloat(childData.egp);
@@ -258,6 +264,8 @@
             var dynamic_title = document.getElementById("dynamic_title").value
             var dynamic_value = document.getElementById("dynamic_value").value
             var total = document.getElementById("total").value
+            var my_note = document.getElementById("my_note").value
+
             if (date != "" && total > 0) {
                 var price = document.getElementById("price").value
 
@@ -270,6 +278,7 @@
                     dynamic_title: dynamic_title,
                     dynamic_value: dynamic_value,
                     total: total,
+                    my_note:my_note,
                 }, function (error) {
                     if (error) {
                         // The write failed...
@@ -285,6 +294,7 @@
                         document.getElementById("dynamic_title").value = ""
                         document.getElementById("dynamic_value").value = "0"
                         document.getElementById("total").value = "0"
+                        document.getElementById("my_note").value = ""
                     }
                 });
 
