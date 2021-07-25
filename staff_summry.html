@@ -388,8 +388,9 @@
                     });
                     msg += selectedMonth
                     if (keysWillRemoved.length <= 0) {
-                        alert("لا يوجد خصومات فى هذا الشهر")
+                        alert("لا يوجد وقت اضافى فى هذا الشهر")
                         document.getElementById("loading_price").style.display = "none"
+                        location.reload();
                     } else {
                         if (confirm(msg)) {
                             // Save it!
