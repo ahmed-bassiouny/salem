@@ -147,6 +147,7 @@
                                         <th> مصاريف اخرى</th>
                                         <th>المبلغ بالمصرى</th>
                                         <th> الاجمالى</th>
+                                        <th> ملحوظات</th>
                                         <th>خيارات</th>
                                     </tr>
 
@@ -224,9 +225,9 @@
                 snapshot.forEach(function (childSnapshot) {
                     var childData = childSnapshot.val();
                     if (childData.dynamic_title) {
-                        var table = `<tr> <td> ${childData.date} </td> <td> ${childData.dollar} </td> <td> ${childData.price} </td><td> ${childData.price_discount} </td> <td> ${childData.dynamic_title + " ( " + childData.dynamic_value + " )"} </td><td> ${childData.egp} </td><td> ${childData.total} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${childSnapshot.key}')">حذف </a></td> </tr>`;
+                        var table = `<tr> <td> ${childData.date} </td> <td> ${childData.dollar} </td> <td> ${childData.price} </td><td> ${childData.price_discount} </td> <td> ${childData.dynamic_title +" " + childData.dynamic_value } </td><td> ${childData.egp} </td><td> ${childData.total} </td><td> اى كلام كتير عشان يبان </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${childSnapshot.key}')">حذف </a></td> </tr>`;
                     } else {
-                        var table = `<tr> <td> ${childData.date} </td> <td> ${childData.dollar} </td> <td> ${childData.price} </td><td> ${childData.price_discount} </td> <td> </td><td> ${childData.egp} </td><td> ${childData.total} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${childSnapshot.key}')">حذف </a></td> </tr>`;
+                        var table = `<tr> <td> ${childData.date} </td> <td> ${childData.dollar} </td> <td> ${childData.price} </td><td> ${childData.price_discount} </td> <td> </td><td> ${childData.egp} </td><td> ${childData.total} </td><td> اى كلام كتير عشان يبان </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${childSnapshot.key}')">حذف </a></td> </tr>`;
                     }
                     $('.app-spinner').remove();
                     myTotal += parseFloat(childData.egp);
