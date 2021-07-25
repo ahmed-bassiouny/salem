@@ -64,6 +64,20 @@
 
                 <br />
                 <h2 style="text-align: center;">الملخص </h2>
+                <select id="selectorDate" onchange="fetchData()" class="form-control">
+                    <option value="01">1</option>
+                    <option value="02">2</option>
+                    <option value="03">3</option>
+                    <option value="04">4</option>
+                    <option value="05">5</option>
+                    <option value="06">6</option>
+                    <option value="07">7</option>
+                    <option value="08">8</option>
+                    <option value="09">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                </select>
                 <h2 id="name" style="text-align: center;"></h2>
                 <!-- /.row -->
                 <div class="row">
@@ -220,18 +234,22 @@
                 var salaryPerDay = 0;
                 var expenses = 0;
                 var timeMinutes = 0;
-
+                var selectedMonth = document.getElementById("selectorDate").value;
                 database.ref('staff').child(key).once('value', function (snapshot) {
                     subTotal = parseInt(snapshot.val().salary)
                     snapshot.child('expenses').forEach(function (childSnapshot) {
                         var childData = childSnapshot.val();
-                        expenses += parseInt(childData.price)
+                        if (childData.date.split("-")[1] == selectedMonth) {
+                            expenses += parseInt(childData.price)
+                        }
+
                     });
 
                     snapshot.child('subtract').forEach(function (childSnapshot) {
                         var childData = childSnapshot.val();
-
+                        if (childData.date.split("-")[1] == selectedMonth) {
                         subtractDays += parseInt(childData.type)
+                        }
                     });
 
                     salaryPerDay = subTotal / 30;
@@ -239,8 +257,9 @@
 
                     snapshot.child('over_time').forEach(function (childSnapshot) {
                         var childData = childSnapshot.val();
-
+                        if (childData.date.split("-")[1] == selectedMonth) {
                         timeMinutes += parseInt(childData.time)
+                        }
                     });
                     var salaryPerMin = salaryPerDay / (9*60)
                     var overTime = salaryPerMin * timeMinutes;
@@ -250,6 +269,7 @@
                     document.getElementById("third").innerHTML = `${subtract.toFixed(2)} جنية مصرى من`
                     document.getElementById("fifth").innerHTML = `${overTime.toFixed(2)} جنية مصرى من`
                     document.getElementById("fourth").innerHTML = `${(subTotal - expenses - subtract+ overTime).toFixed(2)} جنية مصرى`
+                    alert("تم تحميل البيانات")
 
                 });
             }
