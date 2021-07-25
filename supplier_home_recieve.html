@@ -266,12 +266,16 @@ function printMyPage() {
 
 
           document.getElementById("mytableInput").style.display = "none";
-            document.getElementById("save").style.display = "none";
-            document.getElementById("back").style.display = "none";
-            print()
-            document.getElementById("mytableInput").style.display = "block";
-            document.getElementById("save").style.display = "block";
-            document.getElementById("back").style.display = "block";
+          document.getElementById("save").style.display = "none";
+          document.getElementById("back").style.display = "none";
+          document.getElementById("printMyPage").style.display = "none";
+
+          print()
+
+          document.getElementById("mytableInput").style.display = "block";
+          document.getElementById("save").style.display = "block";
+          document.getElementById("back").style.display = "block";
+          document.getElementById("printMyPage").style.display = "block";
 
 
     }
