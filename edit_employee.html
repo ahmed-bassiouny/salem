@@ -80,7 +80,12 @@
                                 <code>.col-md-</code> class to an element will not only affect its styling on medium devices but also on large devices if a
                                 <code>.col-lg-</code> class is not present.</p>-->
                             <button type="button" style="width:30%;" id="save" onclick="save()"
-                                class="btn btn-outline btn-primary btn-lg btn-block">حفظ </button>
+                                    class="btn btn-outline btn-primary btn-lg btn-block">حفظ
+                            </button>
+
+                            <button type="button" style="width:30%;" id="remove" onclick="remove()"
+                                    class="btn btn-outline btn-danger btn-lg btn-block">مسح
+                            </button>
 
                         </div>
                     </div>
@@ -144,6 +149,14 @@
         window.history.back();
 
     }
+
+    function remove(){
+    var name = document.getElementById("name").value;
+    if (confirm('هل انت متاكد من حذف '+name)) {
+    firebase.database().ref().child('employee').child(key).remove();
+    back();
+    }
+}
     function getParameter(theParameter) {
         var params = window.location.search.substr(1).split('&');
 
