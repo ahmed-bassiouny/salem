@@ -340,6 +340,7 @@
                     if (keysWillRemoved.length <= 0) {
                         alert("لا يوجد خصومات فى هذا الشهر")
                         document.getElementById("loading_price").style.display = "none"
+                        removePriceForMonthOverTime();
                     } else {
                         if (confirm(msg)) {
                             // Save it!
@@ -351,6 +352,55 @@
                             }
                             console.log(map);
                             database.ref('staff').child(key).child('subtract').update(map).then(function () {
+                                removePriceForMonthOverTime()
+                            });
+
+                        }else {
+                            document.getElementById("loading_price").style.display = "none"
+                        }
+                    }
+
+                });
+
+
+
+
+
+
+            }
+
+
+                         function removePriceForMonthOverTime(selectedMonth) {
+
+                var keysWillRemoved = []
+                var totalWillRemoved = 0
+                var msg = "سوف يتم حذف الوقت الاضافى شهر  "
+
+
+                database.ref('staff').child(key).child('over_time').once('value', function (snapshot) {
+                    snapshot.forEach(function (childSnapshot) {
+                        var childData = childSnapshot.val();
+                        if (childData.date.split("-")[1] == selectedMonth) {
+                            keysWillRemoved.push(childSnapshot.key)
+                            totalWillRemoved += parseFloat(childData.price)
+                        }
+
+                    });
+                    msg += selectedMonth
+                    if (keysWillRemoved.length <= 0) {
+                        alert("لا يوجد خصومات فى هذا الشهر")
+                        document.getElementById("loading_price").style.display = "none"
+                    } else {
+                        if (confirm(msg)) {
+                            // Save it!
+
+                            var map = {}
+                            while (keysWillRemoved.length > 0) {
+                                var currentKey = keysWillRemoved.pop()
+                                map[currentKey] = null
+                            }
+                            console.log(map);
+                            database.ref('staff').child(key).child('over_time').update(map).then(function () {
                                 location.reload();
                             });
 
