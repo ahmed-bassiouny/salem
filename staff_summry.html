@@ -265,9 +265,9 @@
 
             }
 
-            function removeExpensive(){
-                database.ref("staff").child(key).child('expenses').remove();
-            }
+<!--            function removeExpensive(){-->
+<!--                database.ref("staff").child(key).child('expenses').remove();-->
+<!--            }-->
 
             function removePriceForMonth() {
                 document.getElementById("loading_price").style.display = "block"
@@ -291,6 +291,7 @@
                     if (keysWillRemoved.length <= 0) {
                         alert("لا يوجد مصاريف فى هذا الشهر")
                         document.getElementById("loading_price").style.display = "none"
+                        removePriceForMonthSubtract(selectedMonth);
                     } else {
                         if (confirm(msg)) {
                             // Save it!
@@ -302,6 +303,54 @@
                             }
                             console.log(map);
                             database.ref('staff').child(key).child('expenses').update(map).then(function () {
+                                removePriceForMonthSubtract(selectedMonth);
+                            });
+
+                        }else {
+                            document.getElementById("loading_price").style.display = "none"
+                        }
+                    }
+
+                });
+
+
+
+
+
+
+            }
+
+             function removePriceForMonthSubtract(selectedMonth) {
+
+                var keysWillRemoved = []
+                var totalWillRemoved = 0
+                var msg = "سوف يتم حذف خصومات شهر  "
+
+
+                database.ref('staff').child(key).child('subtract').once('value', function (snapshot) {
+                    snapshot.forEach(function (childSnapshot) {
+                        var childData = childSnapshot.val();
+                        if (childData.date.split("-")[1] == selectedMonth) {
+                            keysWillRemoved.push(childSnapshot.key)
+                            totalWillRemoved += parseFloat(childData.price)
+                        }
+
+                    });
+                    msg += selectedMonth
+                    if (keysWillRemoved.length <= 0) {
+                        alert("لا يوجد خصومات فى هذا الشهر")
+                        document.getElementById("loading_price").style.display = "none"
+                    } else {
+                        if (confirm(msg)) {
+                            // Save it!
+
+                            var map = {}
+                            while (keysWillRemoved.length > 0) {
+                                var currentKey = keysWillRemoved.pop()
+                                map[currentKey] = null
+                            }
+                            console.log(map);
+                            database.ref('staff').child(key).child('subtract').update(map).then(function () {
                                 location.reload();
                             });
 

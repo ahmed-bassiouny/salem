@@ -106,19 +106,37 @@
 
                         <br />
                         <br />
+
                         <div class="panel-body" dir="rtl">
-                            <h1> المصروفات التى اخذها عامل الورشة  </h1>
-
+                            <h1> المصروفات التى اخذها عامل الورشة </h1>
+                            <div class="modal-body">
+                                <select id="selector" onchange="search()" class="form-control">
+                                    <option value="0">الكل</option>
+                                    <option value="01">1</option>
+                                    <option value="02">2</option>
+                                    <option value="03">3</option>
+                                    <option value="04">4</option>
+                                    <option value="05">5</option>
+                                    <option value="06">6</option>
+                                    <option value="07">7</option>
+                                    <option value="08">8</option>
+                                    <option value="09">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                </select>
+                            </div>
+                            <br/><br/>
                             <table width="50%" id="myTable" dir="rtl"
-                                class="table table-striped table-bordered table-hover">
+                                   class="table table-striped table-bordered table-hover">
                                 <thead>
-                                    <tr>
-                                        <th>التاريخ</th>
-                                        <th>المبلغ</th>
-                                        <th> ملاحظات</th>
+                                <tr>
+                                    <th>التاريخ</th>
+                                    <th>المبلغ</th>
+                                    <th> ملاحظات</th>
 
-                                        <th>خيارات</th>
-                                    </tr>
+                                    <th>خيارات</th>
+                                </tr>
 
                                 </thead>
                                 <tbody id="Customdata">
@@ -131,6 +149,7 @@
                             <br />
                             <br />
                         </div>
+
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
@@ -184,17 +203,19 @@
         var database = firebase.database();
         search();
         function search() {
-
+        var selectedMonth = document.getElementById("selector").value;
             database.ref('staff').child(key).child('expenses').on('value', function (snapshot) {
                 document.getElementById("Customdata").innerHTML = ""
                 myTotal = 0
                 snapshot.forEach(function (childSnapshot) {
                     var childData = childSnapshot.val();
 
+                    if (childData.date.split("-")[1] == selectedMonth || selectedMonth == 0) {
                     var table = `<tr> <td> ${childData.date} </td> <td> ${childData.price} </td> <td> ${childData.note} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${childSnapshot.key}')">حذف </a></td> </tr>`;
                     $('.app-spinner').remove();
                     myTotal += parseFloat(childData.egp);
                     document.getElementById("Customdata").innerHTML += table;
+                    }
                 });
             });
         }
