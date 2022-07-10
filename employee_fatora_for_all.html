@@ -191,7 +191,10 @@
                          if (temp > 0) {
                         var table = `<tr> <td style="width: 30;"> ${employee[item]} </td><td style="color:red;"> ${temp}</td> </tr>`;
                         document.getElementById("Customdata").innerHTML += table;
-                     } else {
+                     } else if(temp < 0){
+                        var table = `<tr> <td style="width: 30;"> ${employee[item]} </td><td style="color:green;"> ${temp *-1}</td> </tr>`;
+                        document.getElementById("Customdata").innerHTML += table;
+                     }else {
                         var table = `<tr> <td style="width: 30;"> ${employee[item]} </td><td style="color:black;"> ${temp *-1}</td> </tr>`;
                         document.getElementById("Customdata").innerHTML += table;
                      }
