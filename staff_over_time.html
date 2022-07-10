@@ -192,7 +192,7 @@
         search();
         function search() {
 
-            database.ref('staff').child(key).child('over_time').on('value', function (snapshot) {
+            database.ref('staff').child(key).child('over_time').orderByChild('date').on('value', function (snapshot) {
                 document.getElementById("Customdata").innerHTML = ""
                 myTotal = 0
                 // console.log('here')
