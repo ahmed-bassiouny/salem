@@ -73,10 +73,10 @@
 
                                 <div class="panel-body" dir="rtl">
                                     <td><input id="date" type="date" class="form-control"
-                                            style="width: 50%;"></textarea></td>
+                                            style="width: 50%;visibility: hidden;"></textarea></td>
                                     <br />
                                     <br />
-                                    <button type="button" style="width:30%;" id="save" onclick="search()"
+                                    <button  type="button" style="width:30%;visibility: hidden;" id="save" onclick="search()"
                                         class="btn btn-outline btn-primary btn-lg btn-block">بحث</button>
 
                                     <h1 id="txt"></h1>
@@ -141,6 +141,8 @@
                 fetchEmployee()
             });
 
+            
+
             function fetchEmployee() {
                 document.getElementById("txt").innerText = "من فضلك انتظر"
                 database.ref('employee').once('value', function (snapshot) {
@@ -151,6 +153,7 @@
                         employee[childSnapshot.key] = childData.name + " ( " + list[childData.city - 1] + " )"
                     });
                     document.getElementById("txt").innerText = ""
+                    fetchData();
                 });
             }
 
@@ -174,7 +177,7 @@
                         var result = ""
                         childSnapshot.forEach(function (childchildSnapshot) {
                             var rst = childchildSnapshot.val()
-                            if (rst.date == date)
+                            if ((rst.count - rst.received) > 0)
                                 result += `${rst.count - rst.received} - ${rst.type} <br/>`
                         });
                         if (result == '') return
