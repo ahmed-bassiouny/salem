@@ -143,14 +143,15 @@
 
             
 
+            var employessWillIgnore = []
             function fetchEmployee() {
                 document.getElementById("txt").innerText = "من فضلك انتظر"
                 database.ref('employee').once('value', function (snapshot) {
                     $('.app-spinner').remove();
                     snapshot.forEach(function (childSnapshot) {
                         var childData = childSnapshot.val();
-
-                        employee[childSnapshot.key] = childData.name + " ( " + list[childData.city - 1] + " )"
+                        if(childData.city != 2)
+                            employee[childSnapshot.key] = childData.name + " ( " + list[childData.city - 1] + " )"
                     });
                     document.getElementById("txt").innerText = ""
                     fetchData();
@@ -168,21 +169,23 @@
             }
 
             function fetchData() {
+                
                 var date = document.getElementById("date").value
                 database.ref('employee_have_items').once('value', function (snapshot) {
                     document.getElementById("Customdata").innerHTML = ""
                     snapshot.forEach(function (childSnapshot) {
-
-                        var name = employee[childSnapshot.key]
                         var result = ""
+                        
+                        var name = employee[childSnapshot.key]
                         childSnapshot.forEach(function (childchildSnapshot) {
                             var rst = childchildSnapshot.val()
                             if ((rst.count - rst.received) > 0)
                                 result += `${rst.count - rst.received} - ${rst.type} <br/>`
                         });
-                        if (result == '') return
+                        if (result == '' || name ==null) return
                         var table = `<tr> <td style="width: 30;"> ${name} </td><td> ${result}</td> </tr>`;
                         document.getElementById("Customdata").innerHTML += table;
+                    
                     });
                     document.getElementById("txt").innerText = ""
 
