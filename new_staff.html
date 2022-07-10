@@ -65,6 +65,11 @@
                                             <td ><input id="salary" type="number" 
                                                     class="form-control"></textarea></td>
                                         </tr>
+                                        <tr>
+                                            <th >  مبلغ التامينات</th>
+                                            <td ><input id="insurance" type="number" 
+                                                    class="form-control"></textarea></td>
+                                        </tr>
                                         
                                     </tbody>
                                 </table>
@@ -115,15 +120,18 @@
         if (name == "")
             return
         var salary = document.getElementById("salary").value;
+        var insurance = document.getElementById("insurance").value;
 
         var agent = {
             name: name,
+            insurance:insurance,
             salary: salary
         };
         var newPostKey = firebase.database().ref().child('staff').push().set(agent);
         alert('تم حفظ العامل بنجاح');
         document.getElementById("name").value = ""
         document.getElementById("salary").value = ""
+        document.getElementById("insurance").value = ""
     }
 
     function back(){

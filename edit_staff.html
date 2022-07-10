@@ -68,6 +68,11 @@
                                             </td>
                                         </tr>
                                         <tr>
+                                            <th>مبلغ التامينات </th>
+                                            <td><input id="insurance" type="number" class="form-control"></textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <th>ملاحظات </th>
                                             <td><textarea id="note" class="form-control"></textarea>
                                             </td>
@@ -125,6 +130,7 @@
             var childData = snapshot.val();
             document.getElementById("name").value = childData.name
             document.getElementById("salary").value = childData.salary
+            document.getElementById("insurance").value = childData.insurance
             document.getElementById("note").value = childData.note
         });
     }
@@ -132,11 +138,13 @@
     function save() {
         var name = document.getElementById("name").value;
         var salary = document.getElementById("salary").value;
+        var insurance = document.getElementById("insurance").value;
         var note = document.getElementById("note").value;
 
         var agent = {
             name: name,
             salary: salary,
+            insurance:insurance,
             note: note,
         };
         firebase.database().ref().child('staff').child(key).update(agent);
