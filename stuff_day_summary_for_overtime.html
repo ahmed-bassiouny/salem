@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>ملخص خصومات اليوم </title>
+    <title>ملخص وقت الاضافي اليوم </title>
 
     <!-- Bootstrap Core CSS -->
     <link href="driver.css" rel="stylesheet">
@@ -86,8 +86,8 @@
 
                                             <tr>
                                                 <td style="font-size:16pt">الاسم</td>
-                                                <td style="font-size:16pt">مده الخصم</td>
-                                                <td style="font-size:16pt">سبب الخصم</td>
+                                                <td style="font-size:16pt">مده الوقت الاضافي</td>
+                                                <td style="font-size:16pt">سبب الوقت الاضافي</td>
                                             </tr>
                                         </thead>
                                         <tbody id="Customdata">
@@ -140,7 +140,16 @@
                 });
             });
 
-            var list = {1:"ربع يوم",2:"نص يوم",4:"يوم كامل"}
+            function getTimeHour(time){
+            switch(time){
+                case "90": return "ساعة";
+                case "180": return "ساعتين";
+                case "270": return "ثلاث ساعات";
+                case "360": return "اربع ساعات";
+                case "450": return "خمس ساعات";
+                case "900": return "عشر ساعات";
+            }
+        }
 
           
 
@@ -166,10 +175,10 @@
                         
                         var result = ""
                         //console.log(childSnapshot.child('subtract'))
-                        childSnapshot.child('subtract').forEach(function (childchildSnapshot) {
+                        childSnapshot.child('over_time').forEach(function (childchildSnapshot) {
                             var rst = childchildSnapshot.val()
                             if (rst.date == date){
-                                var table = `<tr> <td style="width: 30;"> ${name} </td><td> ${list[rst.type]}</td><td> ${rst.note}</td> </tr>`;
+                                var table = `<tr> <td style="width: 30;"> ${name} </td><td> ${getTimeHour(rst.time)}</td><td> ${rst.note}</td> </tr>`;
                         document.getElementById("Customdata").innerHTML += table;
                             }
                                 

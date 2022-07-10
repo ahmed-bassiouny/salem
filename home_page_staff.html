@@ -70,8 +70,15 @@
 
                         <!-- /.panel-heading -->
                         <div class="panel-body" dir="rtl">
-                            <a type="button" style="width:30%;" href='stuff_day_summary_for_substract.html'
-                                class="btn btn-outline btn-primary btn-lg btn-block">ملخص مصروف اليوم</a>
+                            <div>
+                            <a type="button"  href='stuff_day_summary_for_expenses.html'
+                                class="btn btn-outline btn-primary">ملخص مصروف اليوم</a>
+                                <a type="button"  href='stuff_day_summary_for_substract.html'
+                                class="btn btn-outline btn-danger">ملخص خصومات اليوم</a>
+                                <a type="button"  href='stuff_day_summary_for_substract.html'
+                                class="btn btn-outline btn-warning">ملخص وقت الاضافي اليوم</a>
+                                <br/><br/>
+                            </div>
                             <table width="50%" id="myTable" dir="rtl"
                                 class="table table-striped table-bordered table-hover">
                                 <thead>
@@ -133,8 +140,7 @@
                 responsive: true
             });
         });
-
-
+        
 
         var database = firebase.database();
         var index = 0

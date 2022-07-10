@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>ملخص خصومات اليوم </title>
+    <title>ملخص مصروف اليوم </title>
 
     <!-- Bootstrap Core CSS -->
     <link href="driver.css" rel="stylesheet">
@@ -85,9 +85,8 @@
                                         <thead>
 
                                             <tr>
-                                                <td style="font-size:16pt">الاسم</td>
-                                                <td style="font-size:16pt">مده الخصم</td>
-                                                <td style="font-size:16pt">سبب الخصم</td>
+                                                <td style="font-size:16pt">البيان</td>
+                                                <td style="font-size:16pt">القيمة</td>
                                             </tr>
                                         </thead>
                                         <tbody id="Customdata">
@@ -131,7 +130,6 @@
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
-
             
             $(document).ready(function () {
                 $('#dataTables-example').DataTable({
@@ -140,9 +138,7 @@
                 });
             });
 
-            var list = {1:"ربع يوم",2:"نص يوم",4:"يوم كامل"}
-
-          
+           
 
             function search() {
                 var date = document.getElementById("date").value
@@ -166,10 +162,10 @@
                         
                         var result = ""
                         //console.log(childSnapshot.child('subtract'))
-                        childSnapshot.child('subtract').forEach(function (childchildSnapshot) {
+                        childSnapshot.child('expenses').forEach(function (childchildSnapshot) {
                             var rst = childchildSnapshot.val()
                             if (rst.date == date){
-                                var table = `<tr> <td style="width: 30;"> ${name} </td><td> ${list[rst.type]}</td><td> ${rst.note}</td> </tr>`;
+                                var table = `<tr> <td style="width: 30;"> ${name} </td><td> ${rst.price}</td> </tr>`;
                         document.getElementById("Customdata").innerHTML += table;
                             }
                                 
