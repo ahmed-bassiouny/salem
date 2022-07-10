@@ -210,14 +210,15 @@
             $(document).ready(function () {
                 $('#dataTables-example').DataTable({
                     responsive: true
+                
+                    
                 });
             });
 
 
             var key = getParameter("key");
             var name = getParameter("name");
-
-
+            var currentYear = 22
 
 
 
@@ -226,8 +227,12 @@
             var database = firebase.database();
             fetchData();
 
+            function getYear(){
+                currentYear = new Date().getYear() - 100 + 2000
+            }
 
             function fetchData() {
+                getYear()
                 var subTotal = 0;
                 var subtract = 0
                 var subtractDays = 0
@@ -239,7 +244,8 @@
                     subTotal = parseInt(snapshot.val().salary)
                     snapshot.child('expenses').forEach(function (childSnapshot) {
                         var childData = childSnapshot.val();
-                        if (childData.date.split("-")[1] == selectedMonth) {
+                        var date = childData.date.split("-")
+                        if (date[1] == selectedMonth && date[0] == currentYear) {
                             expenses += parseInt(childData.price)
                         }
 
@@ -247,7 +253,9 @@
 
                     snapshot.child('subtract').forEach(function (childSnapshot) {
                         var childData = childSnapshot.val();
-                        if (childData.date.split("-")[1] == selectedMonth) {
+                        var date = childData.date.split("-")
+                        
+                        if (date[1] == selectedMonth && date[0] == currentYear) {
                         subtractDays += parseInt(childData.type)
                         }
                     });
@@ -257,7 +265,9 @@
 
                     snapshot.child('over_time').forEach(function (childSnapshot) {
                         var childData = childSnapshot.val();
-                        if (childData.date.split("-")[1] == selectedMonth) {
+                        var date = childData.date.split("-")
+                        
+                        if (date[1] == selectedMonth && date[0] == currentYear) {
                         timeMinutes += parseInt(childData.time)
                         }
                     });
@@ -285,10 +295,6 @@
 
             }
 
-<!--            function removeExpensive(){-->
-<!--                database.ref("staff").child(key).child('expenses').remove();-->
-<!--            }-->
-
             function removePriceForMonth() {
                 document.getElementById("loading_price").style.display = "block"
                 var keysWillRemoved = []
@@ -299,7 +305,8 @@
                 database.ref('staff').child(key).child('expenses').once('value', function (snapshot) {
                     snapshot.forEach(function (childSnapshot) {
                         var childData = childSnapshot.val();
-                        if (childData.date.split("-")[1] == selectedMonth) {
+                        var date = childData.date.split("-")
+                        if (date[1] == selectedMonth && date[0] == currentYear) {
                             keysWillRemoved.push(childSnapshot.key)
                             totalWillRemoved += parseFloat(childData.price)
                         }
@@ -350,7 +357,8 @@
                 database.ref('staff').child(key).child('subtract').once('value', function (snapshot) {
                     snapshot.forEach(function (childSnapshot) {
                         var childData = childSnapshot.val();
-                        if (childData.date.split("-")[1] == selectedMonth) {
+                        var date = childData.date.split("-")
+                        if (date[1] == selectedMonth && date[0] == currentYear) {
                             keysWillRemoved.push(childSnapshot.key)
                             totalWillRemoved += parseFloat(childData.price)
                         }
@@ -400,7 +408,8 @@
                 database.ref('staff').child(key).child('over_time').once('value', function (snapshot) {
                     snapshot.forEach(function (childSnapshot) {
                         var childData = childSnapshot.val();
-                        if (childData.date.split("-")[1] == selectedMonth) {
+                        var date = childData.date.split("-")
+                        if (date[1] == selectedMonth && date[0] == currentYear) {
                             keysWillRemoved.push(childSnapshot.key)
                             totalWillRemoved += parseFloat(childData.price)
                         }
