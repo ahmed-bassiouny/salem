@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>اجمالي لنا / علينا</title>
+    <title>لنا / علينا</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="driver.css" rel="stylesheet">
@@ -199,6 +199,10 @@
                         document.getElementById("Customdata").innerHTML += table;
                      }
                       document.getElementById("name").innerHTML = total;
+                      if(total > 0)
+                      document.getElementById("name").style.color = 'red';
+                      else if(total < 0)
+                      document.getElementById("name").style.color = 'green';
                 }
               
             }
