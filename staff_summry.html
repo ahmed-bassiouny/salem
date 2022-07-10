@@ -121,6 +121,10 @@
                                                 <td style="font-size:18pt"> المرتب الاساسى</td>
                                                 <td style="font-weight:bold;font-size:25pt" id="first"> </td>
                                             </tr>
+                                            <tr>
+                                                <td style="font-size:18pt"> مبلغ التامينات</td>
+                                                <td style="font-weight:bold;font-size:25pt" id="sixth"> </td>
+                                            </tr>
 
 
                                             <tr>
@@ -247,6 +251,7 @@
             function fetchData() {
                 currentYear= document.getElementById("selectorDateYear").value;
                 var subTotal = 0;
+                var insurance = 0;
                 var subtract = 0
                 var subtractDays = 0
                 var salaryPerDay = 0;
@@ -255,6 +260,8 @@
                 var selectedMonth = document.getElementById("selectorDate").value;
                 database.ref('staff').child(key).once('value', function (snapshot) {
                     subTotal = parseInt(snapshot.val().salary)
+                    if(snapshot.val().insurance)
+                    insurance = parseInt(snapshot.val().insurance)
                     snapshot.child('expenses').forEach(function (childSnapshot) {
                         var childData = childSnapshot.val();
                         var date = childData.date.split("-")
@@ -288,10 +295,11 @@
                     var overTime = salaryPerMin * timeMinutes;
 
                     document.getElementById("first").innerHTML = `${subTotal.toFixed(2)} جنية مصرى`
+                    document.getElementById("sixth").innerHTML = `${insurance} جنية مصرى`
                     document.getElementById("second").innerHTML = `${expenses.toFixed(2)} جنية مصرى`
                     document.getElementById("third").innerHTML = `${subtract.toFixed(2)} جنية مصرى من`
                     document.getElementById("fifth").innerHTML = `${overTime.toFixed(2)} جنية مصرى من`
-                    document.getElementById("fourth").innerHTML = `${(subTotal - expenses - subtract+ overTime).toFixed(2)} جنية مصرى`
+                    document.getElementById("fourth").innerHTML = `${(subTotal - expenses - subtract+ overTime -insurance).toFixed(2)} جنية مصرى`
                     alert("تم تحميل البيانات")
 
                 });
