@@ -64,20 +64,37 @@
 
                 <br />
                 <h2 style="text-align: center;">الملخص </h2>
-                <select id="selectorDate" onchange="fetchData()" class="form-control">
-                    <option value="01">1</option>
-                    <option value="02">2</option>
-                    <option value="03">3</option>
-                    <option value="04">4</option>
-                    <option value="05">5</option>
-                    <option value="06">6</option>
-                    <option value="07">7</option>
-                    <option value="08">8</option>
-                    <option value="09">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
+                <div>
+                <select id="selectorDate" style="width: 20%;" >
+                    <option value="01">1 يناير</option>
+                    <option value="02">2 فبراير</option>
+                    <option value="03">3 مارس</option>
+                    <option value="04">4 ابريل</option>
+                    <option value="05">5 مايو</option>
+                    <option value="06">6 يونيو</option>
+                    <option value="07">7 يوليو</option>
+                    <option value="08">8 اغسطس</option>
+                    <option value="09">9 سبتمر</option>
+                    <option value="10">10 اكتوبر</option>
+                    <option value="11">11 نوفمبر</option>
+                    <option value="12">12 ديسمبر</option>
                 </select>
+
+                <select id="selectorDateYear" style="width: 20%;" >
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                    <option value="2026">2026</option>
+                    <option value="2027">2027</option>
+                    <option value="2028">2028</option>
+                    <option value="2029">2029</option>
+                    <option value="2030">2030</option>
+                </select>
+
+                <button type="button" style="margin-left: 1%;margin-right: 1%;" onclick="fetchData()"
+                                class="btn btn-primary">عرض</button>
+            </div>
                 <h2 id="name" style="text-align: center;"></h2>
                 <!-- /.row -->
                 <div class="row">
@@ -225,14 +242,10 @@
             document.getElementById("name").innerHTML = name + "<br/>"
 
             var database = firebase.database();
-            fetchData();
-
-            function getYear(){
-                currentYear = new Date().getYear() - 100 + 2000
-            }
+          
 
             function fetchData() {
-                getYear()
+                currentYear= document.getElementById("selectorDateYear").value;
                 var subTotal = 0;
                 var subtract = 0
                 var subtractDays = 0
