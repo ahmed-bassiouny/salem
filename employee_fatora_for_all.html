@@ -203,14 +203,16 @@
             function fetchGoods() {
                 
                 database.ref('employee_have_items').once('value',function(data){
-                    goods = 0
+                    
                     data.forEach(function (childSnapshot) {
+                        goods = 0
                         childSnapshot.forEach(function (finalData) {
                             
                             var childData = finalData.val();
                             goods += parseFloat(childData.price) * parseInt(childData.count)
+                            
                         });
-
+                        console.log(goods)
                         
                         all_goods[childSnapshot.key] = goods
 
@@ -226,8 +228,9 @@
             function fetchMoney() {
 
                 database.ref('employee_have_price').once('value',function(data){
-                    money = 0
+                    
                     data.forEach(function (childSnapshot) {
+                        money = 0
                         childSnapshot.forEach(function (finalData) {
                             
                             var childData = finalData.val();
