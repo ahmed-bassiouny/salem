@@ -349,6 +349,7 @@
              var total = document.getElementById("price").value * document.getElementById("count").value
 
              var ten = 0
+             alert(document.getElementById("ten").checked)
                 if(document.getElementById("ten").checked){
                     ten = (total * 10 ) / 100
                     document.getElementById("tenValue").innerHTML = ten
@@ -361,7 +362,7 @@
                     twenty = (total * 20 ) / 100
                     document.getElementById("twentyValue").innerHTML = twenty
                 }else {
-                    document.getElementById("tenValue").innerHTML = ""
+                    document.getElementById("twentyValue").innerHTML = ""
                 }
                 if(document.getElementById("material").value)
                 total+= parseFloat(document.getElementById("material").value)
