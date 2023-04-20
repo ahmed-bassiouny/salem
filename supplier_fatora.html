@@ -228,7 +228,7 @@
                 //document.getElementById("date").innerHTML = `التاريخ : ${date}`;
                 snapshot.forEach(function (childSnapshot) {
                     var childData = childSnapshot.val();
-                    var table = `<tr><td style="font-size:14pt"> ${childData.count} </td> <td style="font-size:14pt"> ${childData.type} </td> <td style="font-size:14pt"> ${childData.color} </td> <td style="font-size:14pt"> ${childData.price} </td> <td style="font-size:14pt"> ${childData.total} </td> </tr>`;
+                    var table = `<tr><td style="font-size:12pt"> ${childData.count} </td> <td style="font-size:12pt"> ${childData.type} </td><td style="font-size:12pt"> ${childData.size} </td> <td style="font-size:12pt"> ${childData.color} </td> <td style="font-size:12pt"> ${childData.price} </td><td style="font-size:12pt"> ${childData.ten} </td> <td style="font-size:12pt"> ${childData.twenty} </td> <td style="font-size:12pt"> ${childData.material} </td><td style="font-size:12pt"> ${childData.total} </td> </tr>`;
                     $('.app-spinner').remove();
                     myTotal += parseFloat(childData.total);
                     document.getElementById("Customdata").innerHTML += table;
@@ -236,7 +236,7 @@
 
                     by = childData.by;
                 });
-                document.getElementById("Customdata").innerHTML += `<tr> <td colspan="4" style="font-weight:bold;font-size:25pt">اجمالى الفاتورة الحالية</td> <td style="font-weight:bold;font-size:25pt"> ${myTotal} جنية مصرى</td> </tr>`;
+                document.getElementById("Customdata").innerHTML += `<tr> <td colspan="8" style="font-weight:bold;font-size:25pt">اجمالى الفاتورة الحالية</td> <td style="font-weight:bold;font-size:25pt"> ${myTotal} جنية مصرى</td> </tr>`;
                 var table1 = `<tr><td> ${date} </td> <td> ${by} </td> </tr>`;
 
             });
