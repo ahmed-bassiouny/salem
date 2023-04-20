@@ -100,7 +100,7 @@
                                     </tr>
 
                                     <tr>
-                                        <th>اللون / الاسم</th>
+                                        <th>اللون /النوع/ الاسم</th>
                                         <td><input id="color" class="form-control"></textarea></td>
 
                                     </tr>
@@ -150,8 +150,8 @@
                                     </tr>
                                  
                                     <tr>
-                                        <th>القماش</th>
-                                        <td><input id="material" class="form-control"></textarea></td>
+                                        <th>التكلفة الاضافيه للقماش</th>
+                                        <td><input id="material" onchange="onChange()" type="number" class="form-control"></textarea></td>
 
                                     </tr>
                                     
@@ -201,12 +201,12 @@
                                         <th hidden>التاريخ</th>
                                         <th>العدد</th>
                                         <th>النوع</th>
-                                        <th>اللون / الاسم</th>
+                                        <th>اللون /النوع/ الاسم</th>
                                         <th>السعر</th>
                                         <th>10%</th>
                                         <th>20%</th>
                                         <th>المقاس</th>
-                                        <th>القماش</th>
+                                        <th>التكلفة الاضافيه للقماش</th>
                                         <th>الاجمالى</th>
                                         <th>خيارات</th>
                                     </tr>
@@ -357,6 +357,8 @@
                 if(document.getElementById("twenty").checked){
                     twenty = (total * 20 ) / 100
                 }
+
+                total+= parseFloat(document.getElementById("material").value)
              document.getElementById("total").value = parseFloat(total)+parseFloat(ten)+parseFloat(twenty)
         }
 
