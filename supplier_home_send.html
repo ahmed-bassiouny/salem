@@ -201,11 +201,13 @@
                                         <th hidden>التاريخ</th>
                                         <th>العدد</th>
                                         <th>الصنف</th>
+                                        <th>المقاس</th>
                                         <th>اللون/النوع/الاسم</th>
+                                        
                                         <th>السعر</th>
                                         <th>10%</th>
                                         <th>20%</th>
-                                        <th>المقاس</th>
+                                        
                                         <th>قيمة القماش</th>
                                         <th>الاجمالى</th>
                                         <th>خيارات</th>
@@ -329,7 +331,7 @@
                     var childData = childSnapshot.val();
                     var ten = (childData.ten) ? childData.ten : 0
                     var twenty = (childData.twenty) ? childData.twenty : 0
-                    var table = `<tr> <td> ${childData.count} </td> <td> ${childData.type} </td> <td> ${childData.color} </td> <td> ${childData.price} </td> <td> ${childData.ten} </td> <td> ${childData.twenty} </td><td> ${childData.size} </td> <td> ${childData.material} </td><td> ${childData.total} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${date}','${childSnapshot.key}')">حذف </a> </td> </tr>`;
+                    var table = `<tr> <td> ${childData.count} </td> <td> ${childData.type} </td><td> ${childData.size} </td>  <td> ${childData.color} </td> <td> ${childData.price} </td> <td> ${childData.ten} </td> <td> ${childData.twenty} </td><td> ${childData.material} </td><td> ${childData.total} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${date}','${childSnapshot.key}')">حذف </a> </td> </tr>`;
                     $('.app-spinner').remove();
                     myTotal += parseFloat(childData.total);
                     document.getElementById("Customdata").innerHTML += table;
