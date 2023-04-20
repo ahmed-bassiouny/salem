@@ -98,31 +98,13 @@
                                         </td>
 
                                     </tr>
-                                  
+
                                     <tr>
                                         <th>اللون / الاسم</th>
                                         <td><input id="color" class="form-control"></textarea></td>
 
                                     </tr>
-                                    <tr>
-                                        <th>السعر</th>
-                                        <td>
-                                            <input id="price" onchange="onChange()" type="number"
-                                                class="form-control"></textarea>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>10% فرق مقاس</th>
-                                        <td>
-                                            <input class="form-check-input" type="checkbox" class="form-control" id="ten" onchange="onChange()"></checkbox>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>20% خدمه تفصيل</th>
-                                        <td>
-                                            <input class="form-check-input" type="checkbox" class="form-control" id="twenty" onchange="onChange()"></checkbox>
-                                        </td>
-                                    </tr>
+
                                     <tr>
                                         <th>المقاس</th>
                                         <td><input id="size" class="form-control"></textarea></td>
@@ -145,6 +127,35 @@
                                         </select> -->
                                     </td>
                                     </tr>
+                                    <tr>
+                                        <th>السعر</th>
+                                        <td>
+                                            <input id="price" onchange="onChange()" type="number"
+                                                class="form-control"></textarea>
+                                        </td>
+                                    </tr>
+                                    
+
+                                    <tr>
+                                        <th>10% فرق مقاس</th>
+                                        <td>
+                                            <input class="form-check-input" type="checkbox" class="form-control" id="ten" onchange="onChange()"></checkbox>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>20% خدمه تفصيل</th>
+                                        <td>
+                                            <input class="form-check-input" type="checkbox" class="form-control" id="twenty" onchange="onChange()"></checkbox>
+                                        </td>
+                                    </tr>
+                                 
+                                    <tr>
+                                        <th>القماش</th>
+                                        <td><input id="material" class="form-control"></textarea></td>
+
+                                    </tr>
+                                    
+                                 
                                     <tr>
                                         <th> الاجمالى</th>
                                         <td>
@@ -195,6 +206,7 @@
                                         <th>10%</th>
                                         <th>20%</th>
                                         <th>المقاس</th>
+                                        <th>القماش</th>
                                         <th>الاجمالى</th>
                                         <th>خيارات</th>
                                     </tr>
@@ -317,7 +329,7 @@
                     var childData = childSnapshot.val();
                     var ten = (childData.ten) ? childData.ten : 0
                     var twenty = (childData.twenty) ? childData.twenty : 0
-                    var table = `<tr> <td> ${childData.count} </td> <td> ${childData.type} </td> <td> ${childData.color} </td> <td> ${childData.price} </td> <td> ${childData.ten} </td> <td> ${childData.twenty} </td><td> ${childData.size} </td> <td> ${childData.total} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${date}','${childSnapshot.key}')">حذف </a> </td> </tr>`;
+                    var table = `<tr> <td> ${childData.count} </td> <td> ${childData.type} </td> <td> ${childData.color} </td> <td> ${childData.price} </td> <td> ${childData.ten} </td> <td> ${childData.twenty} </td><td> ${childData.size} </td> <td> ${childData.material} </td><td> ${childData.total} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${date}','${childSnapshot.key}')">حذف </a> </td> </tr>`;
                     $('.app-spinner').remove();
                     myTotal += parseFloat(childData.total);
                     document.getElementById("Customdata").innerHTML += table;
@@ -359,6 +371,7 @@
                 var type = document.getElementById("type").options[document.getElementById("type").selectedIndex].text
                 var color = document.getElementById("color").value
                 var size = document.getElementById("size").value
+                var material = document.getElementById("material").value
 
               
              var ten = 0
@@ -381,6 +394,7 @@
                     twenty: twenty,
                     type: type,
                     size:size,
+                    material:material,
                     color: color,
                 }, function (error) {
                     if (error) {
