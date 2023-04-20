@@ -85,6 +85,11 @@
                                                 class="form-control"></textarea></td>
                                     </tr>
                                     <tr>
+                                        <th>العدد</th>
+                                        <td><input id="count" type="number" class="form-control"
+                                                onchange="onChangeType()"></textarea></td>
+                                    </tr>
+                                    <tr>
                                         <th>النوع</th>
                                         <td><select id="type" class="form-control" onchange="onChangeType()">
                                             
@@ -93,11 +98,7 @@
                                         </td>
 
                                     </tr>
-                                    <tr>
-                                        <th>العدد</th>
-                                        <td><input id="count" type="number" class="form-control"
-                                                onchange="onChangeType()"></textarea></td>
-                                    </tr>
+                                  
                                     <tr>
                                         <th>اللون</th>
                                         <td><input id="color" class="form-control"></textarea></td>
@@ -111,13 +112,13 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>10%</th>
+                                        <th>10% فرق مقاس</th>
                                         <td>
                                             <input class="form-check-input" type="checkbox" class="form-control"></checkbox>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>20%</th>
+                                        <th>20% خدمه تفصيل</th>
                                         <td>
                                             <input class="form-check-input" type="checkbox" class="form-control"></checkbox>
                                         </td>
@@ -313,7 +314,9 @@
                 myTotal = 0
                 snapshot.forEach(function (childSnapshot) {
                     var childData = childSnapshot.val();
-                    var table = `<tr> <td> ${childData.count} </td> <td> ${childData.type} </td> <td> ${childData.color} </td> <td> ${childData.price} </td> <td> ${childData.total} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${date}','${childSnapshot.key}')">حذف </a> </td> </tr>`;
+                    var ten = (childData.ten) ? childData.ten : 0
+                    var twenty = (childData.twenty) ? childData.twenty : 0
+                    var table = `<tr> <td> ${childData.count} </td> <td> ${childData.type} </td> <td> ${childData.color} </td> <td> ${childData.price} </td> <td> ${childData.ten} </td> <td> ${childData.twenty} </td> <td> ${childData.total} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${date}','${childSnapshot.key}')">حذف </a> </td> </tr>`;
                     $('.app-spinner').remove();
                     myTotal += parseFloat(childData.total);
                     document.getElementById("Customdata").innerHTML += table;
