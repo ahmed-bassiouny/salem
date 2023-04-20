@@ -155,9 +155,12 @@
             document.getElementById("Customdata").innerHTML = "";
             snapshot.forEach(function (childSnapshot) {
                 var childData = childSnapshot.val();
-                var table = `<tr> <td style="width:70%;">${childData.name}</td> <td><input type="number" value=${childData.price} onchange="save('${childSnapshot.key}',this.value)" class="form-control"></textarea></td></tr>`;
+                if(childData.name != ""){
+                var price = (childData.price == '') ? 0 : childData.price
+                var table = `<tr><td><input type="text" value="${childData.name}" onchange="saveName('${childSnapshot.key}',this.value)" class="form-control"></input></td><td><input type="number" value=${price} onchange="save('${childSnapshot.key}',this.value)" class="form-control"></input></td> </tr>`;
                 $('.app-spinner').remove();
                 document.getElementById("Customdata").innerHTML += table;
+                }
             });
 
         });
@@ -175,9 +178,13 @@
             document.getElementById("Customdata").innerHTML = "";
             snapshot.forEach(function (childSnapshot) {
                 var childData = childSnapshot.val();
-                var table = `<tr> <td>${childData.name}</td> <td><input type="number" value=${childData.price} onchange="save('${childSnapshot.key}',this.value)" class="form-control"></textarea></td></tr>`;
+                if(childData.name != ""){
+                var price = (childData.price == '') ? 0 : childData.price
+                var table = `<tr><td><input type="text" value="${childData.name}" onchange="saveName('${childSnapshot.key}',this.value)" class="form-control"></input></td><td><input type="number" value=${price} onchange="save('${childSnapshot.key}',this.value)" class="form-control"></input></td> </tr>`;
+                
                 $('.app-spinner').remove();
                 document.getElementById("Customdata").innerHTML += table;
+                }
             });
 
         });
@@ -196,7 +203,12 @@
     }
 
     function save(key,val){
+        console.log(val)
         database.ref('prices').child(key).child("price").set(val)
+    }
+
+    function saveName(key,val){
+        database.ref('prices').child(key).child("name").set(val)
     }
 
     function back(){
