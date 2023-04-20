@@ -358,7 +358,7 @@
                 }
 
                 database.ref().child('sendto').child(key).child(date).push().set({
-                    total: total,
+                    total: parseFloat(total)+parseFloat(ten)+parseFloat(twenty),
                     count: count,
                     date: date,
                     price: price,
