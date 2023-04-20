@@ -114,18 +114,18 @@
                                     <tr>
                                         <th>10% فرق مقاس</th>
                                         <td>
-                                            <input class="form-check-input" type="checkbox" class="form-control" id="ten"></checkbox>
+                                            <input class="form-check-input" type="checkbox" class="form-control" id="ten" onchange="onChange()"></checkbox>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>20% خدمه تفصيل</th>
                                         <td>
-                                            <input class="form-check-input" type="checkbox" class="form-control" id="twenty"></checkbox>
+                                            <input class="form-check-input" type="checkbox" class="form-control" id="twenty" onchange="onChange()"></checkbox>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>المقاس</th>
-                                        <td><select  class="form-control">
+                                        <td><select id="size"  class="form-control">
                                             <option value="1">1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
@@ -316,7 +316,7 @@
                     var childData = childSnapshot.val();
                     var ten = (childData.ten) ? childData.ten : 0
                     var twenty = (childData.twenty) ? childData.twenty : 0
-                    var table = `<tr> <td> ${childData.count} </td> <td> ${childData.type} </td> <td> ${childData.color} </td> <td> ${childData.price} </td> <td> ${childData.ten} </td> <td> ${childData.twenty} </td> <td> ${childData.total} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${date}','${childSnapshot.key}')">حذف </a> </td> </tr>`;
+                    var table = `<tr> <td> ${childData.count} </td> <td> ${childData.type} </td> <td> ${childData.color} </td> <td> ${childData.price} </td> <td> ${childData.ten} </td> <td> ${childData.twenty} </td><td> ${childData.size} </td> <td> ${childData.total} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${date}','${childSnapshot.key}')">حذف </a> </td> </tr>`;
                     $('.app-spinner').remove();
                     myTotal += parseFloat(childData.total);
                     document.getElementById("Customdata").innerHTML += table;
@@ -333,7 +333,18 @@
         function onChange() {
 
 
-            document.getElementById("total").value = document.getElementById("price").value * document.getElementById("count").value
+             var total = document.getElementById("price").value * document.getElementById("count").value
+
+             var ten = 0
+                if(document.getElementById("ten").checked){
+                    ten = (total * 10 ) / 100
+                }
+
+                var twenty = 0
+                if(document.getElementById("twenty").checked){
+                    twenty = (total * 20 ) / 100
+                }
+             document.getElementById("total").value = parseFloat(total)+parseFloat(ten)+parseFloat(twenty)
         }
 
         function save_for_salem() {
@@ -346,19 +357,21 @@
                 var by = document.getElementById("by").value
                 var type = document.getElementById("type").options[document.getElementById("type").selectedIndex].text
                 var color = document.getElementById("color").value
+                var size = document.getElementById("size").value
 
-                var ten = 0
+              
+             var ten = 0
                 if(document.getElementById("ten").checked){
-                    ten = ((count * price) * 10 ) / 100
+                    ten = (total * 10 ) / 100
                 }
 
                 var twenty = 0
                 if(document.getElementById("twenty").checked){
-                    twenty = ((count * price) * 20 ) / 100
+                    twenty = (total * 20 ) / 100
                 }
 
                 database.ref().child('sendto').child(key).child(date).push().set({
-                    total: parseFloat(total)+parseFloat(ten)+parseFloat(twenty),
+                    total: total,
                     count: count,
                     date: date,
                     price: price,
@@ -366,6 +379,7 @@
                     ten: ten,
                     twenty: twenty,
                     type: type,
+                    size:size,
                     color: color,
                 }, function (error) {
                     if (error) {
