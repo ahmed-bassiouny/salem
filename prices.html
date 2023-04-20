@@ -59,7 +59,7 @@
 
                                     </tbody>
 
-                                    <tbody id="Customdata">
+                                    <tbody id="Customdata" >
                                 
                                         <td colspan="3" class='app-spinner' style="text-align: center"><i class="fa fa-spinner fa-spin" style="font-size:24px"></i></td>
                                     </tbody>
@@ -79,6 +79,12 @@
                                 <code>.col-md-</code> class to an element will not only affect its styling on medium devices but also on large devices if a
                                 <code>.col-lg-</code> class is not present.</p>-->
 
+                                <br/><br/><br/><br/>
+                                <h1>ملاحظات</h1>
+                                <br/>
+                        <textarea style="width: 50%; height: 100pt;" id="note"></textarea>
+                        <button onclick="saveNote(this)"> حفظ</button>
+                        <button onclick="deleteNote(this)" class="btn btn-danger"> حذف</button>
                         </div>
                     </div>
                 </div>
@@ -149,12 +155,18 @@
             document.getElementById("Customdata").innerHTML = "";
             snapshot.forEach(function (childSnapshot) {
                 var childData = childSnapshot.val();
-                var table = `<tr> <td>${childData.name}</td> <td><input type="number" value=${childData.price} onchange="save('${childSnapshot.key}',this.value)" class="form-control"></textarea></td></tr>`;
+                var table = `<tr> <td style="width:70%;">${childData.name}</td> <td><input type="number" value=${childData.price} onchange="save('${childSnapshot.key}',this.value)" class="form-control"></textarea></td></tr>`;
                 $('.app-spinner').remove();
                 document.getElementById("Customdata").innerHTML += table;
             });
 
         });
+
+        database.ref().child('prices_note').child("note").once('value', function (snapshot) {
+                document.getElementById("note").value = snapshot.val()
+
+
+            });
     }
 
     function searchByName(item){
@@ -190,6 +202,22 @@
     function back(){
         window.history.back();
     }
+
+    function saveNote(btn) {
+            btn.disabled = true;
+            database.ref('prices_note').child("note").set(document.getElementById("note").value).then(function () {
+                alert("تم الحفظ بنجاح")
+                btn.disabled = false;
+            });
+        }
+        function deleteNote(btn) {
+            btn.disabled = true;
+            database.ref('prices_note').child("note").remove().then(function () {
+                alert("تم الحذف بنجاح")
+                document.getElementById("note").value = ""
+                btn.disabled = false;
+            });
+        }
 </script>
 
 </html>

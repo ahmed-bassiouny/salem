@@ -137,11 +137,13 @@
             $('.app-spinner').remove();
              snapshot.forEach(function(childSnapshot) {
                 var childData = childSnapshot.val();
+                if(childData.name != ''){
                 index++
                 if (!childData.phone) childData.phone = ""
                 var table=`<tr> <td style="font-size:14pt"> ${index} - ${childData.name}</td><td><a  href='edit_supplier.html?key=${childSnapshot.key}' type='button'  class='btn btn-warning'>تعديل بيانات التاجر</a><a  href='supplier_home_send.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-success'>شحن بضاعة</a><a  href='supplier_home_send_all.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-warning'>عرض جميع البضائع التى ارسلت للتاجر</a><a  href='supplier_home_recieve.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-primary'>تسجيل تحويل لنا </a><a  href='supplier_fatora.html?key=${childSnapshot.key}&name= ${childData.name}&phone=${childData.phone}' type='button'  class='btn btn-success'>عرض ملخص الفواتير</a></td></tr>`;
                 
                 document.getElementById("Customdata").innerHTML += table;
+            }
                 });
 
         });
