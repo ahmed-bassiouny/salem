@@ -232,11 +232,12 @@
 
                 snapshot.forEach(function (childSnapshot) {
                     var childData = childSnapshot.val();
-                    //alert(childData.price)
+                    if(childData.name != ''){
                     var table = `<option value=${childData.price}>${childData.name}</option>;`
 
 
                     document.getElementById("type").innerHTML += table;
+                }
 
                 });
 
