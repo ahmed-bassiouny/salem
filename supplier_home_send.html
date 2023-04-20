@@ -385,12 +385,12 @@
               
              var ten = 0
                 if(document.getElementById("ten").checked){
-                    ten = (count * price * 10 ) / 100
+                    ten = document.getElementById("tenValue").value
                 }
 
                 var twenty = 0
                 if(document.getElementById("twenty").checked){
-                    twenty = (count * price * 20 ) / 100
+                    twenty = document.getElementById("twentyValue").value
                 }
 
                 database.ref().child('sendto').child(key).child(date).push().set({
