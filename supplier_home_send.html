@@ -139,13 +139,13 @@
                                     <tr>
                                         <th>10% فرق مقاس</th>
                                         <td>
-                                            <input class="form-check-input" type="checkbox" class="form-control" id="ten" onchange="onChange()"></checkbox>
+                                            <input class="form-check-input" type="checkbox" class="form-control" id="ten" onchange="onChange()"> <label id="tenValue"></label></checkbox> 
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>20% خدمه تفصيل</th>
                                         <td>
-                                            <input class="form-check-input" type="checkbox" class="form-control" id="twenty" onchange="onChange()"></checkbox>
+                                            <input class="form-check-input" type="checkbox" class="form-control" id="twenty" onchange="onChange()"> <label id="twentyValue"></label></checkbox>
                                         </td>
                                     </tr>
                                  
@@ -351,13 +351,15 @@
              var ten = 0
                 if(document.getElementById("ten").checked){
                     ten = (total * 10 ) / 100
+                    document.getElementById("tenValue").innerHTML = ten
                 }
 
                 var twenty = 0
                 if(document.getElementById("twenty").checked){
                     twenty = (total * 20 ) / 100
+                    document.getElementById("twentyValue").innerHTML = twenty
                 }
-
+                if(document.getElementById("material").value)
                 total+= parseFloat(document.getElementById("material").value)
              document.getElementById("total").value = parseFloat(total)+parseFloat(ten)+parseFloat(twenty)
         }
