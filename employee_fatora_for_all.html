@@ -9,6 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+
     <title>لنا / علينا</title>
 
     <!-- Bootstrap Core CSS -->
@@ -61,6 +62,14 @@
                         <button style="float: left;" id="back" onclick="back()" class="btn btn-danger">رجوع </button>
                     </div>
                 </div>
+<select id="city" onchange="fetchEmployee(this.value)"
+                                style="margin-right: 20pt;margin-bottom: 10pt; width: 300pt;" class="form-control">
+                                <option value="0">الكل</option>
+                                <option value="1">الاسكندرية</option>
+                                <option value="2">رشيد</option>
+                                <option value="3">دمنهور</option>
+                                
+                            </select>
 
                 <br />
                 <h2 style="text-align: center;">لنا / علينا </h2>
@@ -153,18 +162,26 @@
             var database = firebase.database();
 
 
-            fetchEmployee();
+            fetchEmployee(0);
 
             
             
 
-            function fetchEmployee() {
-                
+            function fetchEmployee(cityId) {
+                document.getElementById("Customdata").innerHTML = "";
+             money = 0;
+            goods = 0;
+            employee = [];
+            all_goods = [];
+            all_money = [];
                 database.ref('employee').once('value', function (snapshot) {
                     $('.app-spinner').remove();
                     snapshot.forEach(function (childSnapshot) {
                         var childData = childSnapshot.val();
+                        console.log(cityId)
+                        if(childData.city == cityId || cityId == 0){
                             employee[childSnapshot.key] = childData.name + " ( " + list[childData.city - 1] + " )"
+                        }
                     });
                    // document.getElementById("txt").innerText = ""
                    fetchGoods();
@@ -219,7 +236,7 @@
                             goods += parseFloat(childData.price) * parseInt(childData.count)
                             
                         });
-                        console.log(goods)
+                        
                         
                         all_goods[childSnapshot.key] = goods
 
