@@ -87,6 +87,7 @@
                                     <tr>
                                         <th>الاسم</th>
                                         <th>خيارات</th>
+                                        <th>التصفية</th>
                                     </tr>
 
                                 </thead>
@@ -153,8 +154,9 @@
                 var childData = childSnapshot.val();
                 if(childData.name != ""){
                 index++
+                var done = (childData.done)? "تم التصفية" : "X"
                 var table = `<tr> <td style="font-size:14pt"> ${index} - ${childData.name}</td><td><a  href='edit_staff.html?key=${childSnapshot.key}' type='button'  class='btn btn-warning'>تعديل بيانات الصنايعي</a><a  href='staff_subtract.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-danger'>الخصومات </a><a  href='staff_take_money.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-primary'>المصروف </a>
-                    <a  href='staff_over_time.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-warning'>الوقت الاضافى </a><a  href='staff_summry.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-success'>عرض الملخص </a></td></tr>`;
+                    <a  href='staff_over_time.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-warning'>الوقت الاضافى </a><a  href='staff_summry.html?key=${childSnapshot.key}&name= ${childData.name}&done=${childData.done}' type='button'  class='btn btn-success'>عرض الملخص </a></td> <td style="font-size:14pt"> ${done} </td></tr>`;
 
                 document.getElementById("Customdata").innerHTML += table;
             }
