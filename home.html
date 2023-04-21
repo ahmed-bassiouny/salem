@@ -78,8 +78,11 @@
             var name = document.getElementById('name').value;
             var password = document.getElementById('password').value;
             if (name == 'salem' && password == 'yassin8badr11') {
-                localStorage.setItem('key', "true");
+                localStorage.setItem('key', "1");
                 window.location.href = "main.html";
+            }else if (name == 'salem abo yassin' && password == '10001000') {
+                localStorage.setItem('key', "2");
+                window.location.href = "admin_home_page_employee.html";
             } else {
                 alert('اسم المستخدم غير صحيح')
             }

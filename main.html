@@ -179,16 +179,15 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="dist/js/sb-admin-2.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+    <script src="firebaseconfig.js"></script>
 
 </body>
 
 <script>
-    if(localStorage.getItem('key') != "true"){
-    window.location.href = "home.html";
-}
-
+ 
 function back(){
-    localStorage.setItem('key', "false");
+    localStorage.setItem('key', "0");
     window.location.href = "home.html";
     }
 </script>
