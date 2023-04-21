@@ -474,7 +474,7 @@
             }
         function saveDone() {
         var done = document.getElementById("done").checked;
-        alert(key)
+        
         firebase.database().ref().child('staff').child(key).child("done").set(done);
         
         window.history.back();
