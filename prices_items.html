@@ -149,9 +149,11 @@
             document.getElementById("Customdata").innerHTML = "";
             snapshot.forEach(function (childSnapshot) {
                 var childData = childSnapshot.val();
-                var table = `<tr> <td>${childData.name}</td> <td><input type="number" value=${childData.price} onchange="save('${childSnapshot.key}',this.value)" class="form-control"></textarea></td></tr>`;
+                if(childData.name !=""){
+                var table = `<tr><td><input type="text" value="${childData.name}" onchange="saveName('${childSnapshot.key}',this.value)" class="form-control"></input></td> <td><input type="number" value=${childData.price} onchange="save('${childSnapshot.key}',this.value)" class="form-control"></textarea></td></tr>`;
                 $('.app-spinner').remove();
                 document.getElementById("Customdata").innerHTML += table;
+            }
             });
 
         });
@@ -163,9 +165,11 @@
             document.getElementById("Customdata").innerHTML = "";
             snapshot.forEach(function (childSnapshot) {
                 var childData = childSnapshot.val();
-                var table = `<tr> <td>${childData.name}</td> <td><input type="number" value=${childData.price} onchange="save('${childSnapshot.key}',this.value)" class="form-control"></textarea></td></tr>`;
+                if(childData.name !=""){
+                var table = `<tr><td><input type="text" value="${childData.name}" onchange="saveName('${childSnapshot.key}',this.value)" class="form-control"></input></td> <td><input type="number" value=${childData.price} onchange="save('${childSnapshot.key}',this.value)" class="form-control"></textarea></td></tr>`;
                 $('.app-spinner').remove();
                 document.getElementById("Customdata").innerHTML += table;
+                }
             });
 
         });
@@ -187,6 +191,9 @@
         database.ref('prices_items').child(key).child("price").set(val)
     }
 
+    function saveName(key,val){
+        database.ref('prices').child(key).child("name").set(val)
+    }
     function back(){
         window.history.back();
     }
