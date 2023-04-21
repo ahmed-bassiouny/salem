@@ -149,8 +149,10 @@
             document.getElementById("Customdata").innerHTML = "";
             snapshot.forEach(function (childSnapshot) {
                 var childData = childSnapshot.val();
+
                 if(childData.name !=""){
-                var table = `<tr><td><input type="text" value="${childData.name}" onchange="saveName('${childSnapshot.key}',this.value)" class="form-control"></input></td> <td><input type="number" value=${childData.price} onchange="save('${childSnapshot.key}',this.value)" class="form-control"></textarea></td></tr>`;
+                    var price = childData.price ? childData.price : 0
+                var table = `<tr><td><input type="text" value="${childData.name}" onchange="saveName('${childSnapshot.key}',this.value)" class="form-control"></input></td> <td><input type="number" value=${price} onchange="save('${childSnapshot.key}',this.value)" class="form-control"></textarea></td></tr>`;
                 $('.app-spinner').remove();
                 document.getElementById("Customdata").innerHTML += table;
             }
@@ -166,7 +168,8 @@
             snapshot.forEach(function (childSnapshot) {
                 var childData = childSnapshot.val();
                 if(childData.name !=""){
-                var table = `<tr><td><input type="text" value="${childData.name}" onchange="saveName('${childSnapshot.key}',this.value)" class="form-control"></input></td> <td><input type="number" value=${childData.price} onchange="save('${childSnapshot.key}',this.value)" class="form-control"></textarea></td></tr>`;
+                    var price = childData.price ? childData.price : 0
+                var table = `<tr><td><input type="text" value="${childData.name}" onchange="saveName('${childSnapshot.key}',this.value)" class="form-control"></input></td> <td><input type="number" value=${price} onchange="save('${childSnapshot.key}',this.value)" class="form-control"></textarea></td></tr>`;
                 $('.app-spinner').remove();
                 document.getElementById("Customdata").innerHTML += table;
                 }
@@ -192,7 +195,7 @@
     }
 
     function saveName(key,val){
-        database.ref('prices').child(key).child("name").set(val)
+        database.ref('prices_items').child(key).child("name").set(val)
     }
     function back(){
         window.history.back();
