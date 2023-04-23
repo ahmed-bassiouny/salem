@@ -101,6 +101,39 @@
 
 
                             </div>
+
+                            <div class="panel-body" dir="rtl">
+                                <h1 id = "title_2">اجمالى بضاعة لكم وتحويلات لنا </h1>
+
+                                <table id="myTable" dir="rtl"
+                                    class="table table-striped table-bordered table-hover">
+                                    <thead>
+
+                                        <tr>
+                                            <td style="font-size:16pt">البيان</td>
+                                            <td style="font-size:16pt">القيمة</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="Customdata1">
+                                        <tr>
+                                            <td style="font-size:18pt">اجمالى رصيد لنا حتى الان</td>
+                                            <td style="font-weight:bold;font-size:25pt" id="third"> </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td style="font-size:18pt">اجمالى رصيد لكم حتى الان</td>
+                                            <td style="font-weight:bold;font-size:25pt" id="fourth"></td>
+                                        </tr>
+                                       
+
+                                        <tr>
+                                            <td style="font-size:18pt" id="seven"> </td>
+                                            <td style="font-weight:bold;font-size:25pt" id="eight"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                
+                            </div>
                             <!-- /.panel-body -->
                         </div>
                         <!-- /.panel -->
@@ -214,19 +247,9 @@
                     //myTotalToSalem = totalTemp
                     console.log(name+" , " + totalTempRecieved+" , "+totalTemp)
                      var temp = totalTemp - totalTempRecieved
-
-                    // if (temp > 0) {
-                    //     document.getElementById("seven").innerHTML = "الباقى لنا حتى الان"
-                    //     document.getElementById("eight").innerHTML = `${temp} جنية مصرى`
-                    //     document.getElementById("eight").style.color = "#31A46C";
-                    //     document.getElementById("seven").style.fontSize = 14;
-                    // } else {
-                    //     document.getElementById("seven").innerHTML = "الباقى لكم حتى الان"
-                    //     document.getElementById("eight").innerHTML = `${temp * -1} جنية مصرى`
-                    //     document.getElementById("eight").style.color = "#ff0000";
-                    //     document.getElementById("seven").style.fontSize = 14;
-
-                    // }
+                     document.getElementById("third").innerHTML = `${totalTemp} جنية مصرى`
+                     document.getElementById("fourth").innerHTML = `${totalTempRecieved} جنية مصرى`
+                   
 
                     if (temp > 0) {
                         var table = `<tr> <td style="width: 30;"> ${name} </td><td style="color:green;"> ${temp}</td> </tr>`;
@@ -250,6 +273,19 @@
                     else if (finalTotal < 0){
                         document.getElementById("name").style.color = 'red';
                         document.getElementById("name").innerHTML = finalTotal * -1;
+                    }
+
+                    if (finalTotal > 0) {
+                        document.getElementById("seven").innerHTML = "الباقى لنا حتى الان"
+                        document.getElementById("eight").innerHTML = `${finalTotal} جنية مصرى`
+                        document.getElementById("eight").style.color = "#31A46C";
+                        document.getElementById("seven").style.fontSize = 14;
+                    } else {
+                        document.getElementById("seven").innerHTML = "الباقى لكم حتى الان"
+                        document.getElementById("eight").innerHTML = `${finalTotal * -1} جنية مصرى`
+                        document.getElementById("eight").style.color = "#ff0000";
+                        document.getElementById("seven").style.fontSize = 14;
+
                     }
 
                 });
