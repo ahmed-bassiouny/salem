@@ -241,12 +241,13 @@
             }
 
             function final() {
+                if(confirm("هل انت متاكد من تصفيه الحساب")){
                 database.ref("employee_have_price").child(key).remove();
 
                 database.ref("employee_have_items").child(key).remove().then(function () {
                     location.reload();
                 });
-
+            }
 
 
             }

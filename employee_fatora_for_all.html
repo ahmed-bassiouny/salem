@@ -73,7 +73,7 @@
 
                 <br />
                 <h2 style="text-align: center;">لنا / علينا </h2>
-                
+                <h2 id="total_before_sub" style="text-align: center;"></h2>
                 <h2 id="name" style="text-align: center;">برجاء الانتظار</h2>
                 <!-- /.row -->
                 <div class="row">
@@ -192,9 +192,12 @@
 
             function cal(){
                 var total = 0
+                var totalForLana = 0
+                var totalFor3layna = 0
                 for(item in employee){
                     var finalGoods = 0
                     var finalMoney = 0
+                    
 
                     if(all_goods[item]) 
                     finalGoods = all_goods[item]
@@ -208,9 +211,11 @@
                          if (temp > 0) {
                         var table = `<tr> <td style="width: 30;"> ${employee[item]} </td><td style="color:red;"> ${temp}</td> </tr>`;
                         document.getElementById("Customdata").innerHTML += table;
+                        totalFor3layna += temp 
                      } else if(temp < 0){
                         var table = `<tr> <td style="width: 30;"> ${employee[item]} </td><td style="color:green;"> ${temp *-1}</td> </tr>`;
                         document.getElementById("Customdata").innerHTML += table;
+                        totalForLana += temp
                      }else {
                         var table = `<tr> <td style="width: 30;"> ${employee[item]} </td><td style="color:black;"> ${temp *-1}</td> </tr>`;
                         document.getElementById("Customdata").innerHTML += table;
@@ -220,6 +225,9 @@
                       document.getElementById("name").style.color = 'red';
                       else if(total < 0)
                       document.getElementById("name").style.color = 'green';
+
+                      document.getElementById("total_before_sub").innerHTML = (totalForLana*-1) +" / "+ totalFor3layna;
+                      
                 }
               
             }
