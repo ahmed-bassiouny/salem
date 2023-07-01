@@ -343,6 +343,7 @@
 
             document.getElementById("price").value = document.getElementById("type").value
             document.getElementById("total").value = document.getElementById("type").value * document.getElementById("count").value
+            onChange()
         }
 
         function onChange() {
@@ -367,7 +368,7 @@
                     document.getElementById("twentyValue").innerHTML = ""
                 }
                 if(document.getElementById("material").value)
-                total+= parseFloat(document.getElementById("material").value)
+                total+= ( parseFloat(document.getElementById("material").value) * document.getElementById("count").value)
              document.getElementById("total").value = parseFloat(total)+parseFloat(ten)+parseFloat(twenty)
         }
 
@@ -423,6 +424,7 @@
                         document.getElementById("twentyValue").innerHTML = ""
                         document.getElementById("ten").checked = false
                         document.getElementById("twenty").checked = false
+                        location.reload()
                     }
                 });
 
