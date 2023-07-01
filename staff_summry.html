@@ -249,8 +249,12 @@
             document.getElementById("name").innerHTML = name + "<br/>"
 
             var database = firebase.database();
-            if(done){
+            
+            if(done == "true"){
+                
                 document.getElementById("done").checked = true
+            }else {
+                document.getElementById("done").checked = false
             }
             function fetchData() {
                 currentYear= document.getElementById("selectorDateYear").value;
@@ -341,7 +345,7 @@
                     msg += " عن شهر "
                     msg += selectedMonth
                     if (keysWillRemoved.length <= 0) {
-                        alert("لا يوجد مصاريف فى هذا الشهر")
+                        //alert("لا يوجد مصاريف فى هذا الشهر")
                         document.getElementById("loading_price").style.display = "none"
                         removePriceForMonthSubtract(selectedMonth);
                     } else {
@@ -391,7 +395,7 @@
                     });
                     msg += selectedMonth
                     if (keysWillRemoved.length <= 0) {
-                        alert("لا يوجد خصومات فى هذا الشهر")
+                        //alert("لا يوجد خصومات فى هذا الشهر")
                         document.getElementById("loading_price").style.display = "none"
                         removePriceForMonthOverTime(selectedMonth);
                     } else {
@@ -442,7 +446,7 @@
                     });
                     msg += selectedMonth
                     if (keysWillRemoved.length <= 0) {
-                        alert("لا يوجد وقت اضافى فى هذا الشهر")
+                        //alert("لا يوجد وقت اضافى فى هذا الشهر")
                         document.getElementById("loading_price").style.display = "none"
                         location.reload();
                     } else {
@@ -474,6 +478,7 @@
             }
         function saveDone() {
         var done = document.getElementById("done").checked;
+        
         
         firebase.database().ref().child('staff').child(key).child("done").set(done);
         
