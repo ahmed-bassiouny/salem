@@ -49,6 +49,18 @@
                             <div class="table-responsive">
                                 <input placeholder="بحث" onchange="searchByName(this.value)" class="form-control" style="margin: 20pt;width: 300pt;"/>
 
+                                <select id="category" style="width: 20%;" onchange="fetchData()">
+                                    <option value="0">الكل</option>
+                                    <option value="10">تحرير</option>
+                                    <option value="20">كردون</option>
+                                    <option value="30">اسمكي</option>
+                                    <option value="40">شكمه ودقدقه</option>
+                                    <option value="50">بطانه</option>
+                                    <option value="60">ساده</option>
+                                    <option value="70">متنوع</option>
+                                    
+                                </select>
+                                
                                 <table style="width:70%;" id="mytable" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
@@ -70,6 +82,7 @@
                                     <tbody>
                                         <td><input id="new_type" placeholder="صنف جديد" class="form-control"></textarea></td>
                                         <td><input id="new_type_price" type="number"  value="0" class="form-control"></textarea></td>
+                                        <td><input id="order" type="number"  value="0" class="form-control"></textarea></td>
                                         <td><button onclick="saveNewType()"> حفظ</button></td>
                                     </tbody>
                                 </table>
@@ -145,12 +158,15 @@
 
     fetchData();
     function fetchData() {
+
+        var value = document.getElementById("category").value;
+
         database.ref('prices_items').orderByChild("order").on('value', function (snapshot) {
             document.getElementById("Customdata").innerHTML = "";
             snapshot.forEach(function (childSnapshot) {
                 var childData = childSnapshot.val();
 
-                if(childData.name !=""){
+                if((childData.name !="" && value == childData.order) || (childData.name !="" && value == 0)){
                     var price = childData.price ? childData.price : 0
                 var table = `<tr><td><input type="text" value="${childData.name}" onchange="saveName('${childSnapshot.key}',this.value)" class="form-control"></input></td> <td><input type="number" value=${price} onchange="save('${childSnapshot.key}',this.value)" class="form-control"></textarea></td></tr>`;
                 $('.app-spinner').remove();
@@ -181,12 +197,15 @@
     function saveNewType(){
         var item = document.getElementById("new_type").value
         var price =  document.getElementById("new_type_price").value
+        var order =  document.getElementById("order").value
         database.ref('prices_items').push().set({
             'name': item,
             'price': price,
+            'order': order,
         });
         document.getElementById("new_type").value = ""
         document.getElementById("new_type_price").value = "0"
+        document.getElementById("order").value = "0"
 
     }
 
