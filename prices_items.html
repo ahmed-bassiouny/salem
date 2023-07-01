@@ -145,7 +145,7 @@
 
     fetchData();
     function fetchData() {
-        database.ref('prices_items').on('value', function (snapshot) {
+        database.ref('prices_items').orderByChild("order").on('value', function (snapshot) {
             document.getElementById("Customdata").innerHTML = "";
             snapshot.forEach(function (childSnapshot) {
                 var childData = childSnapshot.val();
