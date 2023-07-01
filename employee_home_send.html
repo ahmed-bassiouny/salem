@@ -223,15 +223,17 @@
         getNote()
 
         function getProduct() {
-            database.ref().child('prices_items').once('value', function (snapshot) {
+            database.ref().child('prices_items').orderByChild("order").once('value', function (snapshot) {
 
                 snapshot.forEach(function (childSnapshot) {
                     var childData = childSnapshot.val();
                     //alert(childData.price)
+                    if(childData.name!=""){
                     var table = `<option value=${childData.price}>${childData.name}</option>;`
 
 
                     document.getElementById("type").innerHTML += table;
+                }
 
                 });
                 fetchData()
