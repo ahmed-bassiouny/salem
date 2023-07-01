@@ -73,7 +73,13 @@
 
                 <br />
                 <h2 style="text-align: center;">لنا / علينا </h2>
-                <h2 id="total_before_sub" style="text-align: center;"></h2>
+                <div style="display: flex;justify-content: center;"> 
+                    <h2 id="total_before_sub_for_salem" style="display: inline;padding-left: 20px;color: green;"></h2>
+                    <h2>/</h2>
+                    <h2 id="total_before_sub" style="display: inline;padding-right: 20px;color: red;"></h2>
+
+                </div>
+                
                 <h2 id="name" style="text-align: center;">برجاء الانتظار</h2>
                 <!-- /.row -->
                 <div class="row">
@@ -226,7 +232,8 @@
                       else if(total < 0)
                       document.getElementById("name").style.color = 'green';
 
-                      document.getElementById("total_before_sub").innerHTML = (totalForLana*-1) +" / "+ totalFor3layna;
+                      document.getElementById("total_before_sub_for_salem").innerHTML = (totalForLana*-1) ;
+                      document.getElementById("total_before_sub").innerHTML =  totalFor3layna;
                       
                 }
               
