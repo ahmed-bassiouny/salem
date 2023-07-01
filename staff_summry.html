@@ -309,14 +309,14 @@
                     var resetData = false
                     if (subTotal.toFixed(2) == total) {
                         document.getElementById("done").innerHTML = `تم التصفيه`
-                        resetData = new Date().getMonth()
+                        resetData = (new Date().getMonth()+1)
                     } else {
                         document.getElementById("done").innerHTML = `لم تم التصفيه`
                         resetData = -1
                     }
                     alert("تم تحميل البيانات")
 
-                    if (new Date().getMonth() == selectedMonth) {
+                    if ((new Date().getMonth()+1) == selectedMonth) {
                         saveDone(resetData)
                     }
 
