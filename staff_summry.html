@@ -65,36 +65,35 @@
                 <br />
                 <h2 style="text-align: center;">الملخص </h2>
                 <div>
-                <select id="selectorDate" style="width: 20%;" >
-                    <option value="01">1 يناير</option>
-                    <option value="02">2 فبراير</option>
-                    <option value="03">3 مارس</option>
-                    <option value="04">4 ابريل</option>
-                    <option value="05">5 مايو</option>
-                    <option value="06">6 يونيو</option>
-                    <option value="07">7 يوليو</option>
-                    <option value="08">8 اغسطس</option>
-                    <option value="09">9 سبتمر</option>
-                    <option value="10">10 اكتوبر</option>
-                    <option value="11">11 نوفمبر</option>
-                    <option value="12">12 ديسمبر</option>
-                </select>
+                    <select id="selectorDate" style="width: 20%;">
+                        <option value="01">1 يناير</option>
+                        <option value="02">2 فبراير</option>
+                        <option value="03">3 مارس</option>
+                        <option value="04">4 ابريل</option>
+                        <option value="05">5 مايو</option>
+                        <option value="06">6 يونيو</option>
+                        <option value="07">7 يوليو</option>
+                        <option value="08">8 اغسطس</option>
+                        <option value="09">9 سبتمر</option>
+                        <option value="10">10 اكتوبر</option>
+                        <option value="11">11 نوفمبر</option>
+                        <option value="12">12 ديسمبر</option>
+                    </select>
 
-                <select id="selectorDateYear" style="width: 20%;" >
-                    <option value="2022">2022</option>
-                    <option value="2023">2023</option>
-                    <option value="2024">2024</option>
-                    <option value="2025">2025</option>
-                    <option value="2026">2026</option>
-                    <option value="2027">2027</option>
-                    <option value="2028">2028</option>
-                    <option value="2029">2029</option>
-                    <option value="2030">2030</option>
-                </select>
+                    <select id="selectorDateYear" style="width: 20%;">
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                        <option value="2026">2026</option>
+                        <option value="2027">2027</option>
+                        <option value="2028">2028</option>
+                        <option value="2029">2029</option>
+                        <option value="2030">2030</option>
+                    </select>
 
-                <button type="button" style="margin-left: 1%;margin-right: 1%;" onclick="fetchData()"
-                                class="btn btn-primary">عرض</button>
-            </div>
+                    <button type="button" style="margin-left: 1%;margin-right: 1%;" onclick="fetchData()"
+                        class="btn btn-primary">عرض</button>
+                </div>
                 <h2 id="name" style="text-align: center;"></h2>
                 <!-- /.row -->
                 <div class="row">
@@ -146,55 +145,56 @@
                                         </tbody>
                                     </table>
                                     <h1 id="loading_price" style="color: red;" hidden> برجاء الانتظار</h1>
-<!--                                    <button class="btn btn-primary" hidden onclick="final()">تصفيه الحساب ( الخصومات والوقت الاضافى )</button>-->
+                                    <!--                                    <button class="btn btn-primary" hidden onclick="final()">تصفيه الحساب ( الخصومات والوقت الاضافى )</button>-->
 
-                                    <a data-target="#myModal" role="button" style="margin-right: 5%;" class="btn btn-danger"
-                                        data-toggle="modal">تصفيه شهر محدد</a>
+                                    <a data-target="#myModal" role="button" style="margin-right: 5%;"
+                                        class="btn btn-danger" data-toggle="modal">تصفيه شهر محدد</a>
 
-                                        <input class="form-check-input" type="checkbox" class="form-control" id="done" onchange="saveDone()"> <label>تم التصفية</label></checkbox> 
+                                    <label style="padding-right: 20px;" id="done"></label>
+                                    <!-- <input class="form-check-input" type="checkbox" class="form-control" id="done" onchange="saveDone()"> <label>تم التصفية</label></checkbox>  -->
                                 </div>
-                                
+
                             </div>
                             <!-- /.panel-body -->
                         </div>
-                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-                                aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                            aria-hidden="true">
 
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal"
-                                                aria-hidden="true">×</button>
-                                            <h3 id="myModalLabel">هل انت متاكد من حذف مصروفات شهر</h3>
-                                        </div>
-                                        <div class="modal-body">
-                                            <select id="selector">
-                                                <option value="01">1</option>
-                                                <option value="02">2</option>
-                                                <option value="03">3</option>
-                                                <option value="04">4</option>
-                                                <option value="05">5</option>
-                                                <option value="06">6</option>
-                                                <option value="07">7</option>
-                                                <option value="08">8</option>
-                                                <option value="09">9</option>
-                                                <option value="10">10</option>
-                                                <option value="11">11</option>
-                                                <option value="12">12</option>
-                                            </select>
-                                        </div>
-                                        <div class="modal-footer">
-
-
-
-                                            <button class="btn" data-dismiss="modal" aria-hidden="true">الغاء</button>
-                                            <button class="btn btn-primary" style="margin-right: 80%;"
-                                                data-dismiss="modal" onclick="removePriceForMonth()">تاكيد</button>
-                                        </div>
-                                        
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"
+                                            aria-hidden="true">×</button>
+                                        <h3 id="myModalLabel">هل انت متاكد من حذف مصروفات شهر</h3>
                                     </div>
+                                    <div class="modal-body">
+                                        <select id="selector">
+                                            <option value="01">1</option>
+                                            <option value="02">2</option>
+                                            <option value="03">3</option>
+                                            <option value="04">4</option>
+                                            <option value="05">5</option>
+                                            <option value="06">6</option>
+                                            <option value="07">7</option>
+                                            <option value="08">8</option>
+                                            <option value="09">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                        </select>
+                                    </div>
+                                    <div class="modal-footer">
+
+
+
+                                        <button class="btn" data-dismiss="modal" aria-hidden="true">الغاء</button>
+                                        <button class="btn btn-primary" style="margin-right: 80%;" data-dismiss="modal"
+                                            onclick="removePriceForMonth()">تاكيد</button>
+                                    </div>
+
                                 </div>
                             </div>
+                        </div>
                         <!-- /.panel -->
                     </div>
                     <!-- /.col-lg-12 -->
@@ -233,8 +233,8 @@
             $(document).ready(function () {
                 $('#dataTables-example').DataTable({
                     responsive: true
-                
-                    
+
+
                 });
             });
 
@@ -249,15 +249,10 @@
             document.getElementById("name").innerHTML = name + "<br/>"
 
             var database = firebase.database();
-            
-            if(done == "true"){
-                
-                document.getElementById("done").checked = true
-            }else {
-                document.getElementById("done").checked = false
-            }
+
+
             function fetchData() {
-                currentYear= document.getElementById("selectorDateYear").value;
+                currentYear = document.getElementById("selectorDateYear").value;
                 var subTotal = 0;
                 var insurance = 0;
                 var subtract = 0
@@ -268,8 +263,8 @@
                 var selectedMonth = document.getElementById("selectorDate").value;
                 database.ref('staff').child(key).once('value', function (snapshot) {
                     subTotal = parseInt(snapshot.val().salary)
-                    if(snapshot.val().insurance)
-                    insurance = parseInt(snapshot.val().insurance)
+                    if (snapshot.val().insurance)
+                        insurance = parseInt(snapshot.val().insurance)
                     snapshot.child('expenses').forEach(function (childSnapshot) {
                         var childData = childSnapshot.val();
                         var date = childData.date.split("-")
@@ -282,9 +277,9 @@
                     snapshot.child('subtract').forEach(function (childSnapshot) {
                         var childData = childSnapshot.val();
                         var date = childData.date.split("-")
-                        
+
                         if (date[1] == selectedMonth && date[0] == currentYear) {
-                        subtractDays += parseInt(childData.type)
+                            subtractDays += parseInt(childData.type)
                         }
                     });
 
@@ -294,21 +289,36 @@
                     snapshot.child('over_time').forEach(function (childSnapshot) {
                         var childData = childSnapshot.val();
                         var date = childData.date.split("-")
-                        
+
                         if (date[1] == selectedMonth && date[0] == currentYear) {
-                        timeMinutes += parseInt(childData.time)
+                            timeMinutes += parseInt(childData.time)
                         }
                     });
-                    var salaryPerMin = salaryPerDay / (9*60)
+                    var salaryPerMin = salaryPerDay / (9 * 60)
                     var overTime = salaryPerMin * timeMinutes;
+
 
                     document.getElementById("first").innerHTML = `${subTotal.toFixed(2)} جنية مصرى`
                     document.getElementById("sixth").innerHTML = `${insurance} جنية مصرى`
                     document.getElementById("second").innerHTML = `${expenses.toFixed(2)} جنية مصرى`
                     document.getElementById("third").innerHTML = `${subtract.toFixed(2)} جنية مصرى من`
                     document.getElementById("fifth").innerHTML = `${overTime.toFixed(2)} جنية مصرى من`
-                    document.getElementById("fourth").innerHTML = `${(subTotal - expenses - subtract+ overTime -insurance).toFixed(2)} جنية مصرى`
+                    var total = (subTotal - expenses - subtract + overTime - insurance).toFixed(2)
+                    document.getElementById("fourth").innerHTML = `${total} جنية مصرى`
+
+                    var resetData = false
+                    if (subTotal.toFixed(2) == total) {
+                        document.getElementById("done").innerHTML = `تم التصفيه`
+                        resetData = new Date().getMonth()
+                    } else {
+                        document.getElementById("done").innerHTML = `لم تم التصفيه`
+                        resetData = -1
+                    }
                     alert("تم تحميل البيانات")
+
+                    if (new Date().getMonth() == selectedMonth) {
+                        saveDone(resetData)
+                    }
 
                 });
             }
@@ -362,7 +372,7 @@
                                 removePriceForMonthSubtract(selectedMonth);
                             });
 
-                        }else {
+                        } else {
                             document.getElementById("loading_price").style.display = "none"
                         }
                     }
@@ -376,7 +386,7 @@
 
             }
 
-             function removePriceForMonthSubtract(selectedMonth) {
+            function removePriceForMonthSubtract(selectedMonth) {
 
                 var keysWillRemoved = []
                 var totalWillRemoved = 0
@@ -412,7 +422,7 @@
                                 removePriceForMonthOverTime(selectedMonth)
                             });
 
-                        }else {
+                        } else {
                             document.getElementById("loading_price").style.display = "none"
                         }
                     }
@@ -427,7 +437,7 @@
             }
 
 
-                         function removePriceForMonthOverTime(selectedMonth) {
+            function removePriceForMonthOverTime(selectedMonth) {
 
                 var keysWillRemoved = []
                 var totalWillRemoved = 0
@@ -463,7 +473,7 @@
                                 location.reload();
                             });
 
-                        }else {
+                        } else {
                             document.getElementById("loading_price").style.display = "none"
                         }
                     }
@@ -476,15 +486,13 @@
 
 
             }
-        function saveDone() {
-        var done = document.getElementById("done").checked;
-        
-        
-        firebase.database().ref().child('staff').child(key).child("done").set(done);
-        
-        window.history.back();
+            function saveDone(done) {
 
-    }
+                firebase.database().ref().child('staff').child(key).child("done").set(done);
+
+               // window.history.back();
+
+            }
 
             function getParameter(theParameter) {
                 var params = window.location.search.substr(1).split('&');
