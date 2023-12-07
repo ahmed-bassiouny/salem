@@ -207,7 +207,7 @@
                         var childData = childSnapshot.val();
                         index++
                         if (!childData.phone) childData.phone = ""
-                        var table = `<tr> <td style="font-size:14pt"> ${index} - ${childData.name} (${list[childData.city - 1]})</td><td><a  href='edit_employee.html?key=${childSnapshot.key}' type='button'  class='btn btn-warning'>تعديل بيانات الصنايعي</a><a  href='employee_home_send.html?key=${childSnapshot.key}&name= ${childData.name}&city=${childData.city}' type='button'  class='btn btn-success'>عرض واضافه البضائع </a><a  href='employee_take_money.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-primary'>المصروف </a>
+                        var table = `<tr> <td style="font-size:14pt"> ${index} - ${childData.name} (${list[childData.city - 1]})</td><td><a  href='edit_employee.html?key=${childSnapshot.key}' type='button'  class='btn btn-warning'>تعديل بيانات الصنايعي</a><a  href='employee_home_send.html?key=${childSnapshot.key}&name= ${childData.name}&city=${childData.city}' type='button'  class='btn btn-success'>عرض واضافه البضائع </a><a  href='employee_take_money.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-primary'>المصروف + الخصم </a>
                     <a  href='employee_fatora.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-success'>عرض الملخص </a></td></tr>`;
 
                         document.getElementById("Customdata").innerHTML += table;
@@ -221,7 +221,7 @@
                         var childData = childSnapshot.val();
                         index++
                         if (!childData.phone) childData.phone = ""
-                        var table = `<tr> <td style="font-size:14pt"> ${index} - ${childData.name} (${list[childData.city - 1]})</td><td style="font-size:14pt">${childData.phone}</td><td><a  href='edit_employee.html?key=${childSnapshot.key}' type='button'  class='btn btn-warning'>تعديل بيانات الصنايعي</a><a  href='employee_home_send.html?key=${childSnapshot.key}&name= ${childData.name}&city=${childData.city}' type='button'  class='btn btn-success'>عرض واضافه البضائع </a><a  href='employee_take_money.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-primary'>المصروف </a>
+                        var table = `<tr> <td style="font-size:14pt"> ${index} - ${childData.name} (${list[childData.city - 1]})</td><td style="font-size:14pt">${childData.phone}</td><td><a  href='edit_employee.html?key=${childSnapshot.key}' type='button'  class='btn btn-warning'>تعديل بيانات الصنايعي</a><a  href='employee_home_send.html?key=${childSnapshot.key}&name= ${childData.name}&city=${childData.city}' type='button'  class='btn btn-success'>عرض واضافه البضائع </a><a  href='employee_take_money.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-primary'>المصروف + الخصم </a>
                     <a  href='employee_fatora.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-success'>عرض الملخص </a></td></tr>`;
 
                         document.getElementById("Customdata").innerHTML += table;
@@ -241,7 +241,7 @@
                         var childData = childSnapshot.val();
                         index++
                         if (!childData.phone) childData.phone = ""
-                        var table = `<tr> <td style="font-size:14pt"> ${index} - ${childData.name} (${list[childData.city - 1]})</td><td><a  href='edit_employee.html?key=${childSnapshot.key}' type='button'  class='btn btn-warning'>تعديل بيانات الصنايعي</a><a  href='employee_home_send.html?key=${childSnapshot.key}&name= ${childData.name}&city=${childData.city}' type='button'  class='btn btn-success'>عرض واضافه البضائع </a><a  href='employee_take_money.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-primary'>المصروف </a>
+                        var table = `<tr> <td style="font-size:14pt"> ${index} - ${childData.name} (${list[childData.city - 1]})</td><td><a  href='edit_employee.html?key=${childSnapshot.key}' type='button'  class='btn btn-warning'>تعديل بيانات الصنايعي</a><a  href='employee_home_send.html?key=${childSnapshot.key}&name= ${childData.name}&city=${childData.city}' type='button'  class='btn btn-success'>عرض واضافه البضائع </a><a  href='employee_take_money.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-primary'>المصروف + الخصم </a>
                     <a  href='employee_fatora.html?key=${childSnapshot.key}&name= ${childData.name}' type='button'  class='btn btn-success'>عرض الملخص </a></td></tr>`;
 
                         document.getElementById("Customdata").innerHTML += table;
