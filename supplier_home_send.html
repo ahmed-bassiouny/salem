@@ -150,6 +150,18 @@
                                     </tr>
                                  
                                     <tr>
+                                        <th>اضافة 10% طلب خاص</th>
+                                        <td>
+                                            <input class="form-check-input" type="checkbox" class="form-control" id="tenSecond" onchange="onChange()"> <label id="tenSecondValue"></label></checkbox> 
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>اضافة 20% طلب خاص</th>
+                                        <td>
+                                            <input class="form-check-input" type="checkbox" class="form-control" id="twentySecond" onchange="onChange()"> <label id="twentySecondValue"></label></checkbox> 
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <th>اضافة قيمة القماش</th>
                                         <td><input id="material" onchange="onChange()" type="number" class="form-control"></textarea></td>
 
@@ -207,7 +219,8 @@
                                         <th>السعر</th>
                                         <th>10%</th>
                                         <th>20%</th>
-                                        
+                                        <th>10% طلب خاص</th>
+                                        <th>20% طلب خاص</th>
                                         <th>قيمة القماش</th>
                                         <th>الاجمالى</th>
                                         <th>خيارات</th>
@@ -331,7 +344,9 @@
                     var childData = childSnapshot.val();
                     var ten = (childData.ten) ? childData.ten : 0
                     var twenty = (childData.twenty) ? childData.twenty : 0
-                    var table = `<tr> <td> ${childData.count} </td> <td> ${childData.type} </td><td> ${childData.size} </td>  <td> ${childData.color} </td> <td> ${childData.price} </td> <td> ${childData.ten} </td> <td> ${childData.twenty} </td><td> ${childData.material} </td><td> ${childData.total} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${date}','${childSnapshot.key}')">حذف </a> </td> </tr>`;
+                    var tenSecond = (childData.tenSecond) ? childData.tenSecond : 0
+                    var twentySecond = (childData.twentySecond) ? childData.twentySecond : 0
+                    var table = `<tr> <td> ${childData.count} </td> <td> ${childData.type} </td><td> ${childData.size} </td>  <td> ${childData.color} </td> <td> ${childData.price} </td> <td> ${childData.ten} </td> <td> ${childData.twenty} </td><td> ${tenSecond} </td><td> ${twentySecond} </td><td> ${childData.material} </td><td> ${childData.total} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${date}','${childSnapshot.key}')">حذف </a> </td> </tr>`;
                     $('.app-spinner').remove();
                     myTotal += parseFloat(childData.total);
                     document.getElementById("Customdata").innerHTML += table;
@@ -360,6 +375,15 @@
                     document.getElementById("tenValue").innerHTML = ""
                 }
 
+                var tenSecond = 0
+             
+                if(document.getElementById("tenSecond").checked){
+                    tenSecond = (price * 10 ) / 100
+                    document.getElementById("tenSecondValue").innerHTML = tenSecond
+                }else {
+                    document.getElementById("tenSecondValue").innerHTML = ""
+                }
+
                 var twenty = 0
                 if(document.getElementById("twenty").checked){
                     twenty = (price * 20 ) / 100
@@ -367,11 +391,19 @@
                 }else {
                     document.getElementById("twentyValue").innerHTML = ""
                 }
+                var twentySecond = 0
+                if(document.getElementById("twentySecond").checked){
+                    twentySecond = (price * 20 ) / 100
+                    document.getElementById("twentySecondValue").innerHTML = twenty
+                }else {
+                    document.getElementById("twentySecondValue").innerHTML = ""
+                }
+
                 var material = 0
                 if(document.getElementById("material").value)
                 material=  parseFloat(document.getElementById("material").value)
 
-                var total = (price + parseFloat(ten)+ parseFloat(twenty)+material) * count
+                var total = (price + parseFloat(ten)+ parseFloat(tenSecond)+ parseFloat(twenty)+ parseFloat(twentySecond)+material) * count
              document.getElementById("total").value = total
         }
 
@@ -394,9 +426,19 @@
                     ten = document.getElementById("tenValue").innerHTML
                 }
 
+                var tenSecond = 0
+                if(document.getElementById("tenSecond").checked){
+                    tenSecond = document.getElementById("tenSecondValue").innerHTML
+                }
+
                 var twenty = 0
                 if(document.getElementById("twenty").checked){
                     twenty = document.getElementById("twentyValue").innerHTML
+                }
+
+                var twentySecond = 0
+                if(document.getElementById("twentySecond").checked){
+                    twentySecond = document.getElementById("twentySecondValue").innerHTML
                 }
 
                 database.ref().child('sendto').child(key).child(date).push().set({
@@ -406,7 +448,9 @@
                     price: price,
                     by: by,
                     ten: ten,
+                    tenSecond: tenSecond,
                     twenty: twenty,
+                    twentySecond:twentySecond,
                     type: type,
                     size:size,
                     material:material,
@@ -424,7 +468,9 @@
                         document.getElementById("type").value = ""
                         document.getElementById("color").value = ""
                         document.getElementById("tenValue").innerHTML = ""
+                        document.getElementById("tenSecondValue").innerHTML = ""
                         document.getElementById("twentyValue").innerHTML = ""
+                        document.getElementById("twentySecondValue").innerHTML = ""
                         document.getElementById("ten").checked = false
                         document.getElementById("twenty").checked = false
                         location.reload()

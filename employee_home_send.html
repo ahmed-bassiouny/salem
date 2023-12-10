@@ -164,6 +164,8 @@
                                 </tbody>
                             </table>
 
+                            
+
                         </div>
                         <!-- /.panel-body -->
                     </div>
@@ -178,6 +180,7 @@
     </div>
     <!-- /#wrapper -->
 
+    
     <!-- jQuery -->
     <script src="vendor/jquery/jquery.min.js"></script>
 
@@ -274,10 +277,12 @@
                     // if(city == 2){
                     //     var table = `<tr> <td> ${childData.date} </td><td> ${childData.count} </td> <td> ${childData.type} </td> <td> ${childData.color} </td> <td> ${childData.price} </td> <td> ${childData.total} </td> <td> <input   onchange="edits('${childSnapshot.key}',this)"  value="${childData.received}" class="form-control"></textarea></td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${date}','${childSnapshot.key}')">حذف </a> </td> </tr>`;
                     // }else 
-                    if (childData.count - childData.received != 0) {
-                        var table = `<tr> <td> ${childData.date} </td><td> ${childData.count} </td> <td> ${childData.type} </td> <td> ${childData.color} </td> <td> ${childData.price} </td> <td> ${childData.total} </td> <td> <input   onchange="edits('${childSnapshot.key}',this)"  value="${childData.received}" class="form-control"></textarea></td><td style='color:red'> ${childData.count - childData.received} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${date}','${childSnapshot.key}')">حذف </a> </td> </tr>`;
+                    var totalNotReceived = childData.count - childData.received
+                    if ( totalNotReceived!= 0) {
+                        var option = `<td><button onclick="showDialog(${totalNotReceived})">استرداد بضاعه</button></td>`
+                        var table = `<tr> <td> ${childData.date} </td><td> ${childData.count} </td> <td> ${childData.type} </td> <td> ${childData.color} </td> <td> ${childData.price} </td> <td> ${childData.total} </td> <td> ${childData.received}</td><td style='color:red'> ${childData.count - childData.received} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${date}','${childSnapshot.key}')">حذف </a> </td> ${option} </tr>`;
                     } else {
-                        var table = `<tr> <td> ${childData.date} </td><td> ${childData.count} </td> <td> ${childData.type} </td> <td> ${childData.color} </td> <td> ${childData.price} </td> <td> ${childData.total} </td> <td> <input  onchange="edits('${childSnapshot.key}',this)" value="${childData.received}" class="form-control"></textarea></td><td style='color:black'> ${childData.count - childData.received} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${date}','${childSnapshot.key}')">حذف </a> </td> </tr>`;
+                        var table = `<tr> <td> ${childData.date} </td><td> ${childData.count} </td> <td> ${childData.type} </td> <td> ${childData.color} </td> <td> ${childData.price} </td> <td> ${childData.total} </td> <td> ${childData.received}</td><td style='color:black'> ${childData.count - childData.received} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${date}','${childSnapshot.key}')">حذف </a> </td> </tr>`;
                     }
                     $('.app-spinner').remove();
                     myTotal += parseFloat(childData.total);
@@ -297,6 +302,14 @@
 
         }
 
+        function showDialog(count){
+            var  number = prompt(` المتبقي ${count}`);
+            if(Number.isInteger(parseInt(number)) && number <= count ){
+                document.getElementById("demo").innerHTML = text;
+            }else {
+                alert('الرقم غير صحيح')
+            }
+        }
         function edits(k, v) {
 
 

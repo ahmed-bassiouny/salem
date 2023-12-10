@@ -103,8 +103,12 @@
                                                 <th style="font-size:12pt;text-align: center;">السعر</th>
                                                 <th style="font-size:12pt;text-align: center;">+ 10% فرق مقاس</th>
                                                 <th style="font-size:12pt;text-align: center;">+ 20% خدمه تفصيل</th>
+
+                                                <th style="font-size:12pt;text-align: center;">+ 10% طلب خاص</th>
+                                                <th style="font-size:12pt;text-align: center;">+ 20% طلب خاص</th>
                                                 
                                                 <th style="font-size:12pt;text-align: center;">+ قيمة القماش</th>
+                                                <th style="font-size:12pt;text-align: center;">المجموع</th>
                                                 <th style="font-size:12pt;text-align: center;">= الاجمالى</th>
                                                 
                                             </tr>
@@ -228,7 +232,9 @@
                 //document.getElementById("date").innerHTML = `التاريخ : ${date}`;
                 snapshot.forEach(function (childSnapshot) {
                     var childData = childSnapshot.val();
-                    var table = `<tr><td style="font-size:12pt"> ${childData.count} </td> <td style="font-size:12pt"> ${childData.type} </td><td style="font-size:12pt"> ${childData.size} </td> <td style="font-size:12pt"> ${childData.color} </td> <td style="font-size:12pt"> ${childData.price} </td><td style="font-size:12pt"> ${childData.ten} </td> <td style="font-size:12pt"> ${childData.twenty} </td> <td style="font-size:12pt"> ${childData.material} </td><td style="font-size:12pt"> ${childData.total} </td> </tr>`;
+                    var tenSecond = (childData.tenSecond) ? childData.tenSecond : 0
+                    var twentySecond = (childData.twentySecond) ? childData.twentySecond : 0
+                    var table = `<tr><td style="font-size:12pt"> ${childData.count} </td> <td style="font-size:12pt"> ${childData.type} </td><td style="font-size:12pt"> ${childData.size} </td> <td style="font-size:12pt"> ${childData.color} </td> <td style="font-size:12pt"> ${childData.price} </td><td style="font-size:12pt"> ${childData.ten} </td> <td style="font-size:12pt"> ${childData.twenty} </td><td style="font-size:12pt"> ${tenSecond} </td><td style="font-size:12pt"> ${twentySecond} </td> <td style="font-size:12pt"> ${childData.material} </td><td style="font-size:12pt"> ${childData.total/childData.count} </td><td style="font-size:12pt"> ${childData.total} </td> </tr>`;
                     $('.app-spinner').remove();
                     myTotal += parseFloat(childData.total);
                     document.getElementById("Customdata").innerHTML += table;
@@ -236,7 +242,7 @@
 
                     by = childData.by;
                 });
-                document.getElementById("Customdata").innerHTML += `<tr> <td colspan="8" style="font-weight:bold;font-size:25pt">اجمالى الفاتورة الحالية</td> <td style="font-weight:bold;font-size:25pt"> ${myTotal} جنية مصرى</td> </tr>`;
+                document.getElementById("Customdata").innerHTML += `<tr> <td colspan="11" style="font-weight:bold;font-size:25pt">اجمالى الفاتورة الحالية</td> <td style="font-weight:bold;font-size:25pt"> ${myTotal} جنية مصرى</td> </tr>`;
                 var table1 = `<tr><td> ${date} </td> <td> ${by} </td> </tr>`;
 
             });
