@@ -277,6 +277,8 @@
                     // if(city == 2){
                     //     var table = `<tr> <td> ${childData.date} </td><td> ${childData.count} </td> <td> ${childData.type} </td> <td> ${childData.color} </td> <td> ${childData.price} </td> <td> ${childData.total} </td> <td> <input   onchange="edits('${childSnapshot.key}',this)"  value="${childData.received}" class="form-control"></textarea></td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${date}','${childSnapshot.key}')">حذف </a> </td> </tr>`;
                     // }else 
+
+
                     var totalNotReceived = childData.count - childData.received
                     if ( totalNotReceived!= 0) {
                         var option = `<button class='btn btn-primary' onclick="showDialog('${totalNotReceived}','${childSnapshot.key}','${childData.received}')">استرداد بضاعه</button>`
@@ -401,11 +403,12 @@
         }
 
         function deleteItem(date, subKey) {
-
+            if(confirm('هل انت متاكد من الحذف')){
 
             database.ref("employee_have_items").child(key).child(subKey).remove().then(function () {
                 alert("تم الحذف بنجاح");
             });
+        }
         }
         function getParameter(theParameter) {
             var params = window.location.search.substr(1).split('&');
