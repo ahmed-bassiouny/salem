@@ -42,6 +42,39 @@
 
 <body>
 
+    <div class="container">
+        <button type="button" id="dialog_btn" style="visibility: hidden;" class="btn btn-danger" data-toggle="modal" data-target="#form">
+          See Modal with Form
+        </button>  
+      </div>
+      
+      <div class="modal fade" id="form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+              <button type="button" id="closeBtn" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form>
+              <div class="modal-body">
+                <div class="form-group" style="text-align: right!important;align-items: end;">
+                  <label id="dialog_date" style="text-align: right!important;align-items: end;"></label>
+                <br/>
+                  <label id="dialog_count"></label>
+                  <input type="number" class="form-control" id="input_count"  placeholder="">
+                  <small id="help" class="form-text text-muted" ></small>
+                </div>
+               
+              </div>
+              <div class="modal-footer border-top-0 d-flex justify-content-center">
+                <a onclick="performCal()" class="btn btn-success">Submit</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
     <div id="wrapper" dir="rtl">
 
         <!-- Navigation -->
@@ -135,8 +168,8 @@
                         <br />
                         <br />
                         <textarea style="width: 50%; height: 100pt;" id="note"></textarea>
-                        <button onclick="saveNote(this)"> حفظ</button>
-                        <button onclick="deleteNote(this)" class="btn btn-danger"> حذف</button>
+                        <button class="btn btn-primary" onclick="saveNote(this)"> حفظ</button>
+                        <!-- <button onclick="deleteNote(this)" class="btn btn-danger"> حذف</button> -->
                         <div class="panel-body" dir="rtl">
                             <h1> البضاعة التى ارسلت للصنايعي </h1>
 
@@ -287,18 +320,40 @@
             });
         }
 
+        var contotalNotReceived ;
+        var consubKey;
+        var conreceived;
+        var condate;
+
         function showDialog(totalNotReceived,subKey,received){
             var date = document.getElementById("date").value
             if(date == null || date =="") {
                 alert('برجاء اختار تاريخ الاسترداد')
                 return
             }
-            var  newReceived = prompt(' تاريخ الاسترداد '+date+'\n'+` المتبقي ${totalNotReceived}`);
+            document.getElementById("dialog_date").innerHTML = ' تاريخ الاسترداد '+date
+            document.getElementById("dialog_count").innerHTML = ` المتبقي ${totalNotReceived}`
+            condate = date
+            contotalNotReceived = totalNotReceived
+            consubKey = subKey
+            conreceived = received
+            document.getElementById("input_count").value = ""
             
+            document.getElementById('dialog_btn').click();
+
+            // var  newReceived = prompt(' تاريخ الاسترداد '+date+'\n'+` المتبقي ${totalNotReceived}`);
+            
+            
+        }
+
+        function performCal(){
+            var newReceived = document.getElementById("input_count").value
+            
+            document.getElementById('closeBtn').click();
             if(newReceived == null) return
-            if( parseInt(newReceived) <= parseInt(totalNotReceived) ){
-                var totalReceived = parseInt(received) + parseInt(newReceived)
-                receivedTotal(subKey,date,newReceived,totalReceived)
+            if( parseInt(newReceived) <= parseInt(contotalNotReceived) ){
+                var totalReceived = parseInt(conreceived) + parseInt(newReceived)
+                receivedTotal(consubKey,condate,newReceived,totalReceived)
             }else {
                 alert('الرقم غير صحيح')
             }
