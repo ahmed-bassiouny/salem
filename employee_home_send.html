@@ -367,6 +367,10 @@
                 var date = document.getElementById("date").value
                 var price = document.getElementById("price").value
 
+                if(date == null || date ==""){
+                    alert('برجاء اختيار التاريخ')
+                    return;
+                }
                 var type = document.getElementById("type").options[document.getElementById("type").selectedIndex].text
                 var color = document.getElementById("color").value
                 btn.disabled = true;

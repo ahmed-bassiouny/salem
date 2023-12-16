@@ -167,8 +167,7 @@
 
                         <br />
                         <br />
-                        <textarea style="width: 50%; height: 100pt;" id="note"></textarea>
-                        <button class="btn btn-primary" onclick="saveNote(this)"> حفظ</button>
+                        
                         <!-- <button onclick="deleteNote(this)" class="btn btn-danger"> حذف</button> -->
                         <div class="panel-body" dir="rtl">
                             <h1> البضاعة التى ارسلت للصنايعي </h1>
@@ -466,10 +465,15 @@ database.ref('employee_have_items').child(key).child(subKey).child("received").s
 
 }
         function save(btn) {
+
             var total = document.getElementById("total").value
             if (total > 0) {
                 var count = document.getElementById("count").value
                 var date = document.getElementById("date").value
+                if(date == null || date ==""){
+                    alert('برجاء اختيار التاريخ')
+                    return;
+                }
                 var price = document.getElementById("price").value
 
                 var type = document.getElementById("type").options[document.getElementById("type").selectedIndex].text
