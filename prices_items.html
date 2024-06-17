@@ -3,6 +3,9 @@
 
 <head>
 
+    <style>
+        input[type='text'] { font-size: 20px; }
+        </style>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -167,7 +170,7 @@
 
                 if((childData.name !="" && value == childData.order) || (childData.name !="" && value == 0)){
                     var price = childData.price ? childData.price : 0
-                var table = `<tr><td><input type="text" value="${childData.name}" onchange="saveName('${childSnapshot.key}',this.value)" class="form-control"></input></td> <td><input type="number" value=${price} onchange="save('${childSnapshot.key}',this.value)" class="form-control"></textarea></td></tr>`;
+                var table = `<tr><td ><input type="text" value="${childData.name}" onchange="saveName('${childSnapshot.key}',this.value)" class="form-control"></input></td> <td><input type="number" value=${price} onchange="save('${childSnapshot.key}',this.value)" class="form-control"></textarea></td></tr>`;
                 $('.app-spinner').remove();
                 document.getElementById("Customdata").innerHTML += table;
             }
