@@ -164,7 +164,7 @@
                                             </tr>
                                             <tr>
                                                 <td style="font-size:18pt">ملاحظات</td>
-                                                <td style="font-weight:bold;font-size:25pt" id="sevenId"></td>
+                                                <td style="font-weight:bold;font-size:15pt" id="sevenId"></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -286,7 +286,6 @@
                 var timeMinutes = 0;
                 var selectedMonth = document.getElementById("selectorDate").value;
                 database.ref('staff').child(key).once('value', function (snapshot) {
-                    //alert(snapshot.val().note)
                     document.getElementById("sevenId").innerHTML = snapshot.val().note
                     subTotal = parseInt(snapshot.val().salary)
                     if (snapshot.val().insurance)
