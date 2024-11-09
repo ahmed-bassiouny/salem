@@ -156,7 +156,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>اضافة 20% بيع داخلي </th>
+                                        <th>اضافة 25% بيع داخلي </th>
                                         <td>
                                             <input class="form-check-input" type="checkbox" class="form-control" id="twentySecond" onchange="onChange()"> <label id="twentySecondValue"></label></checkbox> 
                                         </td>
@@ -164,6 +164,11 @@
                                     <tr>
                                         <th>اضافة قيمة القماش</th>
                                         <td><input id="material" onchange="onChange()" type="number" class="form-control"></textarea></td>
+
+                                    </tr>
+                                    <tr>
+                                        <th>اضافة قيمة الشحن</th>
+                                        <td><input id="delivery" onchange="onChange()" type="number" class="form-control"></textarea></td>
 
                                     </tr>
                                     
@@ -220,8 +225,9 @@
                                         <th>10%</th>
                                         <th>20%</th>
                                         <th>10% طلب خاص</th>
-                                        <th>20% بيع داخلي </th>
+                                        <th>25% بيع داخلي </th>
                                         <th>قيمة القماش</th>
+                                        <th>قيمة الشحن</th>
                                         <th>الاجمالى</th>
                                         <th>خيارات</th>
                                     </tr>
@@ -229,7 +235,7 @@
                                 </thead>
                                 <tbody id="Customdata">
 
-                                    <td colspan="9" class='app-spinner' style="text-align: center"><i
+                                    <td colspan="13" class='app-spinner' style="text-align: center"><i
                                             class="fa fa-spinner fa-spin" style="font-size:24px"></i></td>
 
                                 </tbody>
@@ -346,7 +352,7 @@
                     var twenty = (childData.twenty) ? childData.twenty : 0
                     var tenSecond = (childData.tenSecond) ? childData.tenSecond : 0
                     var twentySecond = (childData.twentySecond) ? childData.twentySecond : 0
-                    var table = `<tr> <td> ${childData.count} </td> <td> ${childData.type} </td><td> ${childData.size} </td>  <td> ${childData.color} </td> <td> ${childData.price} </td> <td> ${childData.ten} </td> <td> ${childData.twenty} </td><td> ${tenSecond} </td><td> ${twentySecond} </td><td> ${childData.material} </td><td> ${childData.total} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${date}','${childSnapshot.key}')">حذف </a> </td> </tr>`;
+                    var table = `<tr> <td> ${childData.count} </td> <td> ${childData.type} </td><td> ${childData.size} </td>  <td> ${childData.color} </td> <td> ${childData.price} </td> <td> ${childData.ten} </td> <td> ${childData.twenty} </td><td> ${tenSecond} </td><td> ${twentySecond} </td><td> ${childData.material} </td><td> ${childData.delivery} </td><td> ${childData.total} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${date}','${childSnapshot.key}')">حذف </a> </td> </tr>`;
                     $('.app-spinner').remove();
                     myTotal += parseFloat(childData.total);
                     document.getElementById("Customdata").innerHTML += table;
@@ -403,7 +409,12 @@
                 if(document.getElementById("material").value)
                 material=  parseFloat(document.getElementById("material").value)
 
+                var delivery = 0
+                if(document.getElementById("delivery").value)
+                delivery=  parseFloat(document.getElementById("delivery").value)
+
                 var total = (price + parseFloat(ten)+ parseFloat(tenSecond)+ parseFloat(twenty)+ parseFloat(twentySecond)+material) * count
+                total = total + delivery
              document.getElementById("total").value = total
         }
 
@@ -419,6 +430,7 @@
                 var color = document.getElementById("color").value
                 var size = document.getElementById("size").value
                 var material = document.getElementById("material").value
+                var delivery = document.getElementById("delivery").value
 
               
              var ten = 0
@@ -455,6 +467,7 @@
                     size:size,
                     material:material,
                     color: color,
+                    delivery:delivery
                 }, function (error) {
                     if (error) {
                         // The write failed...
@@ -473,6 +486,7 @@
                         document.getElementById("twentySecondValue").innerHTML = ""
                         document.getElementById("ten").checked = false
                         document.getElementById("twenty").checked = false
+                        document.getElementById("delivery").innerHTML = ""
                         location.reload()
                     }
                 });
