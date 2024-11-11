@@ -271,12 +271,16 @@
         }
         function onChangeType() {
             var dollar = document.getElementById("dollar").value
-            // var euro = document.getElementById("euro").value
-            // var dinar = document.getElementById("dinar").value
+            var euro = document.getElementById("euro").value
+            var dinar = document.getElementById("dinar").value
             var egp = document.getElementById("egp").value
 
             if (dollar > 0){
                 document.getElementById("total").value = ((dollar * document.getElementById("price").value) - document.getElementById("price_discount").value) - document.getElementById("dynamic_value").value
+            }else if (euro > 0){
+                document.getElementById("total").value = ((euro * document.getElementById("price").value) - document.getElementById("price_discount").value) - document.getElementById("dynamic_value").value
+            }else if (dinar > 0){
+                document.getElementById("total").value = ((dinar * document.getElementById("price").value) - document.getElementById("price_discount").value) - document.getElementById("dynamic_value").value
             }else {
                 document.getElementById("total").value = (egp - document.getElementById("price_discount").value) - document.getElementById("dynamic_value").value
             }
