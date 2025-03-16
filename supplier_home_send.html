@@ -352,7 +352,7 @@
                     var twenty = (childData.twenty) ? childData.twenty : 0
                     var tenSecond = (childData.tenSecond) ? childData.tenSecond : 0
                     var twentySecond = (childData.twentySecond) ? childData.twentySecond : 0
-                    var table = `<tr> <td> ${childData.count} </td> <td> ${childData.type} </td><td> ${childData.size} </td>  <td> ${childData.color} </td> <td> ${childData.price} </td> <td> ${childData.ten} </td> <td> ${childData.twenty} </td><td> ${tenSecond} </td><td> ${twentySecond} </td><td> ${childData.material} </td><td> ${childData.delivery} </td><td> ${childData.total} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${date}','${childSnapshot.key}')">حذف </a> </td> </tr>`;
+                    var table = `<tr> <td> ${childData.count} </td> <td> ${childData.type} </td><td> ${childData.size} </td>  <td style='width: 10px;'> ${childData.color} </td> <td> ${childData.price} </td> <td> ${childData.ten} </td> <td> ${childData.twenty} </td><td> ${tenSecond} </td><td> ${twentySecond} </td><td> ${childData.material} </td><td> ${childData.delivery} </td><td> ${childData.total} </td><td> <button style="color:red;" class='btn btn-error' onclick="deleteItem('${date}','${childSnapshot.key}')">حذف </a> </td> </tr>`;
                     $('.app-spinner').remove();
                     myTotal += parseFloat(childData.total);
                     document.getElementById("Customdata").innerHTML += table;
