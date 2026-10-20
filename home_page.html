@@ -68,6 +68,9 @@
                         
                         <!-- /.panel-heading -->
                         <div class="panel-body" dir="rtl" >
+                            <input placeholder="بحث" id="searchName" class="form-control"
+                                style="margin: 20pt;width: 300pt;" />
+
                             <a type="button" style="margin-left: 1%;"  href='supplier_fatora_for_all.html'
                             class="btn btn-danger">الرصيد </a>
                             
@@ -138,8 +141,30 @@
         var database = firebase.database();
         var index = 0 
 
-        database.ref('supplier').once('value', function(snapshot) {
-            $('.app-spinner').remove();
+        database.ref('supplier').once('value', renderSuppliers);
+
+        // Get the input field
+        var input = document.getElementById("searchName");
+
+        // Execute a function when the user releases a key on the keyboard
+        input.addEventListener("keyup", function (event) {
+            // Number 13 is the "Enter" key on the keyboard
+            if (event.keyCode === 13) {
+                // Cancel the default action, if needed
+                event.preventDefault();
+                searchByName(input.value)
+
+            }
+        });
+
+        function searchByName(item) {
+            database.ref('supplier').orderByChild('name').startAt(item)
+                .endAt(item + "\uf8ff").once('value', renderSuppliers);
+        }
+
+        function renderSuppliers(snapshot) {
+            index = 0;
+            document.getElementById("Customdata").innerHTML = "";
              snapshot.forEach(function(childSnapshot) {
                 var childData = childSnapshot.val();
                 if(childData.name != ''){
@@ -151,7 +176,7 @@
             }
                 });
 
-        });
+        }
 
         function myFunction() {
   // Declare variables 
